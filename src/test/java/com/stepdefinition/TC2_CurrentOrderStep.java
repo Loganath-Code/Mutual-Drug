@@ -125,6 +125,7 @@ public class TC2_CurrentOrderStep extends BaseClass {
 	public void userVerifiesTheOrderSubmissionWithAlertMessage(String string) {
 
 		pom.getCurrentOrderPage().clicksOK();
+		System.out.println(getCurrentrl());
 	}
 
 	/**
@@ -250,6 +251,57 @@ public class TC2_CurrentOrderStep extends BaseClass {
 		assertEquals(alertMessage_Ordercreation, alertOrdercreationMessage);
 	}
 
+	/**
+	 * @see Used to Update the order name
+	 * @param string
+	 * @param string2
+	 */
+	@When("User can change Order Name as {string} then  verifying the alert message {string}")
+	public void userCanChangeOrderNameAsThenVerifyingTheAlertMessage(String orderName,
+			String orderNameUpdateedMessage) {
+		pom.getOrdersPage().orderNameUpdate(orderName);
+		WebElement alertSuccessMessageOrderNameUpdate = pom.getOrdersPage().getAlertSuccessMessageOrderNameUpdate();
+		assertEquals(alertSuccessMessageOrderNameUpdate, orderNameUpdateedMessage);
+
+	}
+
+	/**
+	 * @see Used to perform sorting
+	 */
+	@When("User verifies sorting order in both ascending and descending order for items, Product Discriptions")
+	public void userVerifiesSortingOrderInBothAscendingAndDescendingOrderForItemsProductDiscriptions() {
+		pom.getOrdersPage().itemsNumberSorting();
+		pom.getOrdersPage().productDiscriptionsSorting();
+	}
+
+	@When("User updates item quantities and special codes in the grid verifies the {string} alert message")
+	public void userUpdatesItemQuantitiesAndSpecialCodesInTheGridVerifiesTheAlertMessage(String string) {
+		pom.getOrdersPage().updateQty();
+		pom.getOrdersPage().updateSpecialCode();
+	}
+
+	/**
+	 * @see Used to deletes the item in grid
+	 * @param string
+	 * @throws InterruptedException
+	 */
+	@Then("User deletes an order from the Grid verifies the {string} alert message")
+	public void userDeletesAnOrderFromTheGridVerifiesTheAlertMessage(String deleteSuccessMessage)
+			throws InterruptedException {
+		pom.getOrdersPage().deleteItemsInGrid();
+		WebElement alertSuccessMessage = pom.getOrdersPage().getAlertSuccessMessage();
+		assertEquals(alertSuccessMessage, deleteSuccessMessage);
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @see Used to perform pagination function
+	 */
+	@Then("User verifies pagination functionality on the Orders Web Page")
+	public void userVerifiesPaginationFunctionalityOnTheOrdersWebPage() throws InterruptedException {
+		pom.getOrdersPage().pageNavigations();
+	}
+
 	@Then("User clicks on Save As Template and see the alert message as {string}")
 	public void userClicksOnSaveAsTemplateAndSeeTheAlertMessageAs(String alertMessageTemplateSaved) {
 		pom.getCurrentOrderPage().clickSaveAsTemplateButton();
@@ -268,6 +320,159 @@ public class TC2_CurrentOrderStep extends BaseClass {
 		refreshNavigation();
 		pom.getCurrentOrderPage().selectTemplete();
 
+	}
+
+	@When("User clicks on Create New without entering any details and clicks Create")
+	public void userClicksOnCreateNewWithoutEnteringAnyDetailsAndClicksCreate() {
+		pom.getCurrentOrderPage().emptyFieldsOrderCreation();
+
+	}
+
+	@Then("User should verifies the error messages: {string} and {string}")
+	public void userShouldVerifiesTheErrorMessagesAnd(String emptyFieldOrderNameErrorMessage,
+			String emptyFieldOrderType) {
+		try {
+			WebElement errorMessageOrderName = pom.getCurrentOrderPage().getErrorMessageOrderName();
+			assertEquals(errorMessageOrderName, emptyFieldOrderNameErrorMessage);
+			WebElement errorMessageOrderType = pom.getCurrentOrderPage().getErrorMessageOrderType();
+			assertEquals(errorMessageOrderType, emptyFieldOrderType);
+		} catch (Exception e) {
+
+		}
+	}
+
+	@Then("User enter order name with special characters with {string} order type and tries to create an Order and should see the error message {string}")
+	public void userEnterOrderNameWithSpecialCharactersWithOrderTypeAndTriesToCreateAnOrderAndShouldSeeTheErrorMessage(
+			String orderType, String orderNameWithSpecialChar) {
+		pom.getCurrentOrderPage().insertOrderNameWithSpecialChar(orderType);
+		WebElement errorMessageOrdernameSpeclChar = pom.getCurrentOrderPage().getErrorMessageOrdernameSpeclChar();
+		assertEquals(errorMessageOrdernameSpeclChar, orderNameWithSpecialChar);
+
+	}
+
+	@Then("User provides Space in Order Name with {string} order type and tries to create an Order then see the error message {string}")
+	public void userProvidesSpaceInOrderNameWithOrderTypeAndTriesToCreateAnOrderThenSeeTheErrorMessage(String orderType,
+			String orderNameWithSpace) {
+		pom.getCurrentOrderPage().currentOrderNameWithSpace(orderType);
+		WebElement errorMessageOrderName = pom.getCurrentOrderPage().getErrorMessageOrderName();
+		assertEquals(errorMessageOrderName, orderNameWithSpace);
+	}
+
+	@Then("User should clicks on Use a Template and entering without anut details and clicks Create")
+	public void userShouldClicksOnUseATemplateAndEnteringWithoutAnutDetailsAndClicksCreate() {
+		pom.getCurrentOrderPage().emptyFieldsUseATemplate();
+	}
+
+	@Then("User should validate the error message {string} , {string}")
+	public void userShouldValidateTheErrorMessage(String emptyFieldOrderName, String emptyFieldTemplate) {
+		WebElement errorMessageOrderName = pom.getCurrentOrderPage().getErrorMessageOrderName();
+		assertEquals(errorMessageOrderName, emptyFieldOrderName);
+		WebElement errorMessageTemplate = pom.getCurrentOrderPage().getErrorMessageTemplate();
+		assertEquals(errorMessageTemplate, emptyFieldTemplate);
+	}
+
+	@When("User searches for a Order Name {string} and verifies that the grid displays the Order name is {string}")
+	public void userSearchesForAOrderNameAndVerifiesThatTheGridDisplaysTheOrderNameIs(String orderName, String string2)
+			throws InterruptedException {
+
+		pom.getCurrentOrderPage().searchOrders(orderName);
+	}
+
+	@When("User verifies sorting order in both ascending and descending order for all columns OrderName, Status, Created Date, Order Type, Total lines, Total pieces and Ext.Inv.Price")
+	public void userVerifiesSortingOrderInBothAscendingAndDescendingOrderForAllColumnsOrderNameStatusCreatedDateOrderTypeTotalLinesTotalPiecesAndExtInvPrice() {
+		pom.getCurrentOrderPage().sortingOrders();
+
+	}
+
+	@When("User verifies pagination functionality on the Orders")
+	public void userVerifiesPaginationFunctionalityOnTheOrders() throws InterruptedException {
+		pom.getCurrentOrderPage().pageNavigations();
+
+	}
+
+	@Then("User deletes the Order name and verifies the success alert message {string}")
+	public void userDeletesTheOrderNameAndVerifiesTheSuccessAlertMessage(String deleteOrderMessage) {
+		pom.getCurrentOrderPage().deleteOrder();
+		WebElement alertMessageDeleteOrder = pom.getCurrentOrderPage().getAlertMessageDeleteOrder();
+		assertEquals(alertMessageDeleteOrder, deleteOrderMessage);
+	}
+
+	@Then("User should clicks View Order Templates and verifies that the page is {string}")
+	public void userShouldClicksViewOrderTemplatesAndVerifiesThatThePageIs(String pageTitle) {
+		pom.getCurrentOrderPage().clicksViewOrderTemplates();
+		WebElement titleOrderTemplates = pom.getTemplatesPage().getTitleOrderTemplates();
+		assertEquals(titleOrderTemplates, pageTitle);
+
+	}
+
+	@Then("User search for Template name {string} verifies that the grid displays the Template name is {string}")
+	public void userSearchForTemplateNameVerifiesThatTheGridDisplaysTheTemplateNameIs(String templateName,
+			String orderName) {
+
+		pom.getTemplatesPage().searchTemplate(templateName);
+		WebElement tdFirstcell = pom.getCurrentOrderPage().getTdFirstcell();
+		String text = getText(tdFirstcell);
+		System.out.println(text);
+		assertEquals(tdFirstcell, orderName);
+
+	}
+
+	@Then("User verifies sorting Templates in both ascending and descending order for all columns Templates, Created date, Order Type and Total lines")
+	public void userVerifiesSortingTemplatesInBothAscendingAndDescendingOrderForAllColumnsTemplatesCreatedDateOrderTypeAndTotalLines() {
+		pom.getTemplatesPage().sortingTemplates();
+	}
+
+	@Then("User deletes the template name and verifies the success alert message {string}")
+	public void userDeletesTheTemplateNameAndVerifiesTheSuccessAlertMessage(String string) {
+		pom.getTemplatesPage().deleteTemplates();
+
+	}
+
+	@Then("User verifies pagination functionality on the Order Templates Web Page")
+	public void userVerifiesPaginationFunctionalityOnTheOrderTemplatesWebPage() throws InterruptedException {
+
+		pom.getTemplatesPage().pageNavigations();
+	}
+
+	@Then("User attempts to add an item without an item number and verifies the warning message {string}")
+	public void userAttemptsToAddAnItemWithoutAnItemNumberAndVerifiesTheWarningMessage(
+			String warningMessageItemCodeRequired) {
+
+		pom.getOrdersPage().clicksAdd();
+		WebElement warningMessageItemCode = pom.getOrdersPage().getWarningMessageItemCode();
+		assertEquals(warningMessageItemCode, warningMessageItemCodeRequired);
+	}
+
+	@Then("User adds an item {string} with a quantity of {string} and verifies the warning message {string}")
+	public void userAddsAnItemWithAQuantityOfAndVerifiesTheWarningMessage(String itemNum, String orderQty,
+			String WarningMessageMinQunatity) throws InterruptedException {
+		pom.getOrdersPage().addZeroQuantity(itemNum, orderQty);
+		WebElement warningMessageMinQty = pom.getOrdersPage().getWarningMessageMinQty();
+		assertEquals(warningMessageMinQty, WarningMessageMinQunatity);
+	}
+
+	@Then("User attempts to add C2 items {string} in Regular order and verifies the alert message {string}")
+	public void userAttemptsToAddC2ItemsInRegularOrderAndVerifiesTheAlertMessage(String itemNum, String c2Items) throws InterruptedException {
+
+		pom.getOrdersPage().RestrictionOrder(itemNum);
+		WebElement alertMessageC2Item = pom.getOrdersPage().getAlertMessageC2Item();
+		assertEquals(alertMessageC2Item, c2Items);
+	}
+
+	@Then("User attempts to add the same item {string} again and verifies the warning message {string}")
+	public void userAttemptsToAddTheSameItemAgainAndVerifiesTheWarningMessage(String itemNum, String ItemAlreadyAdded) throws InterruptedException {
+
+		pom.getOrdersPage().RestrictionOrder(itemNum);
+		WebElement warningMessageItemAlreadyAdded = pom.getOrdersPage().getWarningMessageItemAlreadyAdded();
+		assertEquals(warningMessageItemAlreadyAdded, ItemAlreadyAdded);
+	}
+
+	@Then("User should updates the order quantity to {string} and verifies the warning message {string}")
+	public void userShouldUpdatesTheOrderQuantityToAndVerifiesTheWarningMessage(String orderQty,
+			String WarningMessageMinQunatity) {
+		pom.getOrdersPage().verifyUpdateWithZeroQuantityInGrid(orderQty);
+		WebElement warningMessageMinQty = pom.getOrdersPage().getWarningMessageMinQty();
+		assertEquals(warningMessageMinQty, WarningMessageMinQunatity);
 	}
 
 }

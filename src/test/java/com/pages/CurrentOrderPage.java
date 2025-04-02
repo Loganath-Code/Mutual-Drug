@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 import java.time.Duration;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -28,6 +29,9 @@ public class CurrentOrderPage extends BaseClass {
 
 	@FindBy(xpath = "//h4[text()='Current Orders']")
 	private WebElement titleCurrentOrders;
+
+	@FindBy(xpath = "//button[@class='template-btn']")
+	private WebElement btnViewOrderTemplate;
 
 	@FindBy(xpath = "//button[text()='Create New']")
 	private WebElement btnCreateNew;
@@ -55,7 +59,7 @@ public class CurrentOrderPage extends BaseClass {
 
 	@FindBy(xpath = "(//div[@role='tab'])[2]")
 	private WebElement tabUseATemplate;
-	
+
 	@FindBy(xpath = "//mat-select[@name='chooseTemplate']")
 	private WebElement ddChooseTemplate;
 
@@ -64,6 +68,57 @@ public class CurrentOrderPage extends BaseClass {
 
 	@FindBy(xpath = "//label[normalize-space()='Regular Order']//span[@class='checkmark']")
 	private WebElement rdbtnRegularOrder;
+
+	@FindBy(xpath = "(//a[@href='/member/orders/current-orders'])[2]")
+	private WebElement bCrumbLinkCurrentOrder;
+
+	@FindBy(xpath = "//input[@placeholder='Search']")
+	private WebElement txtSearchOrders;
+
+	@FindBy(xpath = "(//button[@class='search'])[2]")
+	private WebElement iSearchOrders;
+
+	@FindBy(xpath = "(//i[@class='fa fa-trash'])[1]")
+	private WebElement iTrash;
+
+	@FindBy(xpath = "//button[@class='btn btn-primary modal-btn']")
+	private WebElement btnYes;
+
+	@FindBy(xpath = "//div[@aria-label='Order details deleted.']")
+	private WebElement alertMessageDeleteOrder;
+
+	@FindBy(xpath = "//mat-select[@aria-label='Items per page:']")
+	private WebElement ddItemsperPage;
+
+	@FindBy(xpath = "//span[text()=' 10 ']")
+	private WebElement ddTen;
+
+	@FindBy(xpath = "//span[text()=' 25 ']")
+	private WebElement ddTwentyFive;
+
+	@FindBy(xpath = "//span[text()=' 50 ']")
+	private WebElement ddFifty;
+
+	@FindBy(xpath = "//span[text()=' 100 ']")
+	private WebElement ddHundred;
+
+	@FindBy(xpath = "//button[@aria-label='Next page']")
+	private WebElement btnNextPage;
+
+	@FindBy(xpath = "//button[@aria-label='Last page']")
+	private WebElement btnLastPage;
+
+	@FindBy(xpath = "//button[@aria-label='First page']")
+	private WebElement btnFirstPage;
+
+	@FindBy(xpath = "//button[@aria-label='Previous page']")
+	private WebElement btnPreviousPage;
+
+	@FindBy(xpath = "//tbody//tr[1]//td[1]")
+	private WebElement tdFirstcell;
+
+	@FindBy(xpath = "(//span[@class='val'])[1]//parent::td")
+	private WebElement firstOrderName;
 
 	@FindBy(xpath = "//input[@name='itemSearch']")
 	private WebElement txtItemNum;
@@ -140,8 +195,15 @@ public class CurrentOrderPage extends BaseClass {
 	@FindBy(xpath = "//div[@aria-label='Order template saved.']")
 	private WebElement alertMessageTemplateSaved;
 
+	@FindBy(xpath = "//div[text()='Special characters not allowed']")
+	private WebElement errorMessageOrdernameSpeclChar;
+
 	public WebElement getTitleCurrentOrders() {
 		return titleCurrentOrders;
+	}
+
+	public WebElement getBtnViewOrderTemplate() {
+		return btnViewOrderTemplate;
 	}
 
 	public WebElement getBtnCreateNew() {
@@ -190,6 +252,74 @@ public class CurrentOrderPage extends BaseClass {
 
 	public WebElement getRdbtnRegularOrder() {
 		return rdbtnRegularOrder;
+	}
+
+	public WebElement getbCrumbLinkCurrentOrder() {
+		return bCrumbLinkCurrentOrder;
+	}
+
+	public WebElement getTxtSearchOrders() {
+		return txtSearchOrders;
+	}
+
+	public WebElement getiSearchOrders() {
+		return iSearchOrders;
+	}
+
+	public WebElement getiTrash() {
+		return iTrash;
+	}
+
+	public WebElement getBtnYes() {
+		return btnYes;
+	}
+
+	public WebElement getAlertMessageDeleteOrder() {
+		return alertMessageDeleteOrder;
+	}
+
+	public WebElement getDdItemsperPage() {
+		return ddItemsperPage;
+	}
+
+	public WebElement getDdTen() {
+		return ddTen;
+	}
+
+	public WebElement getDdTwentyFive() {
+		return ddTwentyFive;
+	}
+
+	public WebElement getDdFifty() {
+		return ddFifty;
+	}
+
+	public WebElement getDdHundred() {
+		return ddHundred;
+	}
+
+	public WebElement getBtnNextPage() {
+		return btnNextPage;
+	}
+
+	public WebElement getBtnLastPage() {
+		return btnLastPage;
+	}
+
+	public WebElement getBtnFirstPage() {
+		return btnFirstPage;
+	}
+
+	public WebElement getBtnPreviousPage() {
+		return btnPreviousPage;
+	}
+
+	public WebElement getTdFirstcell() {
+		return tdFirstcell;
+	}
+
+	public WebElement getFirstOrderName() {
+		return firstOrderName;
 	}
 
 	public WebElement getTxtItemNum() {
@@ -301,6 +431,42 @@ public class CurrentOrderPage extends BaseClass {
 		return alertMessageTemplateSaved;
 	}
 
+	public WebElement getErrorMessageOrdernameSpeclChar() {
+		return errorMessageOrdernameSpeclChar;
+	}
+
+	/**
+	 * @see Used to click button View Order Templates
+	 */
+	public void clicksViewOrderTemplates() {
+		clickElementUsingJavaScript(driver, getBtnViewOrderTemplate());
+
+	}
+
+	/**
+	 * @throws InterruptedException
+	 * @see Used to search Orders
+	 */
+	public void searchOrders(String orderName) throws InterruptedException {
+		elementVisibility(getbCrumbLinkCurrentOrder());
+		Thread.sleep(2000);
+		clickElementUsingJavaScript(driver, getbCrumbLinkCurrentOrder());
+		elementVisibility(getTxtSearchOrders());
+		Thread.sleep(2000);
+		insertValue(getTxtSearchOrders(), orderName);
+
+		clickElementUsingJavaScript(driver, getiSearchOrders());
+	}
+
+	/**
+	 * @see Used to delete order
+	 */
+	public void deleteOrder() {
+		elementVisibility(getiTrash());
+		clickElementUsingJavaScript(driver, getiTrash());
+		clickElementUsingJavaScript(driver, getBtnYes());
+	}
+
 	/**
 	 * @see Used to clicking radio button dynamically using label name
 	 * @param rdbtnName
@@ -405,18 +571,21 @@ public class CurrentOrderPage extends BaseClass {
 		clickElementUsingJavaScript(driver, btnOkAlertmessage);
 
 	}
+
 	public void clickSaveAsTemplateButton() {
-	click(getBtnSaveASTemplate());
+		click(getBtnSaveASTemplate());
 
 	}
+
 	public void selectTemplateOptionDropDown(WebDriver driver, WebElement dropdownElement, String optionText) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(dropdownElement));
 		click(dropdownElement);
 		WebElement option = wait.until(
-				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[text()='"+ optionText + " ']")));
+				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[text()='" + optionText + " ']")));
 		clickElementUsingJavaScript(driver, option);
 	}
+
 	public void selectTemplete() {
 		elementToBeClickable(getBtnCreateNew());
 		clickElementUsingJavaScript(driver, getBtnCreateNew());
@@ -424,4 +593,172 @@ public class CurrentOrderPage extends BaseClass {
 		selectTemplateOptionDropDown(driver, getDdChooseTemplate(), "sample test order New");
 
 	}
+
+	public void emptyFieldsOrderCreation() {
+		clickElementUsingJavaScript(driver, getBtnCreateNew());
+		elementVisibility(getTxtOrderName());
+		getTxtOrderName().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		getTxtOrderName().sendKeys(Keys.BACK_SPACE);
+		if (getBtnCreate().isEnabled() && getBtnCreate().isDisplayed()) {
+			clickElementUsingJavaScript(driver, getBtnCreate());
+		} else {
+			System.out.println("Button is either disabled or not visible");
+		}
+
+	}
+
+	public void insertOrderNameWithSpecialChar(String orderType) {
+		elementVisibility(getTxtOrderName());
+		insertValue(getTxtOrderName(), "!@#$%");
+		clickRadioButton(orderType);
+		clickElementUsingJavaScript(driver, getBtnCreate());
+	}
+
+	public void currentOrderNameWithSpace(String orderType) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement orderNameField = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderName()));
+		orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		orderNameField.sendKeys(Keys.BACK_SPACE);
+		orderNameField.sendKeys(Keys.SPACE);
+		clickRadioButton(orderType);
+		int attempt = 0;
+		while (attempt < 5) {
+			try {
+				clickElementUsingJavaScript(driver, getBtnCreate());
+
+				System.out.println("Clicked successfully on attempt " + (attempt + 1));
+				break; // Exit loop if successful
+			} catch (Exception e) {
+				attempt++;
+				System.out.println("Attempt " + attempt + " failed: " + e.getClass().getSimpleName() + ". Retrying...");
+
+			}
+		}
+
+		if (attempt == 5)
+			System.out.println("Failed after 10 attempts.");
+		click(getBtnCreate());
+
+	}
+
+	public void emptyFieldsUseATemplate() {
+		try {
+			clickElementUsingJavaScript(driver, getTabUseATemplate());
+			elementVisibility(getTxtOrderName());
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebElement orderNameField = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderName()));
+			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			orderNameField.sendKeys(Keys.BACK_SPACE);
+			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			orderNameField.sendKeys(Keys.BACK_SPACE);
+			clearTextField(orderNameField);
+			clickElementUsingJavaScript(driver, getBtnCreate());
+			clickElementUsingJavaScript(driver, getBtnCreate());
+		} catch (Exception e) {
+			// TODO: handle exception
+		}
+	}
+
+	/**
+	 * @see Used to Perform Pagination
+	 * @throws InterruptedException
+	 */
+	public void pageNavigations() throws InterruptedException {
+		Thread.sleep(3000);
+		scrollToElement(getDdItemsperPage());
+		clickElementUsingJavaScript(driver, getDdItemsperPage());
+		clickElementUsingJavaScript(driver, getDdTen());
+		Thread.sleep(3000);
+		scrollToElement(getBtnNextPage());
+		if (isButtonEnabled(getBtnNextPage())) {
+			clickElementUsingJavaScript(driver, getBtnNextPage());
+		} else {
+			System.out.println("Next Page button is disabled.");
+		}
+		if (isButtonEnabled(getBtnPreviousPage())) {
+			clickElementUsingJavaScript(driver, getBtnPreviousPage());
+		} else {
+			System.out.println("Previous Page button is disabled.");
+		}
+
+		if (isButtonEnabled(getBtnLastPage())) {
+			clickElementUsingJavaScript(driver, getBtnLastPage());
+		} else {
+			System.out.println("Last Page button is disabled.");
+		}
+		if (isButtonEnabled(getBtnFirstPage())) {
+			clickElementUsingJavaScript(driver, getBtnFirstPage());
+		} else {
+			System.out.println("First Page button is disabled.");
+		}
+
+	}
+
+	/**
+	 * @see Used to verify button is enabled or not
+	 * @param button
+	 * @return
+	 */
+	private boolean isButtonEnabled(WebElement button) {
+		try {
+			return button.isEnabled();
+		} catch (Exception e) {
+			System.out.println("Button not found: " + e.getMessage());
+			return false;
+		}
+	}
+
+	/**
+	 * @see Used to perform order name
+	 */
+
+	public void sortingOrders() {
+		String[] columnNames = { "OrderName", "Status", "Created Date", "Order Type", "Total lines", "Total pieces",
+				"Ext.Inv.Price" };
+
+		try {
+			for (int i = 0; i < columnNames.length; i++) {
+				WebElement columnHeader = driver.findElement(By.xpath("(//th[@role='columnheader'])[" + (i + 1) + "]"));
+				clickElementUsingJavaScript(driver, columnHeader);
+
+				WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+				wait.until(ExpectedConditions.attributeToBeNotEmpty(columnHeader, "aria-sort"));
+				String ariaSort = columnHeader.getAttribute("aria-sort");
+				System.out.println("Initial Sorting Order for '" + columnNames[i] + "': " + ariaSort);
+
+				if ("ascending".equals(ariaSort)) {
+					System.out.println("✅ Column '" + columnNames[i] + "' is initially sorted in ascending order.");
+
+					clickElementUsingJavaScript(driver, columnHeader);
+
+					wait.until(ExpectedConditions.attributeToBeNotEmpty(columnHeader, "aria-sort"));
+					ariaSort = columnHeader.getAttribute("aria-sort");
+					System.out.println("Sorting Order After Click for '" + columnNames[i] + "': " + ariaSort);
+					if ("descending".equals(ariaSort)) {
+						System.out.println("✅ Column '" + columnNames[i] + "' is now sorted in descending order.");
+					} else {
+						System.out.println("❌ Column '" + columnNames[i] + "' is NOT sorted in descending order.");
+					}
+				} else if ("descending".equals(ariaSort)) {
+					System.out.println("✅ Column '" + columnNames[i] + "' is initially sorted in descending order.");
+
+					clickElementUsingJavaScript(driver, columnHeader);
+					wait.until(ExpectedConditions.attributeToBeNotEmpty(columnHeader, "aria-sort"));
+					ariaSort = columnHeader.getAttribute("aria-sort");
+					System.out.println("Sorting Order After Click for '" + columnNames[i] + "': " + ariaSort);
+					if ("ascending".equals(ariaSort)) {
+						System.out.println("✅ Column '" + columnNames[i] + "' is now sorted in ascending order.");
+					} else {
+						System.out.println("❌ Column '" + columnNames[i] + "' is NOT sorted in ascending order.");
+					}
+				} else {
+					System.out.println("Sorting order could not be determined for column '" + columnNames[i] + "'.");
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 }
