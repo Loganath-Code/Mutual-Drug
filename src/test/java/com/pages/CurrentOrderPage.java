@@ -572,11 +572,20 @@ public class CurrentOrderPage extends BaseClass {
 
 	}
 
+	/**
+	 * @see Used to click Save as Template button
+	 */
 	public void clickSaveAsTemplateButton() {
 		click(getBtnSaveASTemplate());
 
 	}
 
+	/**
+	 * @see Used to select Template name in dropDown
+	 * @param driver
+	 * @param dropdownElement
+	 * @param optionText
+	 */
 	public void selectTemplateOptionDropDown(WebDriver driver, WebElement dropdownElement, String optionText) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(dropdownElement));
@@ -586,6 +595,9 @@ public class CurrentOrderPage extends BaseClass {
 		clickElementUsingJavaScript(driver, option);
 	}
 
+	/**
+	 * @see Used to select Template name in dropDown
+	 */
 	public void selectTemplete() {
 		elementToBeClickable(getBtnCreateNew());
 		clickElementUsingJavaScript(driver, getBtnCreateNew());
@@ -594,6 +606,9 @@ public class CurrentOrderPage extends BaseClass {
 
 	}
 
+	/**
+	 * @see used to create empty field order creations
+	 */
 	public void emptyFieldsOrderCreation() {
 		clickElementUsingJavaScript(driver, getBtnCreateNew());
 		elementVisibility(getTxtOrderName());
@@ -607,6 +622,10 @@ public class CurrentOrderPage extends BaseClass {
 
 	}
 
+	/**
+	 * @see Used to Create OrderName with special characters
+	 * @param orderType
+	 */
 	public void insertOrderNameWithSpecialChar(String orderType) {
 		elementVisibility(getTxtOrderName());
 		insertValue(getTxtOrderName(), "!@#$%");
@@ -614,6 +633,10 @@ public class CurrentOrderPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getBtnCreate());
 	}
 
+	/**
+	 * @see Used to create order name with space
+	 * @param orderType
+	 */
 	public void currentOrderNameWithSpace(String orderType) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement orderNameField = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderName()));
@@ -627,7 +650,7 @@ public class CurrentOrderPage extends BaseClass {
 				clickElementUsingJavaScript(driver, getBtnCreate());
 
 				System.out.println("Clicked successfully on attempt " + (attempt + 1));
-				break; // Exit loop if successful
+				break;
 			} catch (Exception e) {
 				attempt++;
 				System.out.println("Attempt " + attempt + " failed: " + e.getClass().getSimpleName() + ". Retrying...");
@@ -641,6 +664,9 @@ public class CurrentOrderPage extends BaseClass {
 
 	}
 
+	/**
+	 * @see Used to create Empty Fields Use A template
+	 */
 	public void emptyFieldsUseATemplate() {
 		try {
 			clickElementUsingJavaScript(driver, getTabUseATemplate());
@@ -710,7 +736,7 @@ public class CurrentOrderPage extends BaseClass {
 	}
 
 	/**
-	 * @see Used to perform order name
+	 * @see Used to perform sorting in order name
 	 */
 
 	public void sortingOrders() {

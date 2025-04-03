@@ -1,17 +1,17 @@
 @Returns
-Feature: Verifying Mutual Drug Create Returns orders
+Feature: Verifying Mutual Drug Create Returns 
 
-  @ReturnName
+  @ReturnsName
   Scenario Outline: Verifying Mutual Drug Returns Name
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new return order
+    And User clicks on Create New to create a new returns 
       | returnName | returnType |
       |          1 | Regular    |
     And User removes the Returns name and navigates back to the Returns page
-    And User searches for a return name " 1" and verifies that the grid displays the return name is "1"
+    And User searches for a returns name " 1" and verifies that the grid displays the returns name is "1"
     And User verifies sorting order in both ascending and descending order for all columns Return Name, Status, Submitted Date, Submitted By, Type, Total Lines, and Total Pieces
     Then User deletes a return order from the returns list and verifies the "Return details deleted." alert message
     And User verifies pagination functionality on the Returns page
@@ -21,12 +21,12 @@ Feature: Verifying Mutual Drug Create Returns orders
       | WEB POS TEST STORE (PREMIER) - 009498 |
 
   @RegularReturns
-  Scenario Outline: Verifying Mutual Drug to Create Returns orders - Regular order
+  Scenario Outline: Verifying Mutual Drug to Create Returns - Regular Returns
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new return order
+    And User clicks on Create New to create a new returns 
       | returnName                  | returnType |
       | sample test -Regular Return | Regular    |
     And User adds return items by searching products:
@@ -74,7 +74,7 @@ Feature: Verifying Mutual Drug Create Returns orders
       | WEB POS TEST STORE (PREMIER) - 009498 | test                | sample | Edwardian Script ITC |
 
   @C2Returns
-  Scenario Outline: Verifying Mutual Drug to Create Returns orders - C2 Returns
+  Scenario Outline: Verifying Mutual Drug to Create Returns - C2 Returns
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
@@ -95,6 +95,7 @@ Feature: Verifying Mutual Drug Create Returns orders
       | 12-02-2025         |         12345 |       2 | CII – 6 Months or Greater dating remain | Return item updated. |
     Then User should sort by Items and Product Description and delete an item from the return list, verifying the alert message  "Return item deleted."
     And User clicks on Sign & Submit and submits with "<authorisedSignature>", "<title>", and "<signatureFont>" and verifying alert success message as "Your C2 Return document has successfully been emailed to Mutual Drug.  Please contact customer service if you have additional questions."
+    And User should Cliks Print Return then view the PDF document
 
     @C2Returns
     Examples: 

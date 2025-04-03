@@ -1055,7 +1055,7 @@ public class ReturnsPage extends BaseClass {
 	 */
 	public void pageNavigations() throws InterruptedException {
 		Thread.sleep(3000);
-		scrollToElement(getDdItemsperPage());
+		scrollToElement(getDdItemsperPage()); 
 		clickElementUsingJavaScript(driver, getDdItemsperPage());
 		clickElementUsingJavaScript(driver, getDdTen());
 		Thread.sleep(3000);
@@ -1492,4 +1492,8 @@ public class ReturnsPage extends BaseClass {
 		}
 	}
 
+	@FindBy(id  = "pageSelector")
+	private WebElement txtPageSelector;
+	
+	@FindBy(xpath = "" )
 }

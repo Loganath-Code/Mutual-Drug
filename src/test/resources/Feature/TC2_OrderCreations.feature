@@ -52,7 +52,7 @@ Feature: Verifying Mutual Drug current orders- Create New order
     @c2order
     Examples: 
       | selectYourCustomerAccount             | orderName                | orderType | storePassword   | c2_OrderSuccessMessage                                                                     |
-      | WALKERS DRUG STORE (PREMIER) - 124685 | sample test C2 order New | C2 Order  | Datacaliper@123 | Thank you, your CSOS order (sample test orderNew) was successfully signed and transmitted. |
+      | WEB POS TEST STORE (PREMIER) - 009498 | sample test C2 order New | C2 Order  | Datacaliper@123 | Thank you, your CSOS order (sample test orderNew) was successfully signed and transmitted. |
 
   @ProductCatalog
   Scenario Outline: Verifying Mutual Drug to Create new order - Products Catalog webpage
@@ -224,3 +224,23 @@ Feature: Verifying Mutual Drug current orders- Create New order
     Examples: 
       | selectYourCustomerAccount             | orderName             | orderType     | autoSubmit | orderReferance |
       | WALKERS DRUG STORE (PREMIER) - 124685 | sample test order New | Regular Order | None       | test           |
+
+  @C2Negative
+  Scenario Outline: Verifying Mutual Drug to Create new order in Current Order webpage - Regular order negative Scenarios
+    Given User is on the Mutual Drug Login
+    When User perform login with Username, Password
+    Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
+    Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
+    When User clicks Create New, Create New C2 Order with "<orderName>" , "<orderType>"
+    Then User attempts to add an item without an item number and verifies the warning message "Item code is required."
+    Then User adds an item "112474" with a quantity of "0" and verifies the warning message "Min allowed order qty is 1."
+    And User Adds the items/products using item number
+      | itemsNum | specialCode | orderQty | successMessage               |
+      |   046425 |             |        1 | Item #046425 added to order. |
+    Then User attempts to add the same item "046425" again and verifies the warning message "Item already added to order."
+    Then User attempts to add Regular items "485136" in c2 order and verifies the alert message "Cannot add non C2 item to C2 order."
+    Then User should updates the order quantity to "0" and verifies the warning message "Min allowed order qty is 1."
+
+    Examples: 
+      | selectYourCustomerAccount             | orderName                | orderType | storePassword   | c2_OrderSuccessMessage                                                                     |
+      | WEB POS TEST STORE (PREMIER) - 009498 | sample test C2 order New | C2 Order  | Datacaliper@123 | Thank you, your CSOS order (sample test orderNew) was successfully signed and transmitted. |

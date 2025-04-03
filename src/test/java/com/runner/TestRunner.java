@@ -14,12 +14,12 @@ import io.cucumber.junit.CucumberOptions;
 import io.cucumber.junit.CucumberOptions.SnippetType;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "C:\\Users\\nloga\\eclipse-workspace\\MutualDrug\\src\\test\\resources\\Feature", glue = ("com.stepdefinition"), tags = "@c2order", snippets = SnippetType.CAMELCASE, dryRun = false, publish = true, monochrome = false, plugin = {
+@CucumberOptions(features = "C:\\Users\\nloga\\eclipse-workspace\\MutualDrug\\src\\test\\resources\\Feature", glue = ("com.stepdefinition"), tags = "@ReturnsName", snippets = SnippetType.CAMELCASE, dryRun = true, publish = true, monochrome = false, plugin = {
 		"pretty", "json:target\\sample.json" }, stepNotifications = true)
 public class TestRunner extends BaseClass {
 	@AfterClass
 	public static void afterClass() throws FileNotFoundException, IOException {
-		Reporting.generateJVMReport(getProjectPath() + getPropertyFileValue("jsonPath"));
+		Reporting.generateJVMReport(getProjectPath() + getPropertyFileValue("jsonPath")); 
 	}
 
 }

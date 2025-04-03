@@ -179,6 +179,12 @@ public class OrdersPage extends BaseClass {
 	@FindBy(xpath = "//div[@aria-label='Min allowed order qty is 1.']")
 	private WebElement warningMessageMinQty;
 
+	@FindBy(xpath = "//div[@aria-label='Cannot add non C2 item to C2 order.']")
+	private WebElement alertMessageNonC2Items;
+
+	@FindBy(xpath = "(//span[@class='val netweight'])[1]")
+	private WebElement tdNetPrice;
+
 	public WebElement getTxtOrderName() {
 		return txtOrderName;
 	}
@@ -399,6 +405,14 @@ public class OrdersPage extends BaseClass {
 		return warningMessageMinQty;
 	}
 
+	public WebElement getAlertMessageNonC2Items() {
+		return alertMessageNonC2Items;
+	}
+
+	public WebElement getTdNetPrice() {
+		return tdNetPrice;
+	}
+
 	/**
 	 * @see Used to update Order Name
 	 * @param updatedOrderName
@@ -441,6 +455,9 @@ public class OrdersPage extends BaseClass {
 
 	}
 
+	/**
+	 * @see Used to perform ascending and descending order in items
+	 */
 	public void itemsSorting() {
 		clickElementUsingJavaScript(driver, getSortingItems());
 		WebElement sortedColumn = driver.findElement(By.xpath("(//th[@role='columnheader'])[1]"));
@@ -512,6 +529,7 @@ public class OrdersPage extends BaseClass {
 
 	/**
 	 * @see Used to perform Ascending and Descending order in Product Discriptions
+	 * 
 	 */
 	public void productDiscriptionsSorting() {
 		clickElementUsingJavaScript(driver, getSortingProductsDiscriptions());
@@ -611,6 +629,12 @@ public class OrdersPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getBtnAdd());
 	}
 
+	/**
+	 * @see Used to set quantity as zero
+	 * @param itemNum
+	 * @param orderQty
+	 * @throws InterruptedException
+	 */
 	public void addZeroQuantity(String itemNum, String orderQty) throws InterruptedException {
 		elementVisibility(getTxtItemSearch());
 		setTextUsingJS(getTxtItemSearch(), itemNum);
@@ -618,6 +642,7 @@ public class OrdersPage extends BaseClass {
 		elementVisibility(getTxtQty());
 		getTxtQty().sendKeys(Keys.chord(Keys.CONTROL, "a"));
 		getTxtQty().sendKeys(Keys.BACK_SPACE);
+		Thread.sleep(1000);
 		String qty = "00";
 		insertValue(getTxtQty(), qty);
 		System.out.println("Updated Qty: " + getTxtQty().getAttribute("value"));
@@ -625,6 +650,11 @@ public class OrdersPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getBtnAdd());
 	}
 
+	/**
+	 * @see Used to insert Restriction items
+	 * @param itemNum
+	 * @throws InterruptedException
+	 */
 	public void RestrictionOrder(String itemNum) throws InterruptedException {
 		Thread.sleep(2500);
 		elementVisibility(getTxtItemSearch());
@@ -642,14 +672,21 @@ public class OrdersPage extends BaseClass {
 
 	}
 
+	/**
+	 * @see Used to verify to set quantity as zero in grid
+	 * @param orderQty
+	 */
 	public void verifyUpdateWithZeroQuantityInGrid(String orderQty) {
 		elementVisibility(getTxtQtyinGrid());
 		clearTextUsingjs(getTxtQtyinGrid());
 		getTxtQtyinGrid().sendKeys(Keys.chord(Keys.CONTROL, "a"));
 		getTxtQtyinGrid().sendKeys(Keys.BACK_SPACE);
-		String qty = "000";
+		String qty = "00";
 		insertValue(getTxtQtyinGrid(), qty);
-		selectByVisibleText(getDdSpecialCodeinGrid(), "Shelf Label Only");
+		if (getDdSpecialCodeinGrid().isDisplayed()) {
+			selectByVisibleText(getDdSpecialCodeinGrid(), "Shelf Label Only");
+		}
+		clickElementUsingJavaScript(driver, getTdNetPrice());
 	}
 
 }

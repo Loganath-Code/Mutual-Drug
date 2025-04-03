@@ -472,5 +472,14 @@ public class TC4_ReturnsStep extends BaseClass {
 		pom.getReturnsPage().pageNavigations();
 	}
 
+	@Then("User should Cliks Print Return then view the PDF document")
+	public void userShouldCliksPrintReturnThenViewThePDFDocument() throws InterruptedException {
+	    
+		WebElement btnPrintReturn = pom.getReturnsPage().getBtnPrintReturn();
+		click(btnPrintReturn);
+		Thread.sleep(5000);
+		getWindowHandle();
+		
+	}
 
 }
