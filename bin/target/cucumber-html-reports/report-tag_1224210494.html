@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/cucumber.css" type="text/css"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="shortcut icon" href="images/favicon.png"/>
+
+<script>
+$(document).ready(function() {
+    // this will tell tablesorter to try looking for the data-value attribute
+    // if present, it'll sort by that instead
+    // otherwise, it'll sort by the text content of the table cell
+    $("#tablesorter").tablesorter({
+        textAttribute: 'data-value',
+        // ignores the first row of the header, the 'scenario', 'steps', since
+        // sorting those doesn't make sense
+        selectorHeaders: '> thead tr:not(.dont-sort) th',
+        // use a stable sort
+        sortStable: true
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<title>Cucumber Reports  - Tag: @c2order</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <p class="navbar-text navbar-left">Cucumber Report</p>
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation" ><a href="overview-features.html">Features</a></li>
+        <li role="presentation" ><a href="overview-tags.html">Tags</a></li>
+        <li role="presentation" ><a href="overview-steps.html">Steps</a></li>
+        <li role="presentation" ><a href="overview-failures.html">Failures</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+  <div class="col-md-5 col-md-offset-1">
+
+<table class="table table-bordered" id="build-info">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info">
+      <td>Mutual Drug</td>
+      <td>09 May 2025, 18:16</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  <div class="col-md-3 col-md-offset-2">
+  </div>
+</div>
+
+
+<div id="report-lead" class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>Tag Report</h2>
+  </div>
+</div>
+
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <table class="stats-table">
+
+
+<thead>
+  <tr class="header dont-sort">
+      <th></th>
+    <th colspan="6">Steps</th>
+    <th colspan="3">Scenarios</th>
+    <th colspan="2">Features</th>
+  </tr>
+  <tr>
+    <th>Tag</th>
+    <th class="passed">Passed</th>
+    <th class="failed">Failed</th>
+    <th class="skipped">Skipped</th>
+    <th class="pending">Pending</th>
+    <th class="undefined">Undefined</th>
+    <th class="total">Total</th>
+
+    <th class="passed">Passed</th>
+    <th class="failed">Failed</th>
+    <th class="total">Total</th>
+
+    <th>Duration</th>
+    <th>Status</th>
+  </tr>
+</thead>
+
+
+        <tbody>
+        <tr>
+          <td class="tagname">@c2order</td>
+          <td      class="passed"    >24</td>
+          <td >0</td>
+          <td >0</td>
+          <td >0</td>
+          <td >0</td>
+          <td class="total">24</td>
+
+          <td  class="passed"    >1</td>
+          <td >0</td>
+          <td class="total">1</td>
+
+          <td class="duration" data-value="549185713200">9:9.185</td>
+          <td class="passed">Passed</td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1 col-md-offset-10">
+      <i class="fa fa-chevron-circle-down fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('show')"></i>
+      <i class="fa fa-chevron-circle-up fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('hide')"></i>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="elements">
+
+
+<div class="element">
+    <div class="indention">
+      <b>Feature:</b>
+      <a href="report-feature_2606419328.html">Verifying Mutual Drug - Create New orders</a>
+    </div>
+
+
+<div class="tags indention">
+    <b>Tags:</b>
+       <a href="report-tag_514821400.html">@Current</a>
+       <a href="report-tag_1224210494.html">@c2order</a>
+</div>
+
+
+  <span class="lead-duration duration">9:9.185</span>
+
+
+  <span data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#element-1">
+
+<div class="brief passed">
+  <span class="keyword indention">Scenario Outline</span>
+  <span class="name">Verifying Mutual Drug to Create new order in Current Orders webpage - C2 orders creation</span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+  </span>
+  <div class="description indention"></div>
+
+  <div id="element-1" class="collapse collapsable-details ">
+
+
+  <div class="inner-level hooks-element-before">
+    <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#before-2">
+
+<div class="brief passed">
+  <span class="keyword indention">Hooks</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+    </div>
+
+    <div id="before-2" class="inner-level collapse collapsable-details ">
+        <div class="hook">
+          <div class="brief passed">
+            <span class="keyword indention">Before</span>
+              <span class="location name">com.stepdefinition.Hook.beforeScenario(io.cucumber.java.Scenario)</span>
+
+  <span class="lead-duration duration">12.201</span>
+
+          </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+  </div>
+
+
+
+<div class="steps inner-level">
+  <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#steps-3">
+
+<div class="brief passed">
+  <span class="keyword indention">Steps</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+  </div>
+
+  <div id="steps-3" class="inner-level collapse collapsable-details ">
+      <div class="step">
+
+
+<div class="brief step-name-Given passed">
+  <span class="keyword indention">Given</span>
+  <span class="name">User is on the Mutual Drug Login</span>
+
+  <span class="lead-duration duration">0.036</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User perform login with Username, Password</span>
+
+  <span class="lead-duration duration">1.314</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should verify after login <span class="argument">&quot;WEB POS TEST STORE (PREMIER) - 009498&quot;</span> and success message as <span class="argument">&quot;Member Access Portal&quot;</span></span>
+
+  <span class="lead-duration duration">11.821</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User navigates to Orders, selects Current Orders and verifies that the page is <span class="argument">&quot;Current Orders&quot;</span></span>
+
+  <span class="lead-duration duration">3.929</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User clicks Create New, Create New C2 Orders with <span class="argument">&quot;C2 order Test&quot;</span> , <span class="argument">&quot;C2 Order&quot;</span></span>
+
+  <span class="lead-duration duration">0.989</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds the items/products using item number</span>
+
+  <span class="lead-duration duration">34.754</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>itemsNum</td>
+                  <td>orderQty</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>046425</td>
+                  <td>1</td>
+                  <td>Item #046425 added to order.</td>
+              </tr>
+              <tr>
+                  <td>118182</td>
+                  <td>1</td>
+                  <td>Item #118182 added to order.</td>
+              </tr>
+              <tr>
+                  <td>788596</td>
+                  <td>1</td>
+                  <td>Item #788596 added to order.</td>
+              </tr>
+              <tr>
+                  <td>245712</td>
+                  <td>1</td>
+                  <td>Item #245712 added to order.</td>
+              </tr>
+              <tr>
+                  <td>017863</td>
+                  <td>1</td>
+                  <td>Item #017863 added to order.</td>
+              </tr>
+              <tr>
+                  <td>744367</td>
+                  <td>1</td>
+                  <td>Item #744367 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds products Using NDC, Product Description then add Quantity to clicks Add To Order</span>
+
+  <span class="lead-duration duration">28.054</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>NDC_ProductDescription</td>
+                  <td>addQuantity</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>54092038701</td>
+                  <td>2</td>
+                  <td>Item #272013 added to order.</td>
+              </tr>
+              <tr>
+                  <td>42858080301</td>
+                  <td>2</td>
+                  <td>Item #017897 added to order.</td>
+              </tr>
+              <tr>
+                  <td>373308</td>
+                  <td>2</td>
+                  <td>Item #373308 added to order.</td>
+              </tr>
+              <tr>
+                  <td>ADDERALL XR CAP 15 MG 100</td>
+                  <td>2</td>
+                  <td>Item #313353 added to order.</td>
+              </tr>
+              <tr>
+                  <td>OXYCODONE HCL TAB 15 MG 100 MALL</td>
+                  <td>2</td>
+                  <td>Item #591438 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds products using UPC then add Quantity to clicks Add To order:</span>
+
+  <span class="lead-duration duration">12.190</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>UPC</td>
+                  <td>addQuantity</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>33172295001</td>
+                  <td>2</td>
+                  <td>Item #379339 added to order.</td>
+              </tr>
+              <tr>
+                  <td>32451011010</td>
+                  <td>2</td>
+                  <td>Item #226050 added to order.</td>
+              </tr>
+              <tr>
+                  <td>34359889701</td>
+                  <td>2</td>
+                  <td>Item #375964 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds products using GTIN then add Quantity to clicks Add To order:</span>
+
+  <span class="lead-duration duration">12.632</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>GTIN</td>
+                  <td>addQuantity</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>00370165025300</td>
+                  <td>2</td>
+                  <td>Item #215095 added to order.</td>
+              </tr>
+              <tr>
+                  <td>00364850515016</td>
+                  <td>2</td>
+                  <td>Item #466359 added to order.</td>
+              </tr>
+              <tr>
+                  <td>00364850511018</td>
+                  <td>2</td>
+                  <td>Item #466235 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should updates already added item:</span>
+
+  <span class="lead-duration duration">37.305</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>itemsNum</td>
+                  <td>orderQty</td>
+                  <td>updateMessage</td>
+              </tr>
+              <tr>
+                  <td>215095</td>
+                  <td>5</td>
+                  <td>Item #215095 updated from order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should Updates already added items Using Add Products, verifies the message <span class="argument">&quot;ITEM ALREADY EXIST&quot;</span>:</span>
+
+  <span class="lead-duration duration">5:38.386</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>updateItems</td>
+                  <td>warningMessage</td>
+                  <td>updateQty</td>
+                  <td>updateMessage</td>
+              </tr>
+              <tr>
+                  <td>788596</td>
+                  <td>Item #788596 already added to order.</td>
+                  <td>5</td>
+                  <td>Item #788596 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>54092038701</td>
+                  <td>Item #272013 already added to order.</td>
+                  <td>5</td>
+                  <td>Item #272013 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>34285880301</td>
+                  <td>Item #017897 already added to order.</td>
+                  <td>5</td>
+                  <td>Item #017897 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>00324510110104</td>
+                  <td>Item #226050 already added to order.</td>
+                  <td>5</td>
+                  <td>Item #226050 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>AMPHETAMINE SALTS ER CAP 10 MG 100 ELITE</td>
+                  <td>Item #466235 already added to order.</td>
+                  <td>5</td>
+                  <td>Item #466235 updated from order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User updates the orders name to <span class="argument">&quot;C2 order Automation Test&quot;</span> and verifies the alert message <span class="argument">&quot;Order name updated.&quot;</span></span>
+
+  <span class="lead-duration duration">9.134</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should select Show Invalid Items First option</span>
+
+  <span class="lead-duration duration">0.126</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should verify that selecting the header checkbox selects all row checkboxes</span>
+
+  <span class="lead-duration duration">10.283</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User verifies sorting order in both ascending and descending order for all columns: items, Product Descriptions, Categories, Whs. Qty, Net Price, Ext. Net Price, Inv. Price, Ext. Inv Price, and Added</span>
+
+  <span class="lead-duration duration">8.842</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should updates the item quantity to <span class="argument">&quot;5&quot;</span> in the grid, then verifies the success alert message <span class="argument">&quot;Success!&quot;</span></span>
+
+  <span class="lead-duration duration">0.448</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should selects the item in list and clicks Delete Selected then verifies the success message <span class="argument">&quot;Items deleted from order.&quot;</span></span>
+
+  <span class="lead-duration duration">2.068</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User deletes an item from the list and confirms the <span class="argument">&quot;Success!&quot;</span> alert message appears</span>
+
+  <span class="lead-duration duration">0.257</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User verifies pagination functionality on the Orders Web Page</span>
+
+  <span class="lead-duration duration">6.694</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should save the template and confirm the success alert message <span class="argument">&quot;Order template saved.&quot;</span></span>
+
+  <span class="lead-duration duration">2.098</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User clicks on <span class="argument">&quot;Print Order&quot;</span> to view the order details.</span>
+
+  <span class="lead-duration duration">0.002</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User clicks <span class="argument">&quot;Sign&amp;Submit&quot;</span> to submit the orders</span>
+
+  <span class="lead-duration duration">0.111</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User enters store password <span class="argument">&quot;Datacaliper@123&quot;</span> and clicks Sign</span>
+
+  <span class="lead-duration duration">16.364</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User verifies the orders submission with alert message <span class="argument">&quot;Thank you, your CSOS order (sample test orderNew) was successfully signed and transmitted.&quot;</span></span>
+
+  <span class="lead-duration duration">11.338</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+  </div>
+</div>
+
+
+
+
+  <div class="inner-level hooks-element-after">
+    <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#after-4">
+
+<div class="brief passed">
+  <span class="keyword indention">Hooks</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+    </div>
+
+    <div id="after-4" class="inner-level collapse collapsable-details ">
+        <div class="hook">
+          <div class="brief passed">
+            <span class="keyword indention">After</span>
+              <span class="location name">com.stepdefinition.Hook.afterScenario(io.cucumber.java.Scenario)</span>
+
+  <span class="lead-duration duration">2.250</span>
+
+          </div>
+
+
+
+
+
+
+  <div class="embeddings inner-level">
+  <div class="embedding indention">
+    <div data-toggle="collapse" data-target="#embedding-5" class="collapsable-control">
+      <a>Every Scenario</a>
+      <a href="embeddings/embedding_-1835140239.png" download target="_blank">
+        <span class="download-button glyphicon glyphicon-download-alt"></span>
+      </a>
+    </div>
+    <div id="embedding-5" class="collapse collapsable-details ">
+      <div class="embedding-content">
+        <img src="embeddings/embedding_-1835140239.png">
+      </div>
+    </div>
+  </div>
+  </div>
+
+        </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1 col-md-offset-10">
+      <i class="fa fa-chevron-circle-down fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('show')"></i>
+      <i class="fa fa-chevron-circle-up fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('hide')"></i>
+    </div>
+  </div>
+</div>
+
+<br/>
+
+<nav class="navbar navbar-default" id="footer">
+  <div class="container-fluid">
+    <p class="navbar-text navbar-right">
+        <small>generate Cucumber HTML reports via:&nbsp;</small>
+        <a class="navbar-link" href="https://github.com/jenkinsci/cucumber-reports-plugin">Jenkins Plugin</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-reporting">Standalone</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-sandwich">Sandwich</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/maven-cucumber-reporting">Maven</a>
+        &nbsp;&nbsp;
+    </p>
+  </div>
+</nav>
+
+</body>
+</html>

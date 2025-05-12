@@ -1,0 +1,1014 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/cucumber.css" type="text/css"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="shortcut icon" href="images/favicon.png"/>
+
+<script>
+$(document).ready(function() {
+    // this will tell tablesorter to try looking for the data-value attribute
+    // if present, it'll sort by that instead
+    // otherwise, it'll sort by the text content of the table cell
+    $("#tablesorter").tablesorter({
+        textAttribute: 'data-value',
+        // ignores the first row of the header, the 'scenario', 'steps', since
+        // sorting those doesn't make sense
+        selectorHeaders: '> thead tr:not(.dont-sort) th',
+        // use a stable sort
+        sortStable: true
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<title>Cucumber Reports  - Tag: @C2Negative</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <p class="navbar-text navbar-left">Cucumber Report</p>
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation" ><a href="overview-features.html">Features</a></li>
+        <li role="presentation" ><a href="overview-tags.html">Tags</a></li>
+        <li role="presentation" ><a href="overview-steps.html">Steps</a></li>
+        <li role="presentation" ><a href="overview-failures.html">Failures</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+  <div class="col-md-5 col-md-offset-1">
+
+<table class="table table-bordered" id="build-info">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info">
+      <td>Mutual Drug</td>
+      <td>09 May 2025, 18:29</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  <div class="col-md-3 col-md-offset-2">
+  </div>
+</div>
+
+
+<div id="report-lead" class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>Tag Report</h2>
+  </div>
+</div>
+
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <table class="stats-table">
+
+
+<thead>
+  <tr class="header dont-sort">
+      <th></th>
+    <th colspan="6">Steps</th>
+    <th colspan="3">Scenarios</th>
+    <th colspan="2">Features</th>
+  </tr>
+  <tr>
+    <th>Tag</th>
+    <th class="passed">Passed</th>
+    <th class="failed">Failed</th>
+    <th class="skipped">Skipped</th>
+    <th class="pending">Pending</th>
+    <th class="undefined">Undefined</th>
+    <th class="total">Total</th>
+
+    <th class="passed">Passed</th>
+    <th class="failed">Failed</th>
+    <th class="total">Total</th>
+
+    <th>Duration</th>
+    <th>Status</th>
+  </tr>
+</thead>
+
+
+        <tbody>
+        <tr>
+          <td class="tagname">@C2Negative</td>
+          <td      class="passed"    >20</td>
+          <td >0</td>
+          <td >0</td>
+          <td >0</td>
+          <td >0</td>
+          <td class="total">20</td>
+
+          <td  class="passed"    >1</td>
+          <td >0</td>
+          <td class="total">1</td>
+
+          <td class="duration" data-value="172008546300">2:52.008</td>
+          <td class="passed">Passed</td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1 col-md-offset-10">
+      <i class="fa fa-chevron-circle-down fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('show')"></i>
+      <i class="fa fa-chevron-circle-up fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('hide')"></i>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="elements">
+
+
+<div class="element">
+    <div class="indention">
+      <b>Feature:</b>
+      <a href="report-feature_2606419328.html">Verifying Mutual Drug - Create New orders</a>
+    </div>
+
+
+<div class="tags indention">
+    <b>Tags:</b>
+       <a href="report-tag_514821400.html">@Current</a>
+       <a href="report-tag_3632556515.html">@C2Negative</a>
+</div>
+
+
+  <span class="lead-duration duration">2:52.008</span>
+
+
+  <span data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#element-1">
+
+<div class="brief passed">
+  <span class="keyword indention">Scenario Outline</span>
+  <span class="name">Verifying Mutual Drug C2 order negative Scenarios</span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+  </span>
+  <div class="description indention"></div>
+
+  <div id="element-1" class="collapse collapsable-details ">
+
+
+  <div class="inner-level hooks-element-before">
+    <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#before-2">
+
+<div class="brief passed">
+  <span class="keyword indention">Hooks</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+    </div>
+
+    <div id="before-2" class="inner-level collapse collapsable-details ">
+        <div class="hook">
+          <div class="brief passed">
+            <span class="keyword indention">Before</span>
+              <span class="location name">com.stepdefinition.Hook.beforeScenario(io.cucumber.java.Scenario)</span>
+
+  <span class="lead-duration duration">12.577</span>
+
+          </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+  </div>
+
+
+
+<div class="steps inner-level">
+  <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#steps-3">
+
+<div class="brief passed">
+  <span class="keyword indention">Steps</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+  </div>
+
+  <div id="steps-3" class="inner-level collapse collapsable-details ">
+      <div class="step">
+
+
+<div class="brief step-name-Given passed">
+  <span class="keyword indention">Given</span>
+  <span class="name">User is on the Mutual Drug Login</span>
+
+  <span class="lead-duration duration">0.020</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User perform login with Username, Password</span>
+
+  <span class="lead-duration duration">0.871</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should verify after login <span class="argument">&quot;WEB POS TEST STORE (PREMIER) - 009498&quot;</span> and success message as <span class="argument">&quot;Member Access Portal&quot;</span></span>
+
+  <span class="lead-duration duration">11.907</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User navigates to Orders, selects Current Orders and verifies that the page is <span class="argument">&quot;Current Orders&quot;</span></span>
+
+  <span class="lead-duration duration">7.857</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User clicks Create New, Create New C2 Orders with <span class="argument">&quot;sample test C2 order New&quot;</span> , <span class="argument">&quot;C2 Order&quot;</span></span>
+
+  <span class="lead-duration duration">0.885</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to Sign&amp;Submit the order without selecting any items and verifies the warning message <span class="argument">&quot;Please select one or more item(s).&quot;</span></span>
+
+  <span class="lead-duration duration">3.443</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User removes the Order Name and verifies the error message <span class="argument">&quot;Order Name is required&quot;</span>.</span>
+
+  <span class="lead-duration duration">3.352</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User attempts to Updates an Order Name with <span class="argument">&quot;ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz1234567890&quot;</span> exceeding <span class="argument">60</span> characters  verifies the error message <span class="argument">&quot;Order Name must be less than 60 characters&quot;</span></span>
+
+  <span class="lead-duration duration">0.776</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to updates an order Name with special characters <span class="argument">&quot;$pec!@*&quot;</span> then see the error message <span class="argument">&quot;Special characters not allowed&quot;</span></span>
+
+  <span class="lead-duration duration">0.582</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to add an item without an item number and verifies the warning message <span class="argument">&quot;Item code is required.&quot;</span></span>
+
+  <span class="lead-duration duration">0.135</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User adds an item <span class="argument">&quot;112474&quot;</span> with a quantity of <span class="argument">&quot;0&quot;</span> and verifies the warning message <span class="argument">&quot;Min allowed order qty is 1.&quot;</span></span>
+
+  <span class="lead-duration duration">4.085</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to add discontinued, and inactive items, then see the warning message <span class="argument">&quot;Item is not found or unavailable for purchase.&quot;</span> for each item:</span>
+
+  <span class="lead-duration duration">38.342</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>items</td>
+              </tr>
+              <tr>
+                  <td>326843</td>
+              </tr>
+              <tr>
+                  <td>355818</td>
+              </tr>
+              <tr>
+                  <td>350967</td>
+              </tr>
+              <tr>
+                  <td>017939</td>
+              </tr>
+              <tr>
+                  <td>247585</td>
+              </tr>
+              <tr>
+                  <td>011460</td>
+              </tr>
+              <tr>
+                  <td>247585</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to add discontinued, and inactive items in Regular Order then see the error message <span class="argument">&quot;Item discontinued. Please see available alternatives below..&quot;</span> for each item:</span>
+
+  <span class="lead-duration duration">9.040</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>products</td>
+              </tr>
+              <tr>
+                  <td>326850</td>
+              </tr>
+              <tr>
+                  <td>381293</td>
+              </tr>
+              <tr>
+                  <td>425926</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to add Non C2 alternative items Using NDC, UPC, GTIN, Product Discriptions and item# in C2 order and verifies the alert message <span class="argument">&quot;Regular products cannot be added to a C2 order.&quot;</span></span>
+
+  <span class="lead-duration duration">14.008</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>products</td>
+              </tr>
+              <tr>
+                  <td>40985022721</td>
+              </tr>
+              <tr>
+                  <td>55513092410</td>
+              </tr>
+              <tr>
+                  <td>00005010005</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to add Regular items Using NDC, UPC, GTIN, Product Discriptions and item# in C2 order and verifies the alert message <span class="argument">&quot;No matching product(s) found.&quot;</span></span>
+
+  <span class="lead-duration duration">19.687</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>products</td>
+              </tr>
+              <tr>
+                  <td>03848591161</td>
+              </tr>
+              <tr>
+                  <td>36570240710</td>
+              </tr>
+              <tr>
+                  <td>35789686406</td>
+              </tr>
+              <tr>
+                  <td>75475654050</td>
+              </tr>
+              <tr>
+                  <td>70537206060</td>
+              </tr>
+              <tr>
+                  <td>02120001030</td>
+              </tr>
+              <tr>
+                  <td>00851806000776</td>
+              </tr>
+              <tr>
+                  <td>00078787401501</td>
+              </tr>
+              <tr>
+                  <td>80882912310</td>
+              </tr>
+              <tr>
+                  <td>00883489000750</td>
+              </tr>
+              <tr>
+                  <td>00071815261313</td>
+              </tr>
+              <tr>
+                  <td>30005010005</td>
+              </tr>
+              <tr>
+                  <td>00301873050506</td>
+              </tr>
+              <tr>
+                  <td>AMPHETAMINE IR TAB 10 MG 100 LANNETT</td>
+              </tr>
+              <tr>
+                  <td>TRUMENBA PF SYR 0.5 ML CTN/5</td>
+              </tr>
+              <tr>
+                  <td>HYDROCORTISONE LOTION 2.5% 2 OZ PADAGIS</td>
+              </tr>
+              <tr>
+                  <td>TRL JOHNSON BABY LOTION 1.7 OZ</td>
+              </tr>
+              <tr>
+                  <td>CYCLOBENZAPRINE HCL TAB 5 MG 500 UNICHEM</td>
+              </tr>
+              <tr>
+                  <td>ANNIE BUTTERFLY CLAMPS SMALL 12 #3180</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds the items/products using item number</span>
+
+  <span class="lead-duration duration">2.071</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>itemsNum</td>
+                  <td>specialCode</td>
+                  <td>orderQty</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>046425</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>Item #046425 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to add the same item <span class="argument">&quot;046425&quot;</span> again and verifies the warning message <span class="argument">&quot;Item already added to order.&quot;</span></span>
+
+  <span class="lead-duration duration">5.275</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User attempts to add Regular items <span class="argument">&quot;485136&quot;</span> in c2 order and verifies the alert message <span class="argument">&quot;Cannot add non C2 item to C2 order.&quot;</span></span>
+
+  <span class="lead-duration duration">5.239</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should updates the order quantity to <span class="argument">&quot;0&quot;</span> and verifies the warning message <span class="argument">&quot;Min allowed order qty is 1.&quot;</span></span>
+
+  <span class="lead-duration duration">15.212</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User submits the C2 Order with an invalid password <span class="argument">&quot;InV!@#&quot;</span> and verifies the error message <span class="argument">&quot;Certificate is not registered or password did not match.&quot;</span></span>
+
+  <span class="lead-duration duration">29.213</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+  </div>
+</div>
+
+
+
+
+  <div class="inner-level hooks-element-after">
+    <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#after-4">
+
+<div class="brief passed">
+  <span class="keyword indention">Hooks</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+    </div>
+
+    <div id="after-4" class="inner-level collapse collapsable-details ">
+        <div class="hook">
+          <div class="brief passed">
+            <span class="keyword indention">After</span>
+              <span class="location name">com.stepdefinition.Hook.afterScenario(io.cucumber.java.Scenario)</span>
+
+  <span class="lead-duration duration">2.557</span>
+
+          </div>
+
+
+
+
+
+
+  <div class="embeddings inner-level">
+  <div class="embedding indention">
+    <div data-toggle="collapse" data-target="#embedding-5" class="collapsable-control">
+      <a>Every Scenario</a>
+      <a href="embeddings/embedding_-1422079173.png" download target="_blank">
+        <span class="download-button glyphicon glyphicon-download-alt"></span>
+      </a>
+    </div>
+    <div id="embedding-5" class="collapse collapsable-details ">
+      <div class="embedding-content">
+        <img src="embeddings/embedding_-1422079173.png">
+      </div>
+    </div>
+  </div>
+  </div>
+
+        </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1 col-md-offset-10">
+      <i class="fa fa-chevron-circle-down fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('show')"></i>
+      <i class="fa fa-chevron-circle-up fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('hide')"></i>
+    </div>
+  </div>
+</div>
+
+<br/>
+
+<nav class="navbar navbar-default" id="footer">
+  <div class="container-fluid">
+    <p class="navbar-text navbar-right">
+        <small>generate Cucumber HTML reports via:&nbsp;</small>
+        <a class="navbar-link" href="https://github.com/jenkinsci/cucumber-reports-plugin">Jenkins Plugin</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-reporting">Standalone</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-sandwich">Sandwich</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/maven-cucumber-reporting">Maven</a>
+        &nbsp;&nbsp;
+    </p>
+  </div>
+</nav>
+
+</body>
+</html>

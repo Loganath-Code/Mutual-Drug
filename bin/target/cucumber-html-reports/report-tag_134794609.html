@@ -1,0 +1,1384 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<script src="js/jquery.min.js"></script>
+<script src="js/jquery.tablesorter.min.js"></script>
+<script src="js/Chart.min.js"></script>
+<script src="js/moment.min.js"></script>
+<script src="js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="css/bootstrap.min.css" type="text/css"/>
+<link rel="stylesheet" href="css/cucumber.css" type="text/css"/>
+<link rel="stylesheet" href="css/font-awesome.min.css"/>
+<link rel="shortcut icon" href="images/favicon.png"/>
+
+<script>
+$(document).ready(function() {
+    // this will tell tablesorter to try looking for the data-value attribute
+    // if present, it'll sort by that instead
+    // otherwise, it'll sort by the text content of the table cell
+    $("#tablesorter").tablesorter({
+        textAttribute: 'data-value',
+        // ignores the first row of the header, the 'scenario', 'steps', since
+        // sorting those doesn't make sense
+        selectorHeaders: '> thead tr:not(.dont-sort) th',
+        // use a stable sort
+        sortStable: true
+    });
+});
+</script>
+
+
+
+
+
+
+
+
+
+
+
+<title>Cucumber Reports  - Tag: @RegularOrder</title>
+
+</head>
+<body>
+
+<nav class="navbar navbar-default navbar-fixed-top" id="navigation">
+  <div class="container-fluid">
+    <div class="collapse navbar-collapse">
+      <p class="navbar-text navbar-left">Cucumber Report</p>
+      <ul class="nav navbar-nav navbar-right">
+        <li role="presentation" ><a href="overview-features.html">Features</a></li>
+        <li role="presentation" ><a href="overview-tags.html">Tags</a></li>
+        <li role="presentation" ><a href="overview-steps.html">Steps</a></li>
+        <li role="presentation" ><a href="overview-failures.html">Failures</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+
+<div class="container-fluid">
+  <div class="col-md-5 col-md-offset-1">
+
+<table class="table table-bordered" id="build-info">
+  <thead>
+    <tr>
+      <th>Project</th>
+      <th>Date</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr class="info">
+      <td>Mutual Drug</td>
+      <td>09 May 2025, 18:05</td>
+    </tr>
+  </tbody>
+</table>
+
+  </div>
+  <div class="col-md-3 col-md-offset-2">
+  </div>
+</div>
+
+
+<div id="report-lead" class="container-fluid">
+  <div class="col-md-10 col-md-offset-1">
+    <h2>Tag Report</h2>
+  </div>
+</div>
+
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <table class="stats-table">
+
+
+<thead>
+  <tr class="header dont-sort">
+      <th></th>
+    <th colspan="6">Steps</th>
+    <th colspan="3">Scenarios</th>
+    <th colspan="2">Features</th>
+  </tr>
+  <tr>
+    <th>Tag</th>
+    <th class="passed">Passed</th>
+    <th class="failed">Failed</th>
+    <th class="skipped">Skipped</th>
+    <th class="pending">Pending</th>
+    <th class="undefined">Undefined</th>
+    <th class="total">Total</th>
+
+    <th class="passed">Passed</th>
+    <th class="failed">Failed</th>
+    <th class="total">Total</th>
+
+    <th>Duration</th>
+    <th>Status</th>
+  </tr>
+</thead>
+
+
+        <tbody>
+        <tr>
+          <td class="tagname">@RegularOrder</td>
+          <td      class="passed"    >27</td>
+          <td >0</td>
+          <td >0</td>
+          <td >0</td>
+          <td >0</td>
+          <td class="total">27</td>
+
+          <td  class="passed"    >1</td>
+          <td >0</td>
+          <td class="total">1</td>
+
+          <td class="duration" data-value="313717605100">5:13.717</td>
+          <td class="passed">Passed</td>
+        </tr>
+        </tbody>
+
+      </table>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1 col-md-offset-10">
+      <i class="fa fa-chevron-circle-down fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('show')"></i>
+      <i class="fa fa-chevron-circle-up fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('hide')"></i>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid" id="report">
+  <div class="row">
+    <div class="col-md-10 col-md-offset-1">
+      <div class="elements">
+
+
+<div class="element">
+    <div class="indention">
+      <b>Feature:</b>
+      <a href="report-feature_2606419328.html">Verifying Mutual Drug - Create New orders</a>
+    </div>
+
+
+<div class="tags indention">
+    <b>Tags:</b>
+       <a href="report-tag_514821400.html">@Current</a>
+       <a href="report-tag_134794609.html">@RegularOrder</a>
+</div>
+
+
+  <span class="lead-duration duration">5:13.717</span>
+
+
+  <span data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#element-1">
+
+<div class="brief passed">
+  <span class="keyword indention">Scenario Outline</span>
+  <span class="name">Verifying Mutual Drug to Create new orders in Current Orders webpage - Regular orders</span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+  </span>
+  <div class="description indention"></div>
+
+  <div id="element-1" class="collapse collapsable-details ">
+
+
+  <div class="inner-level hooks-element-before">
+    <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#before-2">
+
+<div class="brief passed">
+  <span class="keyword indention">Hooks</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+    </div>
+
+    <div id="before-2" class="inner-level collapse collapsable-details ">
+        <div class="hook">
+          <div class="brief passed">
+            <span class="keyword indention">Before</span>
+              <span class="location name">com.stepdefinition.Hook.beforeScenario(io.cucumber.java.Scenario)</span>
+
+  <span class="lead-duration duration">9.626</span>
+
+          </div>
+
+
+
+
+
+
+
+        </div>
+    </div>
+  </div>
+
+
+
+<div class="steps inner-level">
+  <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#steps-3">
+
+<div class="brief passed">
+  <span class="keyword indention">Steps</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+  </div>
+
+  <div id="steps-3" class="inner-level collapse collapsable-details ">
+      <div class="step">
+
+
+<div class="brief step-name-Given passed">
+  <span class="keyword indention">Given</span>
+  <span class="name">User is on the Mutual Drug Login</span>
+
+  <span class="lead-duration duration">0.053</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User perform login with Username, Password</span>
+
+  <span class="lead-duration duration">0.827</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should verify after login <span class="argument">&quot;WALKERS DRUG STORE (PREMIER) - 124685&quot;</span> and success message as <span class="argument">&quot;Member Access Portal&quot;</span></span>
+
+  <span class="lead-duration duration">11.692</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User navigates to Orders, selects Current Orders and verifies that the page is <span class="argument">&quot;Current Orders&quot;</span></span>
+
+  <span class="lead-duration duration">5.115</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User clicks on  Create New, Create New Regular Orders with <span class="argument">&quot;Regular Order Test- Prod&quot;</span> , <span class="argument">&quot;Regular Order&quot;</span> , <span class="argument">&quot;None&quot;</span> , <span class="argument">&quot;test&quot;</span></span>
+
+  <span class="lead-duration duration">2.109</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds the items/products using item number</span>
+
+  <span class="lead-duration duration">2:9.956</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>itemsNum</td>
+                  <td>specialCode</td>
+                  <td>orderQty</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>285684</td>
+                  <td></td>
+                  <td>1</td>
+                  <td>Item #285684 added to order.</td>
+              </tr>
+              <tr>
+                  <td>485136</td>
+                  <td>Shelf Label Only</td>
+                  <td>1</td>
+                  <td>Item #485136 added to order.</td>
+              </tr>
+              <tr>
+                  <td>407585</td>
+                  <td>Price Sticker Only</td>
+                  <td>1</td>
+                  <td>Item #407585 added to order.</td>
+              </tr>
+              <tr>
+                  <td>492892</td>
+                  <td>Shelf Label and Price Sticker</td>
+                  <td>1</td>
+                  <td>Item #492892 added to order.</td>
+              </tr>
+              <tr>
+                  <td>486944</td>
+                  <td>Override Qty Cut</td>
+                  <td>1</td>
+                  <td>Item #486944 added to order.</td>
+              </tr>
+              <tr>
+                  <td>218693</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #218693 added to order.</td>
+              </tr>
+              <tr>
+                  <td>371385</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #371385 added to order.</td>
+              </tr>
+              <tr>
+                  <td>306092</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #306092 added to order.</td>
+              </tr>
+              <tr>
+                  <td>489674</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #489674 added to order.</td>
+              </tr>
+              <tr>
+                  <td>865543</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #865543 added to order.</td>
+              </tr>
+              <tr>
+                  <td>745877</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #745877 added to order.</td>
+              </tr>
+              <tr>
+                  <td>349449</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #349449 added to order.</td>
+              </tr>
+              <tr>
+                  <td>210351</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #210351 added to order.</td>
+              </tr>
+              <tr>
+                  <td>015156</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #015156 added to order.</td>
+              </tr>
+              <tr>
+                  <td>500199</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #500199 added to order.</td>
+              </tr>
+              <tr>
+                  <td>502047</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #502047 added to order.</td>
+              </tr>
+              <tr>
+                  <td>471490</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #471490 added to order.</td>
+              </tr>
+              <tr>
+                  <td>425025</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #425025 added to order.</td>
+              </tr>
+              <tr>
+                  <td>257030</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #257030 added to order.</td>
+              </tr>
+              <tr>
+                  <td>032862</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #032862 added to order.</td>
+              </tr>
+              <tr>
+                  <td>462564</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #462564 added to order.</td>
+              </tr>
+              <tr>
+                  <td>282517</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #282517 added to order.</td>
+              </tr>
+              <tr>
+                  <td>497479</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #497479 added to order.</td>
+              </tr>
+              <tr>
+                  <td>325068</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #325068 added to order.</td>
+              </tr>
+              <tr>
+                  <td>511667</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #511667 added to order.</td>
+              </tr>
+              <tr>
+                  <td>485011</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #485011 added to order.</td>
+              </tr>
+              <tr>
+                  <td>158162</td>
+                  <td>Do Not Substitute</td>
+                  <td>1</td>
+                  <td>Item #158162 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds products Using NDC, Product Description then add Quantity to clicks Add To Order</span>
+
+  <span class="lead-duration duration">34.662</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>NDC_ProductDescription</td>
+                  <td>addQuantity</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>30536105775</td>
+                  <td>1</td>
+                  <td>Item #181560 added to order.</td>
+              </tr>
+              <tr>
+                  <td>03848591161</td>
+                  <td>1</td>
+                  <td>Item #142505 added to order.</td>
+              </tr>
+              <tr>
+                  <td>182766</td>
+                  <td>2</td>
+                  <td>Item #182766 added to order.</td>
+              </tr>
+              <tr>
+                  <td>ZINC + VITAMIN C SOFTGEL 50 MG 120 NT</td>
+                  <td>2</td>
+                  <td>Item #392993 added to order.</td>
+              </tr>
+              <tr>
+                  <td>ASPERCREME LIDOCAINE CREAM 4.3 OZ</td>
+                  <td>2</td>
+                  <td>Item #400069 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds products using UPC then add Quantity to clicks Add To order:</span>
+
+  <span class="lead-duration duration">15.670</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>UPC</td>
+                  <td>addQuantity</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>74098527531</td>
+                  <td>2</td>
+                  <td>Item #236901 added to order.</td>
+              </tr>
+              <tr>
+                  <td>74098522721</td>
+                  <td>2</td>
+                  <td>Item #236893 added to order.</td>
+              </tr>
+              <tr>
+                  <td>36570240710</td>
+                  <td>2</td>
+                  <td>Item #881011 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User Adds products using GTIN then add Quantity to clicks Add To order:</span>
+
+  <span class="lead-duration duration">16.454</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>GTIN</td>
+                  <td>addQuantity</td>
+                  <td>successMessage</td>
+              </tr>
+              <tr>
+                  <td>00365702712102</td>
+                  <td>2</td>
+                  <td>Item #310185 added to order.</td>
+              </tr>
+              <tr>
+                  <td>00883489000750</td>
+                  <td>2</td>
+                  <td>Item #011262 added to order.</td>
+              </tr>
+              <tr>
+                  <td>00604351787155</td>
+                  <td>2</td>
+                  <td>Item #717694 added to order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should updates already added item:</span>
+
+  <span class="lead-duration duration">4.066</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>itemsNum</td>
+                  <td>specialCode</td>
+                  <td>orderQty</td>
+                  <td>updateMessage</td>
+              </tr>
+              <tr>
+                  <td>236901</td>
+                  <td>Override Qty Cut</td>
+                  <td>5</td>
+                  <td>Item #236901 updated from order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should Updates already added items Using Add Products, verifies the message <span class="argument">&quot;ITEM ALREADY EXIST&quot;</span>:</span>
+
+  <span class="lead-duration duration">42.223</span>
+
+</div>
+
+
+
+
+
+
+
+          <table class="step-arguments">
+              <tr>
+                  <td>updateItems</td>
+                  <td>warningMessage</td>
+                  <td>updateSpecialCode</td>
+                  <td>updateQty</td>
+                  <td>updateMessage</td>
+              </tr>
+              <tr>
+                  <td>407585</td>
+                  <td>Item #407585 already added to order.</td>
+                  <td>Do Not Substitute</td>
+                  <td>5</td>
+                  <td>Item #407585 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>03848591161</td>
+                  <td>Item #142505 already added to order.</td>
+                  <td>Shelf Label Only</td>
+                  <td>5</td>
+                  <td>Item #142505 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>ZINC + VITAMIN C SOFTGEL 50 MG 120 NT</td>
+                  <td>Item #392993 already added to order.</td>
+                  <td>Price Sticker Only</td>
+                  <td>5</td>
+                  <td>Item #392993 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>74098527531</td>
+                  <td>Item #236901 already added to order.</td>
+                  <td>Shelf Label and Price Sticker</td>
+                  <td>5</td>
+                  <td>Item #236901 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>00365702712102</td>
+                  <td>Item #310185 already added to order.</td>
+                  <td>Override Qty Cut</td>
+                  <td>5</td>
+                  <td>Item #310185 updated from order.</td>
+              </tr>
+              <tr>
+                  <td>36570240710</td>
+                  <td>Item #881011 already added to order.</td>
+                  <td></td>
+                  <td>5</td>
+                  <td>Item #881011 updated from order.</td>
+              </tr>
+          </table>
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-When passed">
+  <span class="keyword indention">When</span>
+  <span class="name">User updates the orders name to <span class="argument">&quot;Regular order Automation Test&quot;</span> and verifies the alert message <span class="argument">&quot;Order name updated.&quot;</span></span>
+
+  <span class="lead-duration duration">7.824</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should update the auto submit by selecting date <span class="argument">&quot;13-05-2025&quot;</span> and time <span class="argument">&quot;6 PM&quot;</span>, clicks on Auto Submit, and verifies the success message <span class="argument">&quot;Order auto submit scheduled.&quot;</span></span>
+
+  <span class="lead-duration duration">1.963</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should cancel Auto Submit and verify the success message as <span class="argument">&quot;Order auto submit canceled.&quot;</span></span>
+
+  <span class="lead-duration duration">2.237</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">the user clicks on Auto Submit History and successfully views the details</span>
+
+  <span class="lead-duration duration">0.792</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should update the Order Reference with <span class="argument">&quot;Auto Test&quot;</span> and verify the success message <span class="argument">&quot;Order Reference updated.&quot;</span></span>
+
+  <span class="lead-duration duration">2.157</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should select Show Invalid Items First option</span>
+
+  <span class="lead-duration duration">0.190</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User should verify that selecting the header checkbox selects all row checkboxes</span>
+
+  <span class="lead-duration duration">10.413</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User verifies sorting orders in both ascending and descending orders for items, Product Discriptions</span>
+
+  <span class="lead-duration duration">1.363</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User verifies sorting order in both ascending and descending order for all columns: items, Product Descriptions, Categories, Whs. Qty, Net Price, Ext. Net Price, Inv. Price, Ext. Inv Price, and Added</span>
+
+  <span class="lead-duration duration">8.819</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should selects the item in list and clicks Delete Selected then verifies the success message <span class="argument">&quot;Items deleted from order.&quot;</span></span>
+
+  <span class="lead-duration duration">2.015</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should updates the item quantity to <span class="argument">&quot;5&quot;</span> and selects the special code <span class="argument">&quot;Shelf Label and Price Sticker&quot;</span> in the grid, then verifies the success alert message <span class="argument">&quot;Success!&quot;</span></span>
+
+  <span class="lead-duration duration">0.716</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User deletes an item from the list and confirms the <span class="argument">&quot;Success!&quot;</span> alert message appears</span>
+
+  <span class="lead-duration duration">0.906</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User verifies pagination functionality on the Orders Web Page</span>
+
+  <span class="lead-duration duration">6.563</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-Then passed">
+  <span class="keyword indention">Then</span>
+  <span class="name">User should save the template and confirm the success alert message <span class="argument">&quot;Order template saved.&quot;</span></span>
+
+  <span class="lead-duration duration">2.440</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User clicks on <span class="argument">&quot;Print Order&quot;</span> to view the order details.</span>
+
+  <span class="lead-duration duration">0.001</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+      <div class="step">
+
+
+<div class="brief step-name-And passed">
+  <span class="keyword indention">And</span>
+  <span class="name">User submits the regular orders and clicks OK</span>
+
+  <span class="lead-duration duration">2.477</span>
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+      </div>
+  </div>
+</div>
+
+
+
+
+  <div class="inner-level hooks-element-after">
+    <div data-toggle="collapse" class=" collapsed  collapsable-control" data-target="#after-4">
+
+<div class="brief passed">
+  <span class="keyword indention">Hooks</span>
+  <span class="name"></span>
+
+
+     <i class="chevron fa fa-fw"></i>
+</div>
+
+    </div>
+
+    <div id="after-4" class="inner-level collapse collapsable-details ">
+        <div class="hook">
+          <div class="brief passed">
+            <span class="keyword indention">After</span>
+              <span class="location name">com.stepdefinition.Hook.afterScenario(io.cucumber.java.Scenario)</span>
+
+  <span class="lead-duration duration">2.151</span>
+
+          </div>
+
+
+
+
+
+
+  <div class="embeddings inner-level">
+  <div class="embedding indention">
+    <div data-toggle="collapse" data-target="#embedding-5" class="collapsable-control">
+      <a>Every Scenario</a>
+      <a href="embeddings/embedding_1111056135.png" download target="_blank">
+        <span class="download-button glyphicon glyphicon-download-alt"></span>
+      </a>
+    </div>
+    <div id="embedding-5" class="collapse collapsable-details ">
+      <div class="embedding-content">
+        <img src="embeddings/embedding_1111056135.png">
+      </div>
+    </div>
+  </div>
+  </div>
+
+        </div>
+    </div>
+  </div>
+
+  </div>
+</div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-md-1 col-md-offset-10">
+      <i class="fa fa-chevron-circle-down fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('show')"></i>
+      <i class="fa fa-chevron-circle-up fa-2x collapsable-control"
+        onClick="javascript:$('#report .collapsable-details').collapse('hide')"></i>
+    </div>
+  </div>
+</div>
+
+<br/>
+
+<nav class="navbar navbar-default" id="footer">
+  <div class="container-fluid">
+    <p class="navbar-text navbar-right">
+        <small>generate Cucumber HTML reports via:&nbsp;</small>
+        <a class="navbar-link" href="https://github.com/jenkinsci/cucumber-reports-plugin">Jenkins Plugin</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-reporting">Standalone</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/cucumber-sandwich">Sandwich</a> |
+        <a class="navbar-link" href="https://github.com/damianszczepanik/maven-cucumber-reporting">Maven</a>
+        &nbsp;&nbsp;
+    </p>
+  </div>
+</nav>
+
+</body>
+</html>
