@@ -27,7 +27,7 @@ public class TC5_OrderStep extends BaseClass {
 	@Then("User switches to the Compact view and filters the catalog to show only In-Stock items")
 	public void userSwitchesToTheCompactViewAndFiltersTheCatalogToShowOnlyInStockItems() {
 
-		pom.getProductsCatalogPage().clickCompactView();
+		pom.getProductsCatalogPage().selectsCompactView();
 		pom.getProductsCatalogPage().toogleOnInStockIems();
 	}
 

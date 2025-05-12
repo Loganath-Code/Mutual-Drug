@@ -5,6 +5,8 @@ import java.time.Duration;
 import java.util.List;
 
 import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.StaleElementReferenceException;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
@@ -64,7 +66,7 @@ public class ProductsCatalogPage extends BaseClass {
 	@FindBy(xpath = "(//button[text()='Add'])[1]")
 	private WebElement btnAdd;
 
-	@FindBy(xpath = "(//button[text()='Create New Order'])[5]")
+	@FindBy(xpath = "(//button[text()='Create New Order'])[1]")
 	private WebElement btnCreateNewOrder;
 
 	@FindBy(xpath = "//input[@name='orderName']")
@@ -126,6 +128,26 @@ public class ProductsCatalogPage extends BaseClass {
 
 	@FindBy(xpath = "//div[contains(@class, 'toast-message')]")
 	private WebElement alMsgItemsAdded;
+
+	@FindBy(xpath = "//div[@aria-label='Success!']")
+	private WebElement successMessage;
+	// itemAlreadyexist
+	@FindBy(xpath = "//select[@formcontrolname='specialCode']")
+	private WebElement ddSpecialCode;
+
+	@FindBy(xpath = "//button[text()='Update']")
+	private WebElement btnUpdate;
+
+	@FindBy(xpath = "//h4[text()='Item Already Exist']")
+	private WebElement modaltitle;
+	
+	@FindBy(xpath = "//h4[normalize-space()='CASE ITEM']")
+	private WebElement  titleCaseItem;
+	
+
+	public WebElement getTitleCaseItem() {
+		return titleCaseItem;
+	}
 
 	public WebElement getiProducts() {
 		return iProducts;
@@ -259,13 +281,33 @@ public class ProductsCatalogPage extends BaseClass {
 		return alMsgItemsAdded;
 	}
 
+	public WebElement getSuccessMessage() {
+		return successMessage;
+	}
+
+	public WebElement getDdSpecialCode() {
+		return ddSpecialCode;
+	}
+
+	public WebElement getBtnUpdate() {
+		return btnUpdate;
+	}
+
+	public WebElement getModaltitle() {
+		return modaltitle;
+	}
+
+	public WebElement getLinkByText(String linkText) {
+		String xpath = "//a[normalize-space()='" + linkText + "']";
+		return driver.findElement(By.xpath(xpath));
+	}
+
 	/**
 	 * @see Used to clicking radio button dynamically using label name
 	 * @param rdbtnName
 	 */
 	public void clickRadioButton(String rdbtnName) {
 		String xpath = "//label[normalize-space()='" + rdbtnName + "']//span[@class='checkmark']";
-		// Waiting until the radio button is clickable
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement radioButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 		radioButton.click();
@@ -293,9 +335,20 @@ public class ProductsCatalogPage extends BaseClass {
 	}
 
 	/**
+	 * @see Used to Links in Product Catalog
+	 * @param linkText
+	 */
+	public void chooseProductCatalog(String linkText) {
+		navigatesProductCatalog();
+		scrollToElement(getLinkByText(linkText));
+		click(getLinkByText(linkText));
+	}
+
+	/**
 	 * @see Used to clicks Full view in Product Search webpage
 	 */
-	public void clicksFullView() {
+	public void selectsFullView() {
+		toogleOnInStockIems();
 		elementToBeClickable(getViewlinkFullView());
 		clickElementUsingJavaScript(driver, getViewlinkFullView());
 
@@ -308,22 +361,23 @@ public class ProductsCatalogPage extends BaseClass {
 	 * @param autoSubmit
 	 */
 	public void createNewOrder(String orderName, String orderType, String autoSubmit) {
-		try {
+//		try {
 			scrollToElement(getBtnCreateNewOrder());
 			clickElementUsingJavaScript(driver, getBtnCreateNewOrder());
+//			checkingCaseItem();
 			insertValue(getTxtOrderName(), orderName);
-//		clickRadioButton(orderType);
+//			clickRadioButton(orderType);
 			clickRadioButton(autoSubmit);
 			clickElementUsingJavaScript(driver, getBtnCreate());
-		} catch (Exception e) {
-
-		}
+//		} catch (Exception e) {
+//
+//		}
 	}
 
 	/**
 	 * @see Used to clicks Compact view in Product Search webpage
 	 */
-	public void clickCompactView() {
+	public void selectsCompactView() {
 		elementToBeClickable(getViewLinkCompactView());
 		clickElementUsingJavaScript(driver, getViewLinkCompactView());
 
@@ -338,25 +392,31 @@ public class ProductsCatalogPage extends BaseClass {
 	public void compactViewOrderCreation(String orderName, String orderType, String autoSubmit) {
 		elementToBeClickable(getBtnAdd());
 		clickElementUsingJavaScript(driver, getBtnAdd());
+		checkingCaseItem();
 		insertValue(getTxtOrderName(), orderName);
-//		clickRadioButton(orderType);
+		clickRadioButton(orderType);
 		clickRadioButton(autoSubmit);
 		clickElementUsingJavaScript(driver, getBtnCreate());
 	}
 
+	public void checkingCaseItem() {
+		if(getTitleCaseItem().isDisplayed()) {
+			clickElementUsingJavaScript(driver, getBtnYes());
+		}
+
+	}
+	
 	public void toggleSwitch() {
-		// Wait until the mat-slide-toggle element is clickable
+
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement toggle = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//mat-slide-toggle")));
-
-		// Check the current state of the toggle
 		String classValue = toggle.getAttribute("class");
 		if (classValue.contains("mat-checked")) {
 			System.out.println("Toggle is currently ON, switching to OFF");
-			// Click to turn off
+
 		} else {
 			System.out.println("Toggle is currently OFF, switching to ON");
-			toggle.click(); // Click to turn on
+			toggle.click();
 		}
 	}
 
@@ -369,39 +429,39 @@ public class ProductsCatalogPage extends BaseClass {
 		for (int i = 6; i <= count; i++) {
 			try {
 
-			String dynamicXPathForDropdown = "(//select[@formcontrolname='regularOrderArr'])[" + i + "]";
-			WebElement orderDropdown = driver.findElement(By.xpath(dynamicXPathForDropdown));
-			System.out.println(orderDropdown);
-			implicitWait();
-			scrollToElement(orderDropdown);
-			Select dropdown = new Select(orderDropdown);
-			dropdown.selectByVisibleText(" 12AB Sample test auto - Regular");
+				String dynamicXPathForDropdown = "(//select[@formcontrolname='regularOrderArr'])[" + i + "]";
+				WebElement orderDropdown = driver.findElement(By.xpath(dynamicXPathForDropdown));
+				System.out.println(orderDropdown);
+				implicitWait();
+				scrollToElement(orderDropdown);
+				Select dropdown = new Select(orderDropdown);
+				dropdown.selectByVisibleText(" 12AB Sample test auto - Regular");
 
-			String dynamicXPathForQtyField = "(//input[@placeholder='Qty'])[" + i + "]";
-			implicitWait();
-			WebElement qtyField = driver.findElement(By.xpath(dynamicXPathForQtyField));
-			qtyField.clear();
-			qtyField.sendKeys("1");
-			String dynamicXPathForAddButton = "(//button[text()='Add'])[" + i + "]";
+				String dynamicXPathForQtyField = "(//input[@placeholder='Qty'])[" + i + "]";
+				implicitWait();
+				WebElement qtyField = driver.findElement(By.xpath(dynamicXPathForQtyField));
+				qtyField.clear();
+				qtyField.sendKeys("1");
+				String dynamicXPathForAddButton = "(//button[text()='Add'])[" + i + "]";
 
-			WebElement addButton = driver.findElement(By.xpath(dynamicXPathForAddButton));
-			clickElementUsingJavaScript(driver, addButton);
-			System.out.println(addButton);
-			try {
-				String text = getText(getAlMsgItemsAdded());
-				System.out.println(text);
-			} catch (Exception e) {
+				WebElement addButton = driver.findElement(By.xpath(dynamicXPathForAddButton));
+				clickElementUsingJavaScript(driver, addButton);
+				System.out.println(addButton);
+				try {
+					String text = getText(getAlMsgItemsAdded());
+					System.out.println(text);
+				} catch (Exception e) {
 
-			}
-			try {
-				WebElement caseItems = wait.until(ExpectedConditions
-						.visibilityOfElementLocated(By.xpath("//mat-dialog-container[@role='dialog'][1]")));
-				if (caseItems.isDisplayed()) {
-					clickElementUsingJavaScript(driver, btnYes);
 				}
-			} catch (Exception e) {
+				try {
+					WebElement caseItems = wait.until(ExpectedConditions
+							.visibilityOfElementLocated(By.xpath("//mat-dialog-container[@role='dialog'][1]")));
+					if (caseItems.isDisplayed()) {
+						clickElementUsingJavaScript(driver, btnYes);
+					}
+				} catch (Exception e) {
 
-			}
+				}
 			} catch (StaleElementReferenceException e) {
 				retryOrderCreation(i, ddOrderNames, wait);
 			}
@@ -453,7 +513,8 @@ public class ProductsCatalogPage extends BaseClass {
 				System.out.println(btnAdd);
 				clickElementUsingJavaScript(driver, btnAdd);
 				Select dropdown = new Select(getDdOrderName());
-				dropdown.selectByVisibleText(" 12AB Sample test auto - Regular");
+				dropdown.selectByVisibleText(orderName);
+				// dropdown.selectByVisibleText(" 12AB Sample test auto - Regular");
 				clearTextField(getTxtOrderQty());
 				insertValue(getTxtOrderQty(), "1");
 				clickElementUsingJavaScript(driver, getBtnAddToOrder());
@@ -463,5 +524,282 @@ public class ProductsCatalogPage extends BaseClass {
 
 			}
 		}
+	}
+
+	public void addItemToExistingOrder(String orderName, String qty, String successMessage) {
+		toogleOnInStockIems();
+		int count = 6;
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+		for (int i = 2; i <= count; i++) {
+			try {
+				String dropdownXPath = "(//select[@formcontrolname='regularOrderArr'])[" + i + "]";
+				WebElement orderDropdown = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dropdownXPath)));
+				scrollToElement(orderDropdown);
+				Select dropdown = new Select(orderDropdown);
+				dropdown.selectByVisibleText(orderName.trim());
+
+				String qtyFieldXPath = "(//input[@placeholder='Qty'])[" + i + "]";
+				WebElement qtyField = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(qtyFieldXPath)));
+				qtyField.clear();
+				qtyField.sendKeys(qty);
+
+				String addButtonXPath = "(//button[text()='Add'])[" + i + "]";
+				WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(addButtonXPath)));
+				clickElementUsingJavaScript(driver, addButton);
+				assertEquals(getSuccessMessage(), successMessage);
+
+			} catch (Exception e) {
+				System.out.println("Failed to add item at Row " + i + ": " + e.getMessage());
+
+			}
+		}
+	}
+
+	public void addItemInCompactView(String orderName, String qty, String expectedAlertMsg)
+			throws InterruptedException {
+		toogleOnInStockIems();
+		int count = 6;
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+		for (int i = 2; i <= count; i++) {
+			try {
+				Thread.sleep(2000);
+				String addButtonXPath = "(//button[text()='Add'])[" + i + "]";
+				WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(addButtonXPath)));
+				clickElementUsingJavaScript(driver, addButton);
+				String dropdownXPath = "(//select[@formcontrolname='regularOrderArr'])";
+				WebElement orderDropdown = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dropdownXPath)));
+				scrollToElement(orderDropdown);
+				Select dropdown = new Select(orderDropdown);
+				dropdown.selectByVisibleText(orderName.trim());
+				Thread.sleep(800);
+				String qtyFieldXPath = "(//input[@placeholder='Order Qty'])[1]";
+				WebElement qtyField = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(qtyFieldXPath)));
+				qtyField.clear();
+				qtyField.sendKeys(qty);
+				String addTOorderButtonXPath = "(//button[text()='Add To Order'])[1]";
+				WebElement btnAddToOrder = wait
+						.until(ExpectedConditions.elementToBeClickable(By.xpath(addTOorderButtonXPath)));
+				clickElementUsingJavaScript(driver, btnAddToOrder);
+
+				assertEquals(getSuccessMessage(), expectedAlertMsg);
+
+			} catch (Exception e) {
+
+			}
+		}
+
+	}
+
+	public void addExistingItemAndUpdate(String selectOrderName, String titleItemAlreadyExist, String qtyUpdate,
+			String expectedAlertMsg) {
+		int count = 6;
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+		for (int i = 2; i <= count; i++) {
+			try {
+				String dropdownXPath = "(//select[@formcontrolname='regularOrderArr'])[" + i + "]";
+				WebElement orderDropdown = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dropdownXPath)));
+				scrollToElement(orderDropdown);
+				Select dropdownOrder = new Select(orderDropdown);
+				dropdownOrder.selectByVisibleText(selectOrderName.trim());
+				String addButtonXPath = "(//button[text()='Add'])[" + i + "]";
+				WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(addButtonXPath)));
+				clickElementUsingJavaScript(driver, addButton);
+//	            assertEquals(getModaltitle(), titleItemAlreadyExist);
+
+				String qtyFieldXPath = "(//input[@placeholder='Order Qty'])[1]";
+				WebElement qtyField = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(qtyFieldXPath)));
+				qtyField.clear();
+				qtyField.sendKeys(qtyUpdate);
+				int specialCodeIndex = i - 1;
+				WebElement specialCodeDropdown = wait.until(ExpectedConditions.visibilityOf(getDdSpecialCode()));
+				Select specialDropdown = new Select(specialCodeDropdown);
+				if (specialCodeIndex < specialDropdown.getOptions().size()) {
+					Thread.sleep(800);
+					specialDropdown.selectByIndex(specialCodeIndex);
+					System.out.println("Selected Special Code Index: " + specialCodeIndex);
+				} else {
+					System.out.println("Special code index " + specialCodeIndex + " is out of range.");
+				}
+				clickElementUsingJavaScript(driver, getBtnUpdate());
+				assertEquals(getSuccessMessage(), expectedAlertMsg);
+			} catch (Exception e) {
+				System.out.println("Failed at row " + i + ": " + e.getMessage());
+			}
+		}
+	}
+
+	public void handleItemAlreadyExistAndUpdateCompactView(String selectOrderName, String titleItemAlreadyExist,
+			String qtyUpdate, String expectedAlertMsg) throws InterruptedException {
+		int count = 6;
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+
+		for (int i = 2; i <= count; i++) {
+			try {
+				Thread.sleep(2000);
+				String addButtonXPath = "(//button[text()='Add'])[" + i + "]";
+				WebElement addButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(addButtonXPath)));
+				clickElementUsingJavaScript(driver, addButton);
+				String dropdownXPath = "(//select[@formcontrolname='regularOrderArr'])";
+				WebElement orderDropdown = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(dropdownXPath)));
+				scrollToElement(orderDropdown);
+				Select dropdownOrder = new Select(orderDropdown);
+				dropdownOrder.selectByVisibleText(selectOrderName.trim());
+				forceClickAddToOrderButton();
+//			    assertEquals(getModaltitle(), titleItemAlreadyExist);
+				String qtyFieldXPath = "(//input[@placeholder='Order Qty'])[1]";
+				WebElement qtyField = wait
+						.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(qtyFieldXPath)));
+				qtyField.clear();
+				Thread.sleep(800);
+				try {
+					qtyField.sendKeys(qtyUpdate);
+				} catch (Exception e) {
+				}
+				int specialCodeIndex = i - 1;
+				WebElement specialCodeDropdown = wait.until(ExpectedConditions.visibilityOf(getDdSpecialCode()));
+				Select specialDropdown = new Select(specialCodeDropdown);
+				if (specialCodeIndex < specialDropdown.getOptions().size()) {
+					Thread.sleep(800);
+					specialDropdown.selectByIndex(specialCodeIndex);
+					System.out.println("Selected Special Code Index: " + specialCodeIndex);
+				} else {
+					System.out.println("Special code index " + specialCodeIndex + " is out of range.");
+				}
+				clickElementUsingJavaScript(driver, getBtnUpdate());
+				assertEquals(getSuccessMessage(), expectedAlertMsg);
+
+			} catch (Exception e) {
+				System.out.println("❌ Failed at row " + i + ": " + e.getMessage());
+			}
+		}
+
+	}
+
+	public void forceClickAddToOrderButton() {
+		try {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebElement addToOrderButton = wait.until(ExpectedConditions
+					.presenceOfElementLocated(By.xpath("//button[normalize-space()='Add To Order']")));
+			((JavascriptExecutor) driver).executeScript("arguments[0].scrollIntoView({block: 'center'});",
+					addToOrderButton);
+			Thread.sleep(900);
+			if (addToOrderButton.isDisplayed() && addToOrderButton.isEnabled()) {
+
+				((JavascriptExecutor) driver).executeScript("arguments[0].click();", addToOrderButton);
+				System.out.println(" Add To Order' button force-clicked.");
+			} else {
+				System.out.println(" Add To Order' button is not enabled");
+			}
+		} catch (Exception e) {
+			System.out.println(" Failed to force-click: " + e.getMessage());
+		}
+	}
+
+	public void itemAlreadyAdded(String titleItemAlreadyExist, String qtyUpdate, String specialCode)
+			throws InterruptedException {
+
+		// Assert modal title
+		assertEquals(getModaltitle(), titleItemAlreadyExist);
+
+		// Wait for and set quantity
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		elementVisibility(getTxtOrderQty());
+		WebElement qtyFieldUpdate = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderQty()));
+		qtyFieldUpdate.clear();
+		qtyFieldUpdate.sendKeys(qtyUpdate);
+		qtyFieldUpdate.sendKeys(Keys.ENTER);
+
+		// Handle special code dropdown BEFORE clicking update
+		try {
+			List<WebElement> dropdowns = driver.findElements(By.xpath("//select[@formcontrolname='specialCode']"));
+			if (!dropdowns.isEmpty() && dropdowns.get(0).isDisplayed()) {
+				WebElement specialCodeDropdown = dropdowns.get(0);
+				Select dropdownSpecialCode = new Select(specialCodeDropdown);
+
+				if (specialCode != null && !specialCode.trim().isEmpty()
+						&& !"[empty]".equalsIgnoreCase(specialCode.trim())) {
+					try {
+						dropdownSpecialCode.selectByVisibleText(specialCode.trim());
+						System.out.println("✅ Special code selected: " + specialCode.trim());
+					} catch (Exception e) {
+						// Fallback to value
+						specialCodeDropdown = driver.findElement(By.xpath("//select[@formcontrolname='specialCode']"));
+						dropdownSpecialCode = new Select(specialCodeDropdown);
+						dropdownSpecialCode.selectByValue(specialCode.trim());
+					}
+				} else {
+					dropdownSpecialCode.selectByIndex(0);
+					System.out.println("🔘 Default special code selected (index 0)");
+				}
+			} else {
+				System.out.println("⚠️ Special code dropdown not visible — skipping");
+			}
+		} catch (Exception e) {
+			System.out.println("⚠️ Special code dropdown error — skipped: " + e.getMessage());
+		}
+
+		// ✅ Click update after all interactions — no more element checks after this
+		Thread.sleep(300); // Small wait if UI lags
+		clickElementUsingJavaScript(driver, getBtnUpdate());
+
+//		assertEquals(getModaltitle(), titleItemAlreadyExist);
+//		elementVisibility(getTxtOrderQty());
+//		Thread.sleep(1000);
+//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+//		WebElement qtyFieldUpdate = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderQty()));
+//		qtyFieldUpdate.clear();
+//		qtyFieldUpdate.sendKeys(qtyUpdate);
+//		qtyFieldUpdate.sendKeys(Keys.ENTER);
+//		List<WebElement> dropdowns = driver.findElements(By.xpath("//select[@formcontrolname='specialCode']"));
+//		if (!dropdowns.isEmpty() && dropdowns.get(0).isDisplayed()) {
+////		    try {
+//		        WebElement specialCodeDropdown = driver.findElement(By.xpath("//select[@formcontrolname='specialCode']"));
+//		        Select dropdownSpecialCode = new Select(specialCodeDropdown);
+//
+//		        if (specialCode != null && !specialCode.trim().isEmpty()
+//		                && !"[empty]".equalsIgnoreCase(specialCode.trim())) {
+//		        	Thread.sleep(1000);
+//		            try {
+//		                dropdownSpecialCode.selectByVisibleText(specialCode.trim());
+//		                System.out.println("Selected by visible text: " + specialCode.trim());
+//		            } catch (Exception e) {
+//		                specialCodeDropdown = driver.findElement(By.xpath("//select[@formcontrolname='specialCode']"));
+//		                dropdownSpecialCode = new Select(specialCodeDropdown);
+//		                dropdownSpecialCode.selectByValue(specialCode.trim());
+//		                System.out.println("Fallback: Selected by value.");
+//		            }
+//		        } else {
+//		            dropdownSpecialCode.selectByIndex(1);
+//		            System.out.println(" Selected default special code at index 1.");
+//		        }
+////		    } catch (StaleElementReferenceException e) {
+////		        System.out.println(" Special code dropdown went stale. Skipping special code update.");
+////		    }
+//		} else {
+//		    System.out.println("Special code dropdown is not visible or not available.");
+//		}
+//		Thread.sleep(800);
+//		clickElementUsingJavaScript(driver, getBtnUpdate());
+//
+//	}
+	}
+	public void existingItemQtyField(String qtyUpdate) {
+		String qtyFieldXPath = "(//input[@placeholder='Order Qty'])[1]";
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
+		WebElement qtyField = wait
+				.until(ExpectedConditions.visibilityOfElementLocated(By.xpath(qtyFieldXPath)));
+		qtyField.clear();
+		qtyField.sendKeys(qtyUpdate);
+		clickElementUsingJavaScript(driver, getBtnUpdate());
 	}
 }

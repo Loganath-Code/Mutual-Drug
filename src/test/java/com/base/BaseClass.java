@@ -25,6 +25,7 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.By;
 import org.openqa.selenium.ElementClickInterceptedException;
 import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.Keys;
 import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.OutputType;
 import org.openqa.selenium.TakesScreenshot;
@@ -42,12 +43,9 @@ import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
-
-
 import io.github.bonigarcia.wdm.WebDriverManager;
 
 public class BaseClass {
-
 
 	/**
 	 * @see The WebDriver instance used to interact with the browser
@@ -190,10 +188,10 @@ public class BaseClass {
 	 * @throws IOException
 	 */
 	public static String getPropertyFileValue(String key) throws FileNotFoundException, IOException {
-	Properties properties = new Properties();
-		 String configFilePath = getProjectPath() + File.separator + "Config" + File.separator + "Config.properties";
+		Properties properties = new Properties();
+		String configFilePath = getProjectPath() + File.separator + "Config" + File.separator + "Config.properties";
 		properties.load(new FileInputStream(configFilePath));
-	    return properties.getProperty(key);
+		return properties.getProperty(key);
 
 	}
 
@@ -311,9 +309,9 @@ public class BaseClass {
 	 * @return String
 	 */
 	public String getAttribute(WebElement element, String value) {
-	    elementVisibility(element);
-	    String attributeValue = element.getAttribute(value);
-	    return attributeValue != null ? attributeValue : "";
+		elementVisibility(element);
+		String attributeValue = element.getAttribute(value);
+		return attributeValue != null ? attributeValue : "";
 	}
 
 	/**
@@ -996,14 +994,27 @@ public class BaseClass {
 		wait.until(ExpectedConditions.elementToBeClickable(dropdownElement));
 		click(dropdownElement);
 		WebElement option = wait.until(
-				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[text()=' "+ optionText + " ']")));
+				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[text()=' " + optionText + " ']")));
 		clickElementUsingJavaScript(driver, option);
 	}
+
+	public void selectOptionDropDownByIndex(WebDriver driver, WebElement dropdownElement, int index) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(dropdownElement));
+		click(dropdownElement);
+		String optionXPath = "(//mat-option//span)[" + index + "]";
+
+		WebElement option = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(optionXPath)));
+		elementVisibility(option);
+		clickElementUsingJavaScript(driver, option);
+	}
+
 	public void assertEquals(WebElement element, String expectedMessage) {
 		String actualMessage = getText(element);
-		Assert.assertEquals("Verify the page title", expectedMessage, actualMessage);
+		Assert.assertEquals("Verify the message", expectedMessage, actualMessage);
 
 	}
+
 	/**
 	 * @see Used to clicking radio button dynamically using label name
 	 * @param rdbtnName
@@ -1016,5 +1027,29 @@ public class BaseClass {
 		radioButton.click();
 	}
 
+	/**
+	 * Waits for a WebElement to be visible and returns it.
+	 *
+	 * @param element          WebElement you want to wait for
+	 * @param timeoutInSeconds how long to wait (in seconds)
+	 * @return the WebElement once it becomes visible
+	 */
+	public WebElement waitForWebElementVisible(WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		return wait.until(ExpectedConditions.visibilityOf(element));
+	}
 
+	public void clickWithWait( WebElement element) {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(element));
+		clickElementUsingJavaScript(driver, element);
+	}
+	/**
+	 * Clears any existing text from the given element by sending Ctrl+A then Backspace.
+	 * Works on Windows/Linux. On macOS you may need to use Keys.COMMAND instead of Keys.CONTROL.
+	 */
+	public void clearField(WebElement field) {
+	    field.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+	    field.sendKeys(Keys.BACK_SPACE);
+	}
 }

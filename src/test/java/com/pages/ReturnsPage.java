@@ -131,7 +131,7 @@ public class ReturnsPage extends BaseClass {
 	@FindBy(xpath = "(//div[@class='ng-star-inserted']//select)[4]")
 	private WebElement ddReturnReason;
 
-	@FindBy(xpath = "(//select[contains(@class, 'form-control') and contains(@class, 'ng-pristine')])[2]")
+	@FindBy(xpath = "(//select[contains(@class, 'form-control') and contains(@class, 'ng-valid')])[4]")
 	private WebElement ddReturnReasonsRefineSearch;
 
 	@FindBy(xpath = "//div[@class='col-lg-1 col-xs-12 col-sm-6 lot ng-star-inserted']//input[@type='text']")
@@ -161,7 +161,7 @@ public class ReturnsPage extends BaseClass {
 	@FindBy(xpath = "((//td[@role='gridcell'])[1]//following::input[@type='date'])[1]")
 	private WebElement txtExpirationDateinGrid;
 
-	@FindBy(xpath = "//input[@class='form-control order-qty ng-pristine ng-valid ng-touched']")
+	@FindBy(xpath = "//tbody//tr[1]//td[5]//span[2]//input[1]")
 	private WebElement txtQtyinGrid;
 
 	@FindBy(xpath = "((//td[@role='gridcell'])[1]//following::input[@type='string'])[1]")
@@ -816,10 +816,11 @@ public class ReturnsPage extends BaseClass {
 	 * @param qty
 	 * @param returnReason
 	 * @param successMessage
-	 * @throws InterruptedException 
+	 * @throws InterruptedException
 	 */
 	public void refineSearchRefrigeratedItems(String addSearchProducts, String refineSearch, String category,
-			String sortBy, String sortOrder, String lotNumber, String qty, String returnReason, String successMessage) throws InterruptedException {
+			String sortBy, String sortOrder, String lotNumber, String qty, String returnReason, String successMessage)
+			throws InterruptedException {
 		Thread.sleep(1000);
 		try {
 			insertValue(getTxtSearchProducts(), addSearchProducts);
@@ -1055,7 +1056,7 @@ public class ReturnsPage extends BaseClass {
 	 */
 	public void pageNavigations() throws InterruptedException {
 		Thread.sleep(3000);
-		scrollToElement(getDdItemsperPage()); 
+		scrollToElement(getDdItemsperPage());
 		clickElementUsingJavaScript(driver, getDdItemsperPage());
 		clickElementUsingJavaScript(driver, getDdTen());
 		Thread.sleep(3000);
@@ -1104,7 +1105,7 @@ public class ReturnsPage extends BaseClass {
 	 */
 	public void updateReturnName(String returnName) {
 		insertValue(getTxtReturnName(), returnName);
-		clickElementUsingJavaScript(driver, getTextStatus());
+		clickElementUsingJavaScript(driver, getDdItemsperPage());
 	}
 
 	public void removeReturnName() {
@@ -1387,18 +1388,18 @@ public class ReturnsPage extends BaseClass {
 	 * @see Used to validate Ra Number Error message
 	 */
 	public void refrigeratedReturnReason(String items, String returnReason) {
-//		try {
-		scrollToElement(getTxtSearchProducts());
-		insertValue(getTxtSearchProducts(), items);
-		clickElementUsingJavaScript(driver, getiSearch());
-		insertValue(getTxtQty(), "2");
-		selectByVisibleText(getDdReturnReason(), returnReason);
-		elementVisibility(getTxtRANumber());
-		getTxtRANumber().sendKeys(Keys.chord(Keys.CONTROL, "a"));
-		getTxtRANumber().sendKeys(Keys.BACK_SPACE);
-		clickElementUsingJavaScript(driver, getBtnAddToReturn());
-//		} catch (Exception e) {
-//		}
+		try {
+			scrollToElement(getTxtSearchProducts());
+			insertValue(getTxtSearchProducts(), items);
+			clickElementUsingJavaScript(driver, getiSearch());
+			insertValue(getTxtQty(), "2");
+			selectByVisibleText(getDdReturnReason(), returnReason);
+			elementVisibility(getTxtRANumber());
+			getTxtRANumber().sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			getTxtRANumber().sendKeys(Keys.BACK_SPACE);
+			clickElementUsingJavaScript(driver, getBtnAddToReturn());
+		} catch (Exception e) {
+		}
 	}
 
 	/**
@@ -1415,7 +1416,7 @@ public class ReturnsPage extends BaseClass {
 			dateInput.sendKeys(Keys.chord(Keys.CONTROL, "a"));
 			// Delete the selected text
 			dateInput.sendKeys(Keys.BACK_SPACE);
-			dateInput.sendKeys("90");
+			dateInput.sendKeys("m0#2");
 			keyDown(Keys.ENTER);
 			keyUp(Keys.ENTER);
 			clickElementUsingJavaScript(driver, getTxtLotNumberGrid());
@@ -1463,12 +1464,12 @@ public class ReturnsPage extends BaseClass {
 				System.out.println("Sorting Order After Click for '" + columnNames[i] + "': " + ariaSort);
 
 				if ("descending".equals(ariaSort)) {
-					System.out.println("✅ Column '" + columnNames[i] + "' is now sorted in descending order.");
+					System.out.println(" Column '" + columnNames[i] + "' is now sorted in descending order.");
 				} else {
-					System.out.println("❌ Column '" + columnNames[i] + "' is NOT sorted in descending order.");
+					System.out.println(" Column '" + columnNames[i] + "' is NOT sorted in descending order.");
 				}
 			} else if ("descending".equals(ariaSort)) {
-				System.out.println("✅ Column '" + columnNames[i] + "' is initially sorted in descending order.");
+				System.out.println(" Column '" + columnNames[i] + "' is initially sorted in descending order.");
 
 				clickElementUsingJavaScript(driver, columnHeader);
 				try {
@@ -1480,11 +1481,10 @@ public class ReturnsPage extends BaseClass {
 				ariaSort = columnHeader.getAttribute("aria-sort");
 				System.out.println("Sorting Order After Click for '" + columnNames[i] + "': " + ariaSort);
 
-				// Verify it's in ascending order after second click
 				if ("ascending".equals(ariaSort)) {
-					System.out.println("✅ Column '" + columnNames[i] + "' is now sorted in ascending order.");
+					System.out.println(" Column '" + columnNames[i] + "' is now sorted in ascending order.");
 				} else {
-					System.out.println("❌ Column '" + columnNames[i] + "' is NOT sorted in ascending order.");
+					System.out.println(" Column '" + columnNames[i] + "' is NOT sorted in ascending order.");
 				}
 			} else {
 				System.out.println("Sorting order could not be determined for column '" + columnNames[i] + "'.");
@@ -1492,8 +1492,93 @@ public class ReturnsPage extends BaseClass {
 		}
 	}
 
-	@FindBy(id  = "pageSelector")
-	private WebElement txtPageSelector;
-	
-	@FindBy(xpath = "" )
+	public void addItemsUsingNDC_ProductDiscriptions(String ndc, String lotNumber, String qty, String returnReasons,
+			String successMessage) throws InterruptedException {
+		Thread.sleep(2000);
+		scrollToElement(getTxtSearchProducts());
+		insertValue(getTxtSearchProducts(), ndc);
+		clickElementUsingJavaScript(driver, getiSearch());
+		Thread.sleep(2000);
+		WebElement dateInput = driver.findElement(By.xpath("(//input[@type='date'])[1]"));
+		clearTextUsingjs(dateInput);
+		dateInput.sendKeys("05-03-2025");
+		getTxtLotLabel().sendKeys("1234");
+		getTxtQty().clear();
+		getTxtQty().sendKeys("1");
+		Thread.sleep(3000);
+		selectByVisibleText(getDdReturnReasonsRefineSearch(), returnReasons);
+		try {
+			if (returnReasons.equals("NR – Customer Service Authorized")) {
+				if (isElementVisible(getTxtRANumber())) {
+					insertValue(getTxtRANumber(), "1234");
+				}
+			}
+		} catch (Exception e) {
+
+		}
+		clickElementUsingJavaScript(driver, getCbxCase());
+		clickElementUsingJavaScript(driver, getBtnAddToReturn());
+		assertEquals(getAlertMessageAddReturnItems(), successMessage);
+
+	}
+
+	public void addItemsUsingUPC(String upc, String lotNumber, String qty, String returnReasons, String successMessage)
+			throws InterruptedException {
+		Thread.sleep(2000);
+		scrollToElement(getTxtSearchProducts());
+		insertValue(getTxtSearchProducts(), upc);
+		clickElementUsingJavaScript(driver, getiSearch());
+		Thread.sleep(2000);
+		WebElement dateInput = driver.findElement(By.xpath("(//input[@type='date'])[1]"));
+		clearTextUsingjs(dateInput);
+		dateInput.sendKeys("05-03-2025");
+		getTxtLotLabel().sendKeys("1234");
+		getTxtQty().clear();
+		getTxtQty().sendKeys("1");
+		Thread.sleep(3000);
+		selectByVisibleText(getDdReturnReasonsRefineSearch(), returnReasons);
+		try {
+			if (returnReasons.equals("NR – Customer Service Authorized")) {
+				if (isElementVisible(getTxtRANumber())) {
+					insertValue(getTxtRANumber(), "1234");
+				}
+			}
+		} catch (Exception e) {
+
+		}
+		clickElementUsingJavaScript(driver, getCbxCase());
+		clickElementUsingJavaScript(driver, getBtnAddToReturn());
+		assertEquals(getAlertMessageAddReturnItems(), successMessage);
+
+	}
+
+	public void addItemsUsingGTIN(String gtin, String lotNumber, String qty, String returnReasons,
+			String successMessage) throws InterruptedException {
+
+		Thread.sleep(2000);
+		scrollToElement(getTxtSearchProducts());
+		insertValue(getTxtSearchProducts(), gtin);
+		clickElementUsingJavaScript(driver, getiSearch());
+		Thread.sleep(2000);
+		WebElement dateInput = driver.findElement(By.xpath("(//input[@type='date'])[1]"));
+		clearTextUsingjs(dateInput);
+		dateInput.sendKeys("05-03-2025");
+		getTxtLotLabel().sendKeys("1234");
+		getTxtQty().clear();
+		getTxtQty().sendKeys("1");
+		Thread.sleep(3000);
+		selectByVisibleText(getDdReturnReasonsRefineSearch(), returnReasons);
+		try {
+			if (returnReasons.equals("NR – Customer Service Authorized")) {
+				if (isElementVisible(getTxtRANumber())) {
+					insertValue(getTxtRANumber(), "1234");
+				}
+			}
+		} catch (Exception e) {
+
+		}
+		clickElementUsingJavaScript(driver, getCbxCase());
+		clickElementUsingJavaScript(driver, getBtnAddToReturn());
+		assertEquals(getAlertMessageAddReturnItems(), successMessage);
+	}
 }

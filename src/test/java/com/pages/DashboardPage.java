@@ -423,4 +423,12 @@ public class DashboardPage extends BaseClass {
 		action.moveToElement(getiReturns()).perform();
 		clickElementUsingJavaScript(driver, getiReturns());
 	}
+	/**
+	 * @see Used to navigates Rx charts
+	 */
+	public void navigatesRxDoesCharts() {
+		scrollToElement(getRx_Doses_Chart());
+		click(getRx_Doses_Chart());
+
+	}
 }

@@ -1,5 +1,5 @@
 @Returns
-Feature: Verifying Mutual Drug Create Returns 
+Feature: Verifying Mutual Drug Create Returns
 
   @ReturnsName
   Scenario Outline: Verifying Mutual Drug Returns Name
@@ -7,7 +7,7 @@ Feature: Verifying Mutual Drug Create Returns
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new returns 
+    And User clicks on Create New to create a new returns
       | returnName | returnType |
       |          1 | Regular    |
     And User removes the Returns name and navigates back to the Returns page
@@ -26,14 +26,14 @@ Feature: Verifying Mutual Drug Create Returns
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new returns 
+    And User clicks on Create New to create a new returns
       | returnName                  | returnType |
       | sample test -Regular Return | Regular    |
-    And User adds return items by searching products:
+    And User adds returns items by searching products:
       | searchProducts | expirationDate | lotNumber | qty | returnReason                                                            | successMessage     |
       |         025767 | 12-02-2025     |     00000 |   1 | Dated OTC/DME - Within 6 months of Purchase                             | Return item added. |
-      | advil          | 13-02-2025     |     11111 |   1 | Non-Dated OTC/DME - Within 24 Months of Purchase                        | Return item added. |
-      | advil          | 13-02-2025     |     11111 |   1 | NR – Customer Service Authorized                                        | Return item added. |
+      |         420745 | 13-02-2025     |     11111 |   1 | Non-Dated OTC/DME - Within 24 Months of Purchase                        | Return item added. |
+      |         164814 | 13-02-2025     |     11111 |   1 | NR – Customer Service Authorized                                        | Return item added. |
       |         482208 | 14-02-2025     |      0123 |   2 | OTC – Meets Salable Criteria                                            | Return item added. |
       |         728717 | 14-02-2025     |      0123 |   1 | Recall                                                                  | Return item added. |
       |         268573 | 14-02-2025     |      0123 |   1 | Received Damaged - (Customer Service Notified)                          | Return item added. |
@@ -42,28 +42,35 @@ Feature: Verifying Mutual Drug Create Returns
       |         323667 | 15-02-2025     |      0123 |   1 | Rx – Expired (1 month prior to and up to 2 months past expiration date) | Return item added. |
       |         555888 | 15-02-2025     |      0123 |   1 | Rx - Meets Salable Criteria                                             | Return item added. |
       |         555888 | 15-02-2025     |      0123 |   1 | Store Did not Order - (Customer Service Notified)                       | Return item added. |
-      |         881011 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
-      |         323667 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
       |         288936 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
       |         482208 | 15-02-2025     |      0123 |   1 | Rx – Expired (1 month prior to and up to 2 months past expiration date) | Return item added. |
       |         407551 | 15-02-2025     |      0123 |   1 | Recall                                                                  | Return item added. |
       |         359091 | 15-02-2025     |      0123 |   1 | Received Damaged - (Customer Service Notified)                          | Return item added. |
       |         486944 | 15-02-2025     |      0123 |   1 | Received Short Dated - (Customer Service Notified)                      | Return item added. |
       |         476705 | 15-02-2025     |      0123 |   1 | Received Short Dated - (Customer Service Notified)                      | Return item added. |
-      |         308122 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
-      |         309872 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
-      |         881011 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
-      |         716886 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
       |         323667 | 15-02-2025     |      0123 |   1 | NR – Customer Service Authorized                                        | Return item added. |
       |         255695 | 15-02-2025     |      0123 |   1 | OTC – Meets Salable Criteria                                            | Return item added. |
       |         025767 | 15-02-2025     |      0123 |   1 | Received Damaged - (Customer Service Notified)                          | Return item added. |
-    And User adds Regular return items using refined search criteria, sorting by sort By in sort Order order:
+    And User should Add Returns items Using NDC, Product Description then add Quantity with Return Reason to clicks Add To Return
+      | NDC_ProductDescription               | lotNumber | qty | returnReason                                   | successMessage     |
+      |                          51672130005 |      0123 |   1 | Received Damaged - (Customer Service Notified) | Return item added. |
+      |                          00135052904 |      0123 |   1 | Recall                                         | Return item added. |
+      | BIOTENE TOOTHPASTE FRESH MINT 4.3 OZ |      0123 |   1 | OTC – Meets Salable Criteria                   | Return item added. |
+    And User Adds Returns items using UPC then add Quantity with Return Reason to clicks Add To Return:
+      | UPC         | lotNumber | qty | returnReason                                                            | successMessage     |
+      | 84009314006 |      1234 |   1 | NR – Customer Service Authorized                                        | Return item added. |
+      | 84009310231 |      1234 |   1 | Rx – Expired (1 month prior to and up to 2 months past expiration date) | Return item added. |
+    And User Adds Add Returns items using GTIN then add Quantity with Return Reason to clicks Add To Return:
+      | GTIN           | lotNumber | qty | returnReason                 | successMessage     |
+      | 00075486087432 |     01234 |   1 | Recall                       | Return item added. |
+      | 00075486087548 |     01234 |   1 | OTC – Meets Salable Criteria | Return item added. |
+    And User adds Regular returns items using refined search criteria, sorting by sort By in sort Order order:
       | addSearchProducts | refineSearch | category               | sortBy      | sortOrder | returnReasons | successMessage     |
       | advil             | wing         | Over the Counter (OTC) | Description | A to Z    | Recall        | Return item added. |
     And User updates the Regular Returns product list:
       | expirationDateGrid | lotNumberGrid | qtyGrid | returnReasonGrid | updateAlertMessage   |
       | 12-02-2025         |          1234 |       2 | Recall           | Return item updated. |
-    And User can change Return name as "Regular Return Automation Test" then  verifying the alert message  "Return name updated."
+    And User can change Returns name as "Regular Return Automation Test" then  verifying the alert message  "Return name updated."
     Then User should sort by Items and Product Description and delete an item from the return list, verifying the alert message  "Return item deleted."
     And User should navigate through pages using pagination controls on the Returns items page
     And User clicks on Sign & Submit and submits with "<authorisedSignature>", "<title>", and "<signatureFont>" and verifying alert success message as " Your Regular Form has been submitted "
@@ -79,23 +86,23 @@ Feature: Verifying Mutual Drug Create Returns
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new return order
+    And User clicks on Create New to create a new returns
       | returnName                 | returnType |
       | sample test -C2 Return - 4 | C2         |
-    And User adds C2 return  items by searching products:
+    And User adds C2 returns  items by searching products:
       | searchProducts | expirationDate | lotNumber | qty | returnReason                            | successMessage     |
       |         272005 | 12-02-2025     |     00000 |   1 | CII – 6 Months or Greater dating remain | Return item added. |
       |         313353 | 12-02-2025     |     11111 |   1 | CII – 6 Months or Greater dating remain | Return item added. |
       |         313361 | 12-02-2025     |     11111 |   1 | CII – 6 Months or Greater dating remain | Return item added. |
-    And User adds C2 return items using refined search criteria, sorting by sort By in sort Order order:
+    And User adds C2 returns items using refined search criteria, sorting by sort By in sort Order order:
       | addSearchProducts | refineSearch | category   | sortBy      | sortOrder | expirationDate | lotNumber | qty | returnReason                            | successMessage     |
       | HCL               | CAP          | Rx Generic | Description | A to Z    | 12-02-2025     |     11111 |   3 | CII – 6 Months or Greater dating remain | Return item added. |
-    And User updates the return products list:
+    And User updates the returns products list:
       | expirationDateGrid | lotNumberGrid | qtyGrid | returnReasonGrid                        | updateAlertMessage   |
       | 12-02-2025         |         12345 |       2 | CII – 6 Months or Greater dating remain | Return item updated. |
     Then User should sort by Items and Product Description and delete an item from the return list, verifying the alert message  "Return item deleted."
     And User clicks on Sign & Submit and submits with "<authorisedSignature>", "<title>", and "<signatureFont>" and verifying alert success message as "Your C2 Return document has successfully been emailed to Mutual Drug.  Please contact customer service if you have additional questions."
-    And User should Cliks Print Return then view the PDF document
+    And User should Cliks Print Returns then view the PDF document
 
     @C2Returns
     Examples: 
@@ -103,24 +110,24 @@ Feature: Verifying Mutual Drug Create Returns
       | WALKERS DRUG STORE (PREMIER) - 124685 | test                | sample | Edwardian Script ITC |
 
   @RefrigratedItems
-  Scenario Outline: Verifying Mutual Drug to Create Returns orders - Refrigerated Returns
+  Scenario Outline: Verifying Mutual Drug to Create Returns - Refrigerated Returns
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new return order
+    And User clicks on Create New to create a new returns
       | returnName                         | returnType   |
       | sample test -Refrigerated Return 1 | Refrigerated |
-    And User adds Refrigerated  return  items by searching products:
+    And User adds Refrigerated  returns  items by searching products:
       | searchRefrigeratedProducts | expirationDate | lotNumber | qty | returnReason                                                                      | successMessage     |
       |                     103507 | 12-02-2025     |     12345 |   1 | Refrigerated – (Customer Service Authorized)                                      | Return item added. |
       |                     107045 | 12-02-2025     |     12345 |   1 | Refrigerated – (Customer Service Authorized)                                      | Return item added. |
       |                     060574 | 12-02-2025     |     12345 |   1 | Refrigerated – Expired (1 month prior to and up to 2 months past expiration date) | Return item added. |
       |                     124990 | 12-02-2025     |     12345 |   1 | Refrigerated – Expired (1 month prior to and up to 2 months past expiration date) | Return item added. |
-    And User adds return items using refined search criteria, sorting by sort By in sort Order order:
+    And User adds returns items using refined search criteria, sorting by sort By in sort Order order:
       | addSearchProducts | refineSearch | category   | sortBy      | sortOrder | expirationDate | lotNumber | qty | returnReason                                 |
       | HCL               | TAB          | Rx Generic | Description | A to Z    | 12-02-2025     |     12345 |   1 | Refrigerated – (Customer Service Authorized) |
-    And User updates the return products list:
+    And User updates the returns products list:
       | expirationDateGrid | lotNumberGrid | qtyGrid | returnReasonGrid                                                                  | updateAlertMessage |
       | 12-02-2025         |         00000 |       1 | Refrigerated – Expired (1 month prior to and up to 2 months past expiration date) | Return item added. |
     Then User should sort by Items and Product Description and delete an item from the return list, verifying the alert message  "Return item deleted."
@@ -148,12 +155,12 @@ Feature: Verifying Mutual Drug Create Returns
       | WEB POS TEST STORE (PREMIER) - 009498 |
 
   @NegativeRegular
-  Scenario Outline: Verifying Mutual Drug Returns -Regular Returns - Negative Test
+  Scenario Outline: Verifying Mutual Drug Returns - Regular Returns - Negative Test
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new return order
+    And User clicks on Create New to create a new returns
       | returnName                    | returnType |
       | Negative Test Regular Returns | Regular    |
     Then User clicks on Sign & Submit without adding any Items and verifies the warning message "Please add at least one item to submit."
@@ -165,17 +172,29 @@ Feature: Verifying Mutual Drug Create Returns
       | 103507 | No matching product(s) found |
       | 032839 | No matching product(s) found |
       | 060574 | No matching product(s) found |
-    Then User adds a return by item number "025767" , does not select a return reason, clicks on Add to Return and verifies the warning message "Return reason is required."
+    Then User attempts to add C2, refrigerated, discontinued, and inactive items using NDC, UPC, GTIN, Product Discriptions in Regular returns then see the warning message "No matching product(s) found" for each item:
+      | products                                      | warningMessage               |
+      |                                   42858080401 | No matching product(s) found |
+      |                                   00781325089 | No matching product(s) found |
+      |                                        107045 | No matching product(s) found |
+      |                                   30781325089 | No matching product(s) found |
+      |                                   34928179051 | No matching product(s) found |
+      |                                00354092383016 | No matching product(s) found |
+      |                                00367457245010 | No matching product(s) found |
+      | AMPHETAMINE SALTS ER CAP 20 MG 100 ELITE      | No matching product(s) found |
+      | AMPHETAMINE SALTS ER CAP 20 MG 100 RHODES     | No matching product(s) found |
+      | ORENCIA INJ SUBQ 125 MG/ML CTN/4 U/S SYRINGES | No matching product(s) found |
+    Then User adds a returns by item number "025767", does not select a return reason, clicks on Add to Return and verifies the warning message "Return reason is required."
     Then User insert invalid date with "dd-mm-0010" and clicks Add To Order then verifies the warning messages "Please select valid expiration date."
     Then User adds item "881011" with Reaturn Reason as "NR – Customer Service Authorized" and Clicks Add To Order without enter RA Number then verifies the warning messages "RA Number is required."
     And User adds return items by searching products insert nill qty verifies warning message
       | searchProducts | expirationDate | lotNumber | qty | returnReason                                | warningmessage               |
       |         025767 | 12-02-2025     |     00000 |   0 | Dated OTC/DME - Within 6 months of Purchase | Min allowed return qty is 1. |
       |         881011 | 15-02-2025     |      0123 |   0 | NR – Customer Service Authorized            | Min allowed return qty is 1. |
-    And User adds return items by searching products:
+    And User adds returns items by searching products:
       | searchProducts | expirationDate | lotNumber | qty | returnReason                                | successMessage     |
       |         025767 | 12-02-2025     |     00000 |   1 | Dated OTC/DME - Within 6 months of Purchase | Return item added. |
-    And User enters a return quantity of "0" in the grid and sees the warning message "Min allowed return qty is 1."
+    And User enters a returns quantity of "0" in the grid and sees the warning message "Min allowed return qty is 1."
     And User clicks on Sign & Submit and submits
     And User should clicks on Sign & Submit and Without entering Authorized Signature (Type First & Last Name), title then see the error message as "Authorized Signature is required" , "Title is required"
 
@@ -189,7 +208,7 @@ Feature: Verifying Mutual Drug Create Returns
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new return order
+    And User clicks on Create New to create a new returns
       | returnName               | returnType |
       | Negative Test C2 Returns | C2         |
     Then User clicks on Sign & Submit without adding any Items and verifies the warning message "Please add at least one item to submit."
@@ -203,12 +222,12 @@ Feature: Verifying Mutual Drug Create Returns
       | 031427 | No matching product(s) found |
       | 011544 | No matching product(s) found |
       | 804385 | No matching product(s) found |
-    Then User adds a C2 return by item number "378729" with various missing fields (Expiration date, Lot Number, Qty, Return Reason) and verifies the corresponding warning messages: "Please select expiration date." , "Lot number is required." , "Min allowed return qty is 1." and "Return reason is required."
+    Then User adds a C2 returns by item number "378729" with various missing fields (Expiration date, Lot Number, Qty, Return Reason) and verifies the corresponding warning messages: "Please select expiration date." , "Lot number is required." , "Min allowed return qty is 1." and "Return reason is required."
     Then User insert invalid date with "dd-mm-0010" and clicks Add To Order then verifies the warning messages "Please select valid expiration date."
-    And User adds return items by searching products:
+    And User adds returns items by searching products:
       | searchProducts | expirationDate | lotNumber | qty | returnReason                            | successMessage     |
       |         729129 | 12-02-2025     |     00123 |   1 | CII – 6 Months or Greater dating remain | Return item added. |
-    And User enters a return quantity of "0" in the grid and sees the warning message "Min allowed return qty is 1."
+    And User enters a returns quantity of "0" in the grid and sees the warning message "Min allowed return qty is 1."
     And User clicks on Sign & Submit and submits
     And User should clicks on Sign & Submit and Without entering Authorized Signature (Type First & Last Name), title then see the error message as "Authorized Signature is required" , "Title is required"
 
@@ -222,7 +241,7 @@ Feature: Verifying Mutual Drug Create Returns
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
     Then User navigates to the "Returns" page and verifies the page is displayed
-    And User clicks on Create New to create a new return order
+    And User clicks on Create New to create a new returns
       | returnName                          | returnType   |
       | Negative Test Refrigerated  Returns | Refrigerated |
     Then User clicks on Sign & Submit without adding any Items and verifies the warning message "Please add at least one item to submit."
@@ -237,15 +256,15 @@ Feature: Verifying Mutual Drug Create Returns
       | 280941 | No matching product(s) found |
       | 407585 | No matching product(s) found |
       | 804385 | No matching product(s) found |
-    Then User adds a return by item number "103507" , does not select a return reason, clicks on Add to Return and verifies the warning message "Return reason is required."
-    Then User enters a return quantity of "0" and sees the warning message "Min allowed return qty is 1."
+    Then User adds a returns by item number "103507" , does not select a return reason, clicks on Add to Returns and verifies the warning message "Return reason is required."
+    Then User enters a returns quantity of "0" and sees the warning message "Min allowed return qty is 1."
     Then User adds item "107045" with Reaturn Reason as "Refrigerated – (Customer Service Authorized)" and Clicks Add To Order without enter RA Number then verifies the warning messages "RA Number is required."
     Then User insert invalid date with "dd-mm-0010" and clicks Add To Order then verifies the warning messages "Please select valid expiration date."
-    And User adds Refrigerated  return  items by searching products:
+    And User adds Refrigerated  returns  items by searching products:
       | searchRefrigeratedProducts | expirationDate | lotNumber | qty | returnReason                                 | successMessage     |
       |                     103507 | 12-02-2025     |     12345 |   1 | Refrigerated – (Customer Service Authorized) | Return item added. |
     Then User insert invalid date with "dd-mm-0010" in the Grid then verifies the warning messages "Please select valid expiration date."
-    And User enters a return quantity of "0" in the grid and sees the warning message "Min allowed return qty is 1."
+    And User enters a returns quantity of "0" in the grid and sees the warning message "Min allowed return qty is 1."
     And User clicks on Sign & Submit and submits
     And User should clicks on Sign & Submit and Without entering Authorized Signature (Type First & Last Name), title then see the error message as "Authorized Signature is required" , "Title is required"
 

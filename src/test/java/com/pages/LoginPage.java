@@ -65,6 +65,9 @@ public class LoginPage extends BaseClass {
 	@FindBy(xpath = "//a[@class='cancel-btn']")
 	private WebElement btnCancel;
 
+	@FindBy(xpath = "//div[text()='Email is required']")
+	private WebElement errorMessageEmailAddress;
+
 	@FindBy(xpath = "//div[contains(text(),'Email must be a valid email address')]")
 	private WebElement textInvaild_EmailAddress_Error_Message;
 
@@ -78,6 +81,12 @@ public class LoginPage extends BaseClass {
 	@FindBy(xpath = "//input[@name='lastName']")
 	private WebElement txtLast_Name;
 
+	@FindBy(xpath = "//input[@name='email']")
+	private WebElement txtUsername;
+
+	@FindBy(xpath = "//input[@name='password']")
+	private WebElement txtPassWord;
+
 	@FindBy(xpath = "//input[@name='confirmPassword']")
 	private WebElement txtConfirm_Password;
 
@@ -86,6 +95,44 @@ public class LoginPage extends BaseClass {
 
 	@FindBy(xpath = "//a[@class='signup-link']")
 	private WebElement sign_in;
+
+	@FindBy(xpath = "//div[contains(text(),'Member Number is required')]")
+	private WebElement errorMessageMemberNumberRequired;
+
+	@FindBy(xpath = "//div[contains(text(),'First Name is required')]")
+	private WebElement errorMessageFirstName;
+
+	@FindBy(xpath = "//div[contains(text(),'Last Name is required')]")
+	private WebElement errorMessageLastName;
+
+	@FindBy(xpath = "//div[contains(text(),'Email is required')]")
+	private WebElement errorMessageEmail;
+
+	@FindBy(xpath = "//div[contains(text(),'Email must be a valid email address')]")
+	private WebElement errorMessageInvalidEmail;
+
+	@FindBy(xpath = "//div[contains(text(),'Password is required')]")
+	private WebElement errorMessagePassword;
+
+	@FindBy(xpath = "//div[contains(text(),'Password must be at least 8 characters ')]")
+	private WebElement errorMessageinvalidPassword;
+
+	@FindBy(xpath = "//div[contains(text(),'Confirm Password is required')]")
+	private WebElement errorMessageConfirmPassword;
+
+	@FindBy(xpath = "//div[contains(text(),'Confirm Password must match with password.')]")
+	private WebElement errorMessageinvalidConfirmPassword;
+
+	@FindBy(xpath = "//div[contains(text(), 'Email already exists')]")
+	private WebElement alertMessageEmailAlreadyExists;
+
+	@FindBy(xpath = "//div[contains(text(), ' Invalid member number.')]")
+	private WebElement alertMessageInvalidmembernumber;
+
+	@FindBy(xpath = "//a[text()='Sign in']")
+	private WebElement btnSignIn;
+
+//dashboard
 
 	@FindBy(xpath = "//select[@class='form-control']")
 	private WebElement ddSelect_Your_Customer_Account;
@@ -104,7 +151,7 @@ public class LoginPage extends BaseClass {
 
 	@FindBy(xpath = "//div[@aria-label='C2 CERTIFICATE NOTIFICATION !!']")
 	private WebElement alertMessage;
-	
+
 	@FindBy(xpath = "//button[@aria-label='Close']")
 	private WebElement iClose;
 
@@ -152,16 +199,20 @@ public class LoginPage extends BaseClass {
 		return btnCancel;
 	}
 
+	public WebElement getErrorMessageEmailAddress() {
+		return errorMessageEmailAddress;
+	}
+
 	public WebElement getTxtMember_Number() {
 		return txtMember_Number;
 	}
 
-	public WebElement getTextInvaild_EmailAddress_Error_Message() {
-		return textInvaild_EmailAddress_Error_Message;
-	}
-
 	public WebElement getTextInvaild_UserName_Error_Message() {
 		return textInvaild_UserName_Error_Message;
+	}
+
+	public WebElement getTextInvaild_EmailAddress_Error_Message() {
+		return textInvaild_EmailAddress_Error_Message;
 	}
 
 	public WebElement getTxtFirst_Name() {
@@ -172,8 +223,56 @@ public class LoginPage extends BaseClass {
 		return txtLast_Name;
 	}
 
+	public WebElement getTxtUsername() {
+		return txtUsername;
+	}
+
+	public WebElement getTxtPassWord() {
+		return txtPassWord;
+	}
+
 	public WebElement getTxtConfirm_Password() {
 		return txtConfirm_Password;
+	}
+
+	public WebElement getErrorMessageMemberNumberRequired() {
+		return errorMessageMemberNumberRequired;
+	}
+
+	public WebElement getErrorMessageFirstName() {
+		return errorMessageFirstName;
+	}
+
+	public WebElement getErrorMessageLastName() {
+		return errorMessageLastName;
+	}
+
+	public WebElement getErrorMessageEmail() {
+		return errorMessageEmail;
+	}
+
+	public WebElement getErrorMessageInvalidEmail() {
+		return errorMessageInvalidEmail;
+	}
+
+	public WebElement getErrorMessagePassword() {
+		return errorMessagePassword;
+	}
+
+	public WebElement getErrorMessageinvalidPassword() {
+		return errorMessageinvalidPassword;
+	}
+
+	public WebElement getErrorMessageConfirmPassword() {
+		return errorMessageConfirmPassword;
+	}
+
+	public WebElement getErrorMessageinvalidConfirmPassword() {
+		return errorMessageinvalidConfirmPassword;
+	}
+
+	public WebElement getAlertMessageEmailAlreadyExists() {
+		return alertMessageEmailAlreadyExists;
 	}
 
 	public WebElement getBtnSign_Up() {
@@ -182,6 +281,14 @@ public class LoginPage extends BaseClass {
 
 	public WebElement getSign_in() {
 		return sign_in;
+	}
+
+	public WebElement getAlertMessageInvalidmembernumber() {
+		return alertMessageInvalidmembernumber;
+	}
+
+	public WebElement getBtnSignIn() {
+		return btnSignIn;
 	}
 
 	public WebElement getDdSelect_Your_Customer_Account() {
@@ -241,15 +348,16 @@ public class LoginPage extends BaseClass {
 	}
 
 	public void selectCustomerAccount(String selectYourCustomerAccount) throws InterruptedException {
-		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-		wait.until(ExpectedConditions.elementToBeClickable(getDdSelect_Your_Customer_Account()));
-		selectByVisibleText(getDdSelect_Your_Customer_Account(), selectYourCustomerAccount);
-		System.out.println(selectYourCustomerAccount);
-		wait.until(ExpectedConditions.elementToBeClickable(getBtnSubmit()));
-		clickWithActions(getBtnSubmit());
-		Thread.sleep(2000);
-		clickElementUsingJavaScript(driver, getBtnSubmit());
-
+		if (getDdSelect_Your_Customer_Account().isDisplayed()) {
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			wait.until(ExpectedConditions.elementToBeClickable(getDdSelect_Your_Customer_Account()));
+			selectByVisibleText(getDdSelect_Your_Customer_Account(), selectYourCustomerAccount);
+			System.out.println(selectYourCustomerAccount);
+			wait.until(ExpectedConditions.elementToBeClickable(getBtnSubmit()));
+			clickWithActions(getBtnSubmit());
+			Thread.sleep(2000);
+			clickElementUsingJavaScript(driver, getBtnSubmit());
+		}
 	}
 
 	/**
@@ -307,9 +415,15 @@ public class LoginPage extends BaseClass {
 		insertValue(getTxtPassword(), password);
 
 	}
-	public void closeNotifications() {
-		clickElementUsingJavaScript(driver, getiClose());
 
+	public void closeNotifications() {
+		try {
+			if (getiClose().isDisplayed()) {
+				clickElementUsingJavaScript(driver, getiClose());
+			}
+		} catch (Exception e) {
+
+		}
 	}
 
 	/**
@@ -317,9 +431,221 @@ public class LoginPage extends BaseClass {
 	 */
 	public void performLogout() {
 		closeNotifications();
+		// moveToElement(getIconUserProfile());
+		scrollToElement(getIconUserProfile());
+		click(getIconUserProfile());
+		click(getLogOut());
+
+	}
+
+	/**
+	 * @see Used login with admin User
+	 * @throws IOException
+	 * @throws FileNotFoundException
+	 * @see Used to admin Login
+	 */
+	public void adminLogin() throws FileNotFoundException, IOException {
+		String username = getPropertyFileValue("adminUserName");
+		String password = getPropertyFileValue("adminPassword");
+		insertValue(getTxtUserName(), username);
+		insertValue(getTxtPassword(), password);
+		click(getBtnLogin());
+
+	}
+
+	/**
+	 * @see Used to Member login
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void memberLogin() throws FileNotFoundException, IOException {
+		String username = getPropertyFileValue("memberUserName");
+		String password = getPropertyFileValue("memberPassWord");
+		insertValue(getTxtUserName(), username);
+		insertValue(getTxtPassword(), password);
+		click(getBtnLogin());
+
+	}
+	/**
+	 * @see Used to login after update profile
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void memberLoginWithUpdateProfile() throws FileNotFoundException, IOException {
+		String username = getPropertyFileValue("memberUserName");
+		String password = getPropertyFileValue("memberNewPassWord");
+		insertValue(getTxtUserName(), username);
+		insertValue(getTxtPassword(), password);
+		click(getBtnLogin());
+
+	}
+
+	/**
+	 * @see User to admin User logged out
+	 */
+	public void adminLogout() {
 		moveToElement(getIconUserProfile());
 		click(getIconUserProfile());
 		click(getLogOut());
+
+	}
+
+	/**
+	 * @see Used to clicks SignUp link
+	 */
+	public void clicksSignUp() {
+		elementToBeClickable(getSign_up());
+		clickElementUsingJavaScript(driver, getSign_up());
+	}
+
+	/**
+	 * @see Used to Insert SignUp details
+	 */
+	public void insertSignUpDetails(String memberNumber, String firstName, String lastName, String userName,
+			String password, String confirmPassword) {
+		insertValue(getTxtMember_Number(), memberNumber);
+		insertValue(getTxtFirst_Name(), firstName);
+		insertValue(getTxtLast_Name(), lastName);
+		insertValue(getTxtUsername(), userName);
+		insertValue(getTxtPassWord(), password);
+		insertValue(getTxtConfirm_Password(), confirmPassword);
+		click(getBtnSign_Up());
+	}
+
+	/**
+	 * @see Used to clicks SignIn button after insert SignUp Datails
+	 */
+	public void clicksSignIn() {
+		elementVisibility(getBtnSignIn());
+		clickElementUsingJavaScript(driver, getBtnSignIn());
+	}
+
+	/**
+	 * @see Used login after signUp
+	 * @throws FileNotFoundException
+	 * @throws IOException
+	 */
+	public void login_SignUp() throws FileNotFoundException, IOException {
+		String username = getPropertyFileValue("signUpUserName");
+		String password = getPropertyFileValue("signUpPassword");
+		insertValue(getTxtUserName(), username);
+		insertValue(getTxtPassword(), password);
+		click(getBtnLogin());
+
+	}
+
+	/**
+	 * @see Used to Signup with empty fields
+	 */
+	public void signupwithemptyFields() {
+		clearTextField(getTxtMember_Number());
+		clearTextField(getTxtFirst_Name());
+		clearTextField(getTxtLast_Name());
+		clearTextField(getTxtUsername());
+		clearTextField(getTxtPassWord());
+		clearTextField(getTxtConfirm_Password());
+		click(getBtnSign_Up());
+
+	}
+
+	/**
+	 * @see Used to signup with UserName, Password, confirm password
+	 * @param userName
+	 * @param password
+	 * @param confirmPassword
+	 */
+	public void signupwithUserNamePassword(String userName, String password, String confirmPassword) {
+		insertValue(getTxtUsername(), userName);
+		insertValue(getTxtPassWord(), password);
+		insertValue(getTxtConfirm_Password(), confirmPassword);
+		click(getBtnSign_Up());
+
+	}
+
+	/**
+	 * @see Used to entering invalid email
+	 * @param invalidmail
+	 */
+	public void invalidEmail(String invalidmail) {
+		clearTextUsingjs(getTxtUsername());
+		insertValue(getTxtUsername(), invalidmail);
+
+	}
+
+	/**
+	 * @see Used to password validation
+	 */
+	public void passwordValidation(String password) {
+		clearTextUsingjs(getTxtPassWord());
+		insertValue(getTxtPassWord(), password);
+
+	}
+
+	/**
+	 * @see Used to Confirm Password validation
+	 */
+	public void confirmPasswordValidation() {
+		clearTextUsingjs(getTxtPassWord());
+		insertValue(getTxtPassWord(), "Test1234");
+		insertValue(getTxtConfirm_Password(), "Test");
+
+	}
+
+	/**
+	 * @see used Sign Up with an already used Member
+	 */
+	public void signUpwithAlreadyUsedMember(String memberNumber) {
+		insertValue(getTxtMember_Number(), memberNumber);
+		insertValue(getTxtFirst_Name(), "Test");
+		insertValue(getTxtLast_Name(), "TEST");
+		insertValue(getTxtUsername(), "sajeso6269@linxues.com");
+		insertValue(getTxtPassWord(), "Test1234");
+		insertValue(getTxtConfirm_Password(), "Test1234");
+		click(getBtnSign_Up());
+	}
+
+	public void invalidMemberNumber(String memberNumber) {
+		insertValue(getTxtMember_Number(), memberNumber);
+		insertValue(getTxtFirst_Name(), "Test");
+		insertValue(getTxtLast_Name(), "TEST");
+		insertValue(getTxtUsername(), "cowoc38407@lushosa.com");
+		insertValue(getTxtPassWord(), "Test1234");
+		insertValue(getTxtConfirm_Password(), "Test1234");
+		click(getBtnSign_Up());
+
+	}
+
+	public void mailValidation() {
+		insertValue(getTxtMember_Number(), "126367");
+		insertValue(getTxtFirst_Name(), "Test");
+		insertValue(getTxtLast_Name(), "TEST");
+		insertValue(getTxtUsername(), "cowoc38407@lushosa.com");
+		insertValue(getTxtPassWord(), "Test1234");
+		insertValue(getTxtConfirm_Password(), "Test1234");
+		click(getBtnSign_Up());
+	}
+
+	public void clicksForgotPasswordLink() {
+		clickElementUsingJavaScript(driver, getForgot_Password());
+
+	}
+
+	/**
+	 * @see Used insert email address
+	 * @param emailAddress
+	 */
+	public void insertEmailAddress(String emailAddress) {
+		insertValue(getTxtEmail_Address(), emailAddress);
+		click(getBtnSend_Reset_Link());
+
+	}
+
+	/**
+	 * @see Used to attempts empty fields EmailAddress to clicks on send Reset Link
+	 */
+	public void emptyfieldsEmailAddress() {
+		clearTextField(getTxtEmail_Address());
+		click(getBtnSend_Reset_Link());
 
 	}
 

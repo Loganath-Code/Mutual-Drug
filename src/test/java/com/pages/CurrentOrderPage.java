@@ -5,11 +5,13 @@ import java.time.Duration;
 
 import org.openqa.selenium.By;
 import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.Select;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.base.BaseClass;
@@ -29,6 +31,9 @@ public class CurrentOrderPage extends BaseClass {
 
 	@FindBy(xpath = "//h4[text()='Current Orders']")
 	private WebElement titleCurrentOrders;
+
+	@FindBy(xpath = "//input[@placeholder='Search']")
+	private WebElement txtSearch;
 
 	@FindBy(xpath = "//button[@class='template-btn']")
 	private WebElement btnViewOrderTemplate;
@@ -62,6 +67,12 @@ public class CurrentOrderPage extends BaseClass {
 
 	@FindBy(xpath = "//mat-select[@name='chooseTemplate']")
 	private WebElement ddChooseTemplate;
+
+	@FindBy(xpath = "//div[text()='Special characters not allowed']")
+	private WebElement errorMessageSpecialChar;
+
+	@FindBy(xpath = "//div[text()='Order Name must be less than 60 characters']")
+	private WebElement errorMessageOrdenNamelength;
 
 	@FindBy(xpath = "//input[@name='orderName']")
 	private WebElement txtOrdername_Template;
@@ -126,7 +137,7 @@ public class CurrentOrderPage extends BaseClass {
 	@FindBy(xpath = "(//td[@class='tableCell'])[2]")
 	private WebElement tdProductDiscription;
 
-	@FindBy(xpath = "//select[@class='form-control ng-pristine ng-valid ng-touched']")
+	@FindBy(xpath = "//select[contains(@class, 'form-control') and contains(@class, 'ng-valid')]")
 	private WebElement ddSpecialCode;
 
 	@FindBy(xpath = "//input[@min='1']")
@@ -135,7 +146,7 @@ public class CurrentOrderPage extends BaseClass {
 	@FindBy(xpath = "//button[text()='Add']")
 	private WebElement btnAdd;
 
-	@FindBy(xpath = "//i[@class='fa fa-trash']")
+	@FindBy(xpath = "(//i[@class='fa fa-trash'])[1]")
 	private WebElement iconDelete;
 
 	@FindBy(xpath = "//input[@name='searchKey']")
@@ -144,7 +155,7 @@ public class CurrentOrderPage extends BaseClass {
 	@FindBy(xpath = "//button[@type='button']//i[@class='fa fa-search']")
 	private WebElement iSearch;
 
-	@FindBy(xpath = "//input[@placeholder='Qty']")
+	@FindBy(xpath = "(//input[@placeholder='Qty'])[1]")
 	private WebElement txtAddQty;
 
 	@FindBy(xpath = "(//button[@type='submit'])[2]")
@@ -198,8 +209,24 @@ public class CurrentOrderPage extends BaseClass {
 	@FindBy(xpath = "//div[text()='Special characters not allowed']")
 	private WebElement errorMessageOrdernameSpeclChar;
 
+	@FindBy(xpath = "//a[text()='Full View']")
+	private WebElement viewlinkFullView;
+
+	@FindBy(xpath = "//a[text()='Compact View']")
+	private WebElement viewLinkCompactView;
+	
+	@FindBy(xpath = "//button[text()='Update']")
+	private WebElement btnUpdate;
+
+	@FindBy(xpath = "//h4[text()='Item Already Exist']")
+	private WebElement modaltitle;
+
 	public WebElement getTitleCurrentOrders() {
 		return titleCurrentOrders;
+	}
+
+	public WebElement getTxtSearch() {
+		return txtSearch;
 	}
 
 	public WebElement getBtnViewOrderTemplate() {
@@ -248,6 +275,14 @@ public class CurrentOrderPage extends BaseClass {
 
 	public WebElement getDdChooseTemplate() {
 		return ddChooseTemplate;
+	}
+
+	public WebElement getErrorMessageSpecialChar() {
+		return errorMessageSpecialChar;
+	}
+
+	public WebElement getErrorMessageOrdenNamelength() {
+		return errorMessageOrdenNamelength;
 	}
 
 	public WebElement getRdbtnRegularOrder() {
@@ -435,6 +470,45 @@ public class CurrentOrderPage extends BaseClass {
 		return errorMessageOrdernameSpeclChar;
 	}
 
+	public WebElement getViewlinkFullView() {
+		return viewlinkFullView;
+	}
+
+	public WebElement getViewLinkCompactView() {
+		return viewLinkCompactView;
+	}
+	
+	public WebElement getBtnUpdate() {
+		return btnUpdate;
+	}
+
+	public WebElement getModaltitle() {
+		return modaltitle;
+	}
+
+	public void searchCurrentOrders(String orderName) throws InterruptedException {
+		elementVisibility(getTxtSearchOrders());
+		Thread.sleep(2000);
+		insertValue(getTxtSearchOrders(), orderName);
+		clickElementUsingJavaScript(driver, getiSearchOrders());
+
+	}
+	
+	public void deleteCurrentOrder() {
+		clickElementUsingJavaScript(driver, getiTrash());
+		clickElementUsingJavaScript(driver, getBtnYes());
+	}
+
+	/**
+	 * @see Used to clicks Full view in Product Search webpage
+	 */
+	public void selectsFullView() {
+
+		elementToBeClickable(getViewlinkFullView());
+		clickElementUsingJavaScript(driver, getViewlinkFullView());
+
+	}
+
 	/**
 	 * @see Used to click button View Order Templates
 	 */
@@ -454,8 +528,28 @@ public class CurrentOrderPage extends BaseClass {
 		elementVisibility(getTxtSearchOrders());
 		Thread.sleep(2000);
 		insertValue(getTxtSearchOrders(), orderName);
-
 		clickElementUsingJavaScript(driver, getiSearchOrders());
+	}
+
+	public void orderNameValidations(String orderNameValidations, String orderType) {
+		insertValue(getTxtOrderName(), orderNameValidations);
+		getTxtOrderName().sendKeys(Keys.ENTER);
+		clickRadioButton(orderType);
+		String autoSubmit = "6 PM";
+		clickRadioButton(autoSubmit);
+		clickElementUsingJavaScript(driver, getBtnCreate());
+
+	}
+
+	public void orderReference(String orderReferance, String orderType) {
+		clearTextUsingjs(getTxtOrderName());
+		String orderName = "Test";
+		getTxtOrderName().sendKeys(Keys.ENTER);
+		insertValue(getTxtOrderName(), orderName);
+		insertValue(getTxtOrderReference(), orderReferance);
+		getTxtOrderReference().sendKeys(Keys.ENTER);
+		clickElementUsingJavaScript(driver, getBtnCreate());
+
 	}
 
 	/**
@@ -473,7 +567,6 @@ public class CurrentOrderPage extends BaseClass {
 	 */
 	public void clickRadioButton(String rdbtnName) {
 		String xpath = "//label[normalize-space()='" + rdbtnName + "']//span[@class='checkmark']";
-		// Waiting until the radio button is clickable
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		WebElement radioButton = wait.until(ExpectedConditions.elementToBeClickable(By.xpath(xpath)));
 		radioButton.click();
@@ -496,15 +589,74 @@ public class CurrentOrderPage extends BaseClass {
 	}
 
 	/**
-	 * @see Used to add items
+	 * @see Used to create Empty Fields Use A template
+	 */
+	public void emptyFieldsUseATemplate() {
+		try {
+			clickElementUsingJavaScript(driver, getTabUseATemplate());
+			elementVisibility(getTxtOrderName());
+			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+			WebElement orderNameField = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderName()));
+			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			orderNameField.sendKeys(Keys.BACK_SPACE);
+			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+			orderNameField.sendKeys(Keys.BACK_SPACE);
+			clearTextField(orderNameField);
+			clickElementUsingJavaScript(driver, getBtnCreate());
+			clickElementUsingJavaScript(driver, getBtnCreate());
+		} catch (Exception e) {
+
+		}
+	}
+
+	public void templateOrderNameValidations(String orderName) {
+		elementVisibility(getTxtOrderName());
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement orderNameField = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderName()));
+		insertValue(orderNameField, orderName);
+		clickElementUsingJavaScript(driver, getBtnCreate());
+	}
+
+	public void templateOrderNamewithSpace() {
+		elementVisibility(getTxtOrderName());
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebElement orderNameField = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderName()));
+		orderNameField.sendKeys(Keys.BACK_SPACE);
+		clickElementUsingJavaScript(driver, getBtnCreate());
+	}
+
+	/**
+	 * @see Used to add items in the Order
 	 * @param itemsNum
 	 * @param specialCode
 	 * @param orderQty
+	 * @throws InterruptedException
 	 */
-	public void addItems(String itemsNum, String specialCode, String orderQty, String successMessage) {
+	public void addItems(String itemsNum, String specialCode, String orderQty, String successMessage)
+			throws InterruptedException {
 		elementVisibility(getTxtItemNum());
-		insertValue(getTxtItemNum(), itemsNum);
-		insertValue(getTxtOrderQty(), orderQty);
+		if (itemsNum != null)
+			insertValue(getTxtItemNum(), itemsNum);
+		if (orderQty != null)
+			insertValue(getTxtOrderQty(), orderQty);
+		WebElement specialCodeDropdown = getDdSpecialCode();
+		if (specialCodeDropdown != null && specialCodeDropdown.isDisplayed()) {
+			new WebDriverWait(driver, Duration.ofSeconds(5))
+					.until(ExpectedConditions.visibilityOf(specialCodeDropdown));
+			Select dropdown = new Select(specialCodeDropdown);
+			if (specialCode != null && !specialCode.trim().isEmpty()
+					&& !"[empty]".equalsIgnoreCase(specialCode.trim())) {
+				Thread.sleep(1000);
+				try {
+					dropdown.selectByVisibleText(specialCode);
+				} catch (NoSuchElementException e) {
+					dropdown.selectByValue(specialCode.trim());
+				}
+			} else {
+				dropdown.selectByIndex(0);
+			}
+		}
+		Thread.sleep(1000);
 		click(getBtnAdd());
 		assertEquals(getAlertMessageByItemNumber(itemsNum), successMessage);
 	}
@@ -514,10 +666,40 @@ public class CurrentOrderPage extends BaseClass {
 	 * @param NDC
 	 * @param addQuantity
 	 * @param successMessage
+	 * @throws InterruptedException
 	 */
-	public void addProducts(String NDC, String addQuantity, String successMessage) {
+	public void addProducts(String NDC_ProductDescription, String addQuantity, String successMessage)
+			throws InterruptedException {
 		elementVisibility(getTxtSearchAddProducts());
-		insertValue(getTxtSearchAddProducts(), NDC);
+		Thread.sleep(1000);
+		insertValue(getTxtSearchAddProducts(), NDC_ProductDescription);
+		Thread.sleep(1500);
+		clickElementUsingJavaScript(driver, getiSearch());
+		selectsFullView();
+		elementVisibility(getTxtAddQty());
+		insertValue(getTxtAddQty(), addQuantity);
+		clickElementUsingJavaScript(driver, getBtnAddToOrder());
+//		assertEquals(getAlertMessageByItemNumber(itemsNum), successMessage);
+	}
+
+	public void addProductsUsingUPC(String UPC, String addQuantity, String successMessage) throws InterruptedException {
+		elementVisibility(getTxtSearchAddProducts());
+		Thread.sleep(1000);
+		insertValue(getTxtSearchAddProducts(), UPC);
+		Thread.sleep(1500);
+		clickElementUsingJavaScript(driver, getiSearch());
+		elementVisibility(getTxtAddQty());
+		insertValue(getTxtAddQty(), addQuantity);
+		clickElementUsingJavaScript(driver, getBtnAddToOrder());
+//		assertEquals(getAlertMessageByItemNumber(itemsNum), successMessage);
+	}
+
+	public void addProductsUsingGTIN(String GTIN, String addQuantity, String successMessage)
+			throws InterruptedException {
+		elementVisibility(getTxtSearchAddProducts());
+		Thread.sleep(1000);
+		insertValue(getTxtSearchAddProducts(), GTIN);
+		Thread.sleep(1500);
 		clickElementUsingJavaScript(driver, getiSearch());
 		elementVisibility(getTxtAddQty());
 		insertValue(getTxtAddQty(), addQuantity);
@@ -665,28 +847,6 @@ public class CurrentOrderPage extends BaseClass {
 	}
 
 	/**
-	 * @see Used to create Empty Fields Use A template
-	 */
-	public void emptyFieldsUseATemplate() {
-		try {
-			clickElementUsingJavaScript(driver, getTabUseATemplate());
-			elementVisibility(getTxtOrderName());
-			WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-			WebElement orderNameField = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderName()));
-			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-			orderNameField.sendKeys(Keys.BACK_SPACE);
-			orderNameField.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-			orderNameField.sendKeys(Keys.BACK_SPACE);
-			clearTextField(orderNameField);
-			clickElementUsingJavaScript(driver, getBtnCreate());
-			clickElementUsingJavaScript(driver, getBtnCreate());
-		} catch (Exception e) {
-			// TODO: handle exception
-		}
-	}
-
-	/**
 	 * @see Used to Perform Pagination
 	 * @throws InterruptedException
 	 */
@@ -754,7 +914,7 @@ public class CurrentOrderPage extends BaseClass {
 				System.out.println("Initial Sorting Order for '" + columnNames[i] + "': " + ariaSort);
 
 				if ("ascending".equals(ariaSort)) {
-					System.out.println("✅ Column '" + columnNames[i] + "' is initially sorted in ascending order.");
+					System.out.println("Column '" + columnNames[i] + "' is initially sorted in ascending order.");
 
 					clickElementUsingJavaScript(driver, columnHeader);
 
@@ -762,21 +922,21 @@ public class CurrentOrderPage extends BaseClass {
 					ariaSort = columnHeader.getAttribute("aria-sort");
 					System.out.println("Sorting Order After Click for '" + columnNames[i] + "': " + ariaSort);
 					if ("descending".equals(ariaSort)) {
-						System.out.println("✅ Column '" + columnNames[i] + "' is now sorted in descending order.");
+						System.out.println(" Column '" + columnNames[i] + "' is now sorted in descending order.");
 					} else {
-						System.out.println("❌ Column '" + columnNames[i] + "' is NOT sorted in descending order.");
+						System.out.println(" Column '" + columnNames[i] + "' is NOT sorted in descending order.");
 					}
 				} else if ("descending".equals(ariaSort)) {
-					System.out.println("✅ Column '" + columnNames[i] + "' is initially sorted in descending order.");
+					System.out.println("Column '" + columnNames[i] + "' is initially sorted in descending order.");
 
 					clickElementUsingJavaScript(driver, columnHeader);
 					wait.until(ExpectedConditions.attributeToBeNotEmpty(columnHeader, "aria-sort"));
 					ariaSort = columnHeader.getAttribute("aria-sort");
 					System.out.println("Sorting Order After Click for '" + columnNames[i] + "': " + ariaSort);
 					if ("ascending".equals(ariaSort)) {
-						System.out.println("✅ Column '" + columnNames[i] + "' is now sorted in ascending order.");
+						System.out.println("Column '" + columnNames[i] + "' is now sorted in ascending order.");
 					} else {
-						System.out.println("❌ Column '" + columnNames[i] + "' is NOT sorted in ascending order.");
+						System.out.println("Column '" + columnNames[i] + "' is NOT sorted in ascending order.");
 					}
 				} else {
 					System.out.println("Sorting order could not be determined for column '" + columnNames[i] + "'.");
@@ -787,4 +947,31 @@ public class CurrentOrderPage extends BaseClass {
 		}
 	}
 
+	public void searchTemplates(String templateName) {
+		insertValue(getTxtSearch(), templateName);
+		clickElementUsingJavaScript(driver, getiSearchOrders());
+	}
+
+	public void addAlternativeItem(String itemNumber, String orderQty) throws InterruptedException {
+
+		elementVisibility(getTxtSearchAddProducts());
+		insertValue(getTxtSearchAddProducts(), itemNumber);
+		clickElementUsingJavaScript(driver, getiSearch());
+		elementVisibility(getTxtAddQty());
+		insertValue(getTxtAddQty(), orderQty);
+		clickElementUsingJavaScript(driver, getBtnAddToOrder());
+		Thread.sleep(1500);
+
+	}
+	public void alreadyAddedItemUsingAddProducts(String product) throws InterruptedException {
+		elementVisibility(getTxtSearchAddProducts());
+		Thread.sleep(1000);
+		insertValue(getTxtSearchAddProducts(), product);
+		Thread.sleep(1500);
+		clickElementUsingJavaScript(driver, getiSearch());
+
+
+	}
+
+	
 }
