@@ -548,7 +548,7 @@ public class AdminOrderTemplatesPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getTxtMemberNumber());
 		selectOptionByIndex(driver, getTxtMemberNumber(), 1);
 		insertValue(getTxtTemplateName(), templatesName);
-		selectOptionDropDown(driver, getTxtTemplateName(), templatesName);
+		selectOptionDropDown(getTxtTemplateName(), templatesName);
 		clickElementUsingJavaScript(driver, getBtnCreate());
 		click(getBtnCreate());
 	}

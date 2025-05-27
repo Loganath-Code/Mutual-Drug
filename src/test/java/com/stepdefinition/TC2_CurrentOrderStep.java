@@ -24,7 +24,10 @@ public class TC2_CurrentOrderStep extends BaseClass {
 	 */
 
 	PageObjectManager pom = new PageObjectManager();
-
+	@Then("User should Read and Accept the Returns Policy Update")
+	public void userShouldReadAndAcceptTheReturnsPolicyUpdate() throws InterruptedException {
+		pom.getDashboardPage().returnPolicy();
+	}
 	/**
 	 * @see Navigates to the Current Orders page and verifies the page title
 	 * @param expectedTitle The expected title of the Current Orders page
@@ -37,7 +40,38 @@ public class TC2_CurrentOrderStep extends BaseClass {
 		WebElement titleCurrentOrders = pom.getCurrentOrderPage().getTitleCurrentOrders();
 		verifyPageTitle(titleCurrentOrders, currentOrder);
 	}
-
+	@When("User clicks the Create New button and selects {string} as the customer account for the new order")
+	public void userClicksTheCreateNewButtonAndSelectsAsTheCustomerAccountForTheNewOrder(String selectPharmacyAccount) throws InterruptedException {
+	  
+		pom.getCurrentOrderPage().clickBtnCreateNew();
+		pom.getCurrentOrderPage().selectYourPharmacyAccount(selectPharmacyAccount);
+	}
+	/**
+	 * @see Used to create a new regular order
+	 * @param orderName      - The name of the order
+	 * @param orderType      - The type of order (e.g., Regular)
+	 * @param autoSubmit     - Auto Submit option (e.g., Yes/No)
+	 * @param orderReference - Custom reference for the order
+	 */
+	
+	@When("User should Create New Regular Orders with {string}, {string} , {string} , {string} , {string}")
+	public void userShouldCreateNewRegularOrdersWith(String selectedPharmacyAccount, String orderName, String orderType, String autoSubmit,
+			String orderReferance) {
+		WebElement textMemberSelection = pom.getCurrentOrderPage().getTextMemberSelection();
+		assertEquals(textMemberSelection, selectedPharmacyAccount);
+		pom.getCurrentOrderPage().createNewOrder(orderName, orderType, autoSubmit, orderReferance);
+	}
+	@When("User verifies that the selected Member Pharmacy Account {string} is displayed on the Orders page")
+	public void userVerifiesThatTheSelectedMemberPharmacyAccountIsDisplayedOnTheOrdersPage(String selectedPharmacyAccount) {
+		WebElement textMemberSelection = pom.getCurrentOrderPage().getTextMemberSelection();
+		assertEquals(textMemberSelection, selectedPharmacyAccount);
+	}
+	@When("User should Create New Regular Orders with {string} , {string} , {string} , {string}")
+	public void userShouldCreateNewRegularOrdersWith(String orderName, String orderType, String autoSubmit,
+			String orderReferance) {
+		pom.getCurrentOrderPage().createNewOrder(orderName, orderType, autoSubmit, orderReferance);
+	  
+	}
 	/**
 	 * @see Used to create a new regular order
 	 * @param orderName      - The name of the order
@@ -57,12 +91,12 @@ public class TC2_CurrentOrderStep extends BaseClass {
 	 * @param orderName - The name of the C2 order
 	 * @param orderType - The type/category of the order
 	 */
-	@When("User clicks Create New, Create New C2 Orders with {string} , {string}")
-	public void userClicksCreateNewCreateNewC2OrdersWith(String orderName, String orderType) {
+	@When("User should Create New C2 Orders  with {string} , {string}")
+	public void userShouldCreateNewC2OrdersWith(String orderName, String orderType) {
 		pom.getCurrentOrderPage().createC2Order(orderName, orderType);
 
+		
 	}
-
 	/**
 	 * @see This step definition is used to add multiple products to the order using
 	 *      either NDC, Product Description, UPC, or GTIN values along with
@@ -303,7 +337,7 @@ public class TC2_CurrentOrderStep extends BaseClass {
 
 	/**
 	 * @see Used to selecting the header (select-all) checkbox correctly selects all
-	 *      individual row checkboxes in the list or table.
+	 *      individual row check boxes in the list or table.
 	 * @throws InterruptedException if the test execution is interrupted during wait
 	 *                              operations
 	 */
@@ -324,7 +358,7 @@ public class TC2_CurrentOrderStep extends BaseClass {
 	public void userShouldSelectsTheItemInListAndClicksDeleteSelectedThenVerifiesTheSuccessMessage(
 			String alertMessageDelete) {
 		pom.getOrdersPage().deleteProducts();
-		WebElement successMessageDelete = pom.getOrdersPage().getSuccessMessageDelete();
+		WebElement successMessageDelete = pom.getOrdersPage().getSuccesMessageItemDeleted();
 		assertEquals(successMessageDelete, alertMessageDelete);
 
 	}

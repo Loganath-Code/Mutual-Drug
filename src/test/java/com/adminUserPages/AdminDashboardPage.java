@@ -53,20 +53,34 @@ public class AdminDashboardPage extends BaseClass {
 
 	@FindBy(xpath = "//span[text()='Order Templates']")
 	private WebElement lnkOrderTemplates;
-	
+
 	@FindBy(xpath = "//a[@href='/admin/planograms']")
 	private WebElement lnkPlanograms;
-	
+
 	@FindBy(xpath = "//span[text()='Banners']")
 	private WebElement lbkBanners;
-	
+
 	@FindBy(xpath = "//span[text()='Create Banner']")
 	private WebElement lnkCreateBanner;
-	
+
 	@FindBy(xpath = "//span[text()='Banner Metrics']")
 	private WebElement lnkBannerMetrics;
+
+	@FindBy(xpath = "//span[text()='Returns']")
+	private WebElement lnkReturns;
+
+	@FindBy(xpath = "//span[text()='Return Policies']")
+	private WebElement lnkReturnPolices;
+
+	@FindBy(xpath = "//span[text()='C2 Returns']")
+	private WebElement lnkC2Returns;
 	
-	
+	@FindBy(xpath = "//span[text()='Open C2 Returns']")
+	private WebElement lnkOpenC2Returns;
+
+	@FindBy(xpath = "//span[text()='Closed C2 Returns']")
+	private WebElement tnkClosedC2Returns;
+
 	public WebElement getTitleMemberUsers() {
 		return titleMemberUsers;
 	}
@@ -139,6 +153,26 @@ public class AdminDashboardPage extends BaseClass {
 		return lnkBannerMetrics;
 	}
 
+	public WebElement getLnkReturns() {
+		return lnkReturns;
+	}
+
+	public WebElement getLnkReturnPolices() {
+		return lnkReturnPolices;
+	}
+
+	public WebElement getLnkC2Returns() {
+		return lnkC2Returns;
+	}
+
+	public WebElement getLnkOpenC2Returns() {
+		return lnkOpenC2Returns;
+	}
+
+	public WebElement getTnkClosedC2Returns() {
+		return tnkClosedC2Returns;
+	}
+
 	public void navigatesOrderTemplates() {
 		moveToElement(iAdministrations);
 		clickElementUsingJavaScript(driver, getLnkAdministration());
@@ -163,12 +197,13 @@ public class AdminDashboardPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getLnkMembers());
 		clickElementUsingJavaScript(driver, getLnkRoles());
 	}
+
 	public void navigatesPlanograms() {
 		moveToElement(getiAdministrations());
 		clickElementUsingJavaScript(driver, getLnkAdministration());
 		clickElementUsingJavaScript(driver, getLnkPlanograms());
 	}
-	
+
 	public void navigatesCreateBanners() {
 		moveToElement(getiAdministrations());
 		clickElementUsingJavaScript(driver, getLnkAdministration());
@@ -176,11 +211,21 @@ public class AdminDashboardPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getLnkCreateBanner());
 
 	}
+
 	public void navigtesBannerMetrics() {
 		moveToElement(getiAdministrations());
 		clickElementUsingJavaScript(driver, getLnkAdministration());
 		clickElementUsingJavaScript(driver, getLbkBanners());
 		clickElementUsingJavaScript(driver, getLnkBannerMetrics());
+
+	}
+
+	public void navigatesOpenC2Returns() {
+		moveToElement(getiAdministrations());
+		clickElementUsingJavaScript(driver, getLnkAdministration());
+		clickElementUsingJavaScript(driver, getLnkReturns());
+		clickElementUsingJavaScript(driver, getLnkC2Returns());
+		clickElementUsingJavaScript(driver, getLnkOpenC2Returns());
 
 	}
 }

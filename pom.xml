@@ -65,6 +65,12 @@
 			<artifactId>pdfbox</artifactId>
 			<version>3.0.1</version>
 		</dependency>
+<!-- https://mvnrepository.com/artifact/io.cucumber/messages -->
+<dependency>
+    <groupId>io.cucumber</groupId>
+    <artifactId>messages</artifactId>
+    <version>26.0.0</version>
+</dependency>
 	</dependencies>
 	<name>Mutual Drug</name>
 </project>

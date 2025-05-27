@@ -1,11 +1,15 @@
 package com.pages;
 
 import java.lang.reflect.Constructor;
+import java.time.Duration;
 
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.interactions.Actions;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
+import org.openqa.selenium.support.ui.ExpectedConditions;
+import org.openqa.selenium.support.ui.WebDriverWait;
 
 import com.base.BaseClass;
 
@@ -20,6 +24,8 @@ public class DashboardPage extends BaseClass {
 	public DashboardPage() {
 		PageFactory.initElements(driver, this);
 	}
+
+	WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
 	@FindBy(xpath = "//i[@class='fa fa-tachometer']")
 	private WebElement Rx_Doses_Chart;
@@ -53,9 +59,21 @@ public class DashboardPage extends BaseClass {
 
 	@FindBy(xpath = "//a[@href='/map/pages/recalls-and-safety-information']")
 	private WebElement lnkRecalls;
-	
-	@FindBy(xpath = "//a[@href='/member/returns']")
+
+	@FindBy(xpath = "//i[@class='fa fa-retweet']")
 	private WebElement iReturns;
+
+	@FindBy(xpath = "//span[text()='Returns']")
+	private WebElement lnkReturnsm;
+
+	@FindBy(xpath = "(//a[@href='/member/returns'])[1]")
+	private WebElement lnkUnsubmitted;
+
+	@FindBy(xpath = "(//a[@href='/member/returns/return-submitted'])[1]")
+	private WebElement lnkSubmitted;
+
+	@FindBy(xpath = "(//a[@href='/member/returns/return-ack-history'])[1]")
+	private WebElement lnkAcknowledgement;
 
 	@FindBy(xpath = "//span[contains(text(),'Reports')]")
 	private WebElement iReports;
@@ -171,6 +189,18 @@ public class DashboardPage extends BaseClass {
 	@FindBy(xpath = "//div[@aria-label='Product added to order.']")
 	private WebElement alertSuccessMessageOrderCreation;
 
+	@FindBy(xpath = "(//input[@type='checkbox'])[2]")
+	private WebElement cbxReturnPolicyUpdates;
+
+	@FindBy(xpath = "//button[@class='btn btn-primary modal-btn']")
+	private WebElement btnIAccept;
+
+	@FindBy(xpath = "//button[text()='Next']")
+	private WebElement btnNext;
+
+	@FindBy(xpath = "//h4[normalize-space()='Important : Return Policy Update']")
+	private WebElement titleReturnPolicy;
+
 	public WebElement getRx_Doses_Chart() {
 		return Rx_Doses_Chart;
 	}
@@ -217,6 +247,22 @@ public class DashboardPage extends BaseClass {
 
 	public WebElement getiReturns() {
 		return iReturns;
+	}
+
+	public WebElement getLnkReturnsm() {
+		return lnkReturnsm;
+	}
+
+	public WebElement getLnkUnsubmitted() {
+		return lnkUnsubmitted;
+	}
+
+	public WebElement getLnkSubmitted() {
+		return lnkSubmitted;
+	}
+
+	public WebElement getLnkAcknowledgement() {
+		return lnkAcknowledgement;
 	}
 
 	public WebElement getiReports() {
@@ -371,6 +417,22 @@ public class DashboardPage extends BaseClass {
 		return alertSuccessMessageOrderCreation;
 	}
 
+	public WebElement getCbxReturnPolicyUpdates() {
+		return cbxReturnPolicyUpdates;
+	}
+
+	public WebElement getBtnIAccept() {
+		return btnIAccept;
+	}
+
+	public WebElement getBtnNext() {
+		return btnNext;
+	}
+
+	public WebElement getTitleReturnPolicy() {
+		return titleReturnPolicy;
+	}
+
 	/**
 	 * @see Used to Select Order
 	 * @throws InterruptedException
@@ -415,14 +477,19 @@ public class DashboardPage extends BaseClass {
 	}
 
 	/**
-	 * @see Used to naigates return webpage
+	 * @see Used to naigates returns Submenus
 	 */
-	public void navigatesReturns() {
+	public void navigatesReturns(String linkedMenu) {
 		scrollToElement(getiReturns());
 		Actions action = new Actions(driver);
 		action.moveToElement(getiReturns()).perform();
-		clickElementUsingJavaScript(driver, getiReturns());
+		clickElementUsingJavaScript(driver, getLnkReturnsm());
+		WebElement returnSubmenu = wait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("//span[contains(normalize-space(),'" + linkedMenu + "')]")));
+		returnSubmenu.click();
+		
 	}
+
 	/**
 	 * @see Used to navigates Rx charts
 	 */
@@ -430,5 +497,19 @@ public class DashboardPage extends BaseClass {
 		scrollToElement(getRx_Doses_Chart());
 		click(getRx_Doses_Chart());
 
+	}
+
+	public void returnPolicy() throws InterruptedException {
+		if (getTitleReturnPolicy().isDisplayed()) {
+			elementToBeClickable(getCbxReturnPolicyUpdates());
+			clickElementUsingJavaScript(driver, getCbxReturnPolicyUpdates());
+			clickElementUsingJavaScript(driver, getBtnIAccept());
+			Thread.sleep(800);
+			clickWithWait(getCbxReturnPolicyUpdates());
+			clickElementUsingJavaScript(driver, getBtnNext());
+			Thread.sleep(800);
+			clickWithWait(getCbxReturnPolicyUpdates());
+			clickElementUsingJavaScript(driver, getBtnIAccept());
+		}
 	}
 }

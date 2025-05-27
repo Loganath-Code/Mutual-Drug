@@ -14,17 +14,41 @@ import io.cucumber.java.en.*;
 public class TC4_ReturnsStep extends BaseClass {
 	PageObjectManager pom = new PageObjectManager();
 
-	@Then("User navigates to the {string} page and verifies the page is displayed")
-	public void userNavigatesToThePageAndVerifiesThePageIsDisplayed(String expectedTitle) {
-		pom.getDashboardPage().navigatesReturns();
-		WebElement titleReturns = pom.getReturnsPage().getTitleReturns();
+	/**
+	 * @see used for navigating to the Returns section and clicking on a specified
+	 *      menu link.
+	 *
+	 * @param linkedMenu The name of the menu link to be clicked under Returns.
+	 */
+	@When("User navigates to Returns and clicks on {string}")
+	public void userNavigatesToReturnsAndClicksOn(String linkedMenu) {
+
+		pom.getDashboardPage().navigatesReturns(linkedMenu);
+
+	}
+
+	/**
+	 * @see used for verify that the bread crumb title is displayed on the page and
+	 *      matches the expected title.
+	 *
+	 * @param expectedTitle The expected bread crumb title text to verify.
+	 */
+	@Then("User should verify the breadcrumb title {string} is displayed on the page")
+	public void userShouldVerifyTheBreadcrumbTitleIsDisplayedOnThePage(String expectedTitle) {
+
+		WebElement titleReturns = pom.getReturnsPage().getBctitleReturns();
 		verifyPageTitle(titleReturns, expectedTitle);
 	}
 
+	/**
+	 * @see used to click on "Create New" and create one or more new return orders
+	 *      based on the provided data table.
+	 *
+	 * @param dataTable A Cucumber DataTable containing return order details with
+	 *                  columns like "returnName" and "returnType".
+	 */
 	@Then("User clicks on Create New to create a new returns")
-	public void userClicksOnCreateNewToCreateANewReturns(io.cucumber.datatable.DataTable dataTable)
-			throws InterruptedException {
-
+	public void userClicksOnCreateNewToCreateANewReturns(io.cucumber.datatable.DataTable dataTable) {
 		List<Map<String, String>> returnOrders = dataTable.asMaps();
 
 		for (Map<String, String> returnOrder : returnOrders) {
@@ -32,102 +56,186 @@ public class TC4_ReturnsStep extends BaseClass {
 			String returnType = returnOrder.get("returnType");
 			pom.getReturnsPage().createReturnOrder(returnName, returnType);
 		}
+	}
+
+	/**
+	 * @see used to remove the current Returns name and then navigate back to the
+	 *      Returns page.
+	 *
+	 * @throws InterruptedException if the thread sleep is interrupted.
+	 */
+	@Then("User removes the Returns name and navigates back to the Returns page")
+	public void userRemovesTheReturnsNameAndNavigatesBackToTheReturnsPage() throws InterruptedException {
+		Thread.sleep(2000);
+		pom.getReturnsPage().removeReturnName();
+		pom.getReturnsPage().navigatesBackUsingBclink();
+	}
+
+	/**
+	 * @see used to search for a returns name and verify that the grid displays the
+	 *      expected returns name.
+	 *
+	 * @param returnName         The returns name to search for.
+	 * @param expectedReturnName The expected returns name displayed in the grid.
+	 * @throws InterruptedException if the thread sleep or wait is interrupted.
+	 */
+	@Then("User searches for a returns name {string} and verifies that the grid displays the returns name is {string}")
+	public void userSearchesForAReturnsNameAndVerifiesThatTheGridDisplaysTheReturnsNameIs(String returnName,
+			String ReturnName) throws InterruptedException {
+
+		pom.getReturnsPage().searchReturnsName(returnName);
+		pom.getReturnsPage().SubmittedDateSorting();
+		WebElement tdFirstcell = pom.getReturnsPage().getTdFirstcell();
+		assertEquals(tdFirstcell, ReturnName);
 
 	}
 
-	@Then("User adds returns items by searching products:")
-	public void userAddsReturnsItemsBySearchingProducts(io.cucumber.datatable.DataTable dataTable)
-			throws InterruptedException {
-
-		List<Map<String, String>> returnItems = dataTable.asMaps();
-		for (Map<String, String> Item : returnItems) {
-			String searchProducts = Item.get("searchProducts");
-			String expirationDate = Item.get("expirationDate");
-			String lotNumber = Item.get("lotNumber");
-			String qty = Item.get("qty");
-			String returnReason = Item.get("returnReason");
-			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().addReturnProducts(searchProducts, expirationDate, lotNumber, qty, returnReason,
-					successMessage);
-		}
+	/**
+	 * @see used to verify sorting functionality in both ascending and descending
+	 *      order for all specified columns in the Returns grid.
+	 * 
+	 *      The columns verified are: Return Name, Status, Submitted Date, Submitted
+	 *      By, Type, Total Lines, and Total Pieces.
+	 */
+	@Then("User verifies sorting order in both ascending and descending order for all columns Return Name, Status, Submitted Date, Submitted By, Type, Total Lines, and Total Pieces")
+	public void userVerifiesSortingOrderInBothAscendingAndDescendingOrderForAllColumnsReturnNameStatusSubmittedDateSubmittedByTypeTotalLinesAndTotalPieces() {
+		String[] columnNames = { "Return Name", "Status", "Submitted Date", "Submitted By", "Type", "Total Lines",
+				"Total Pieces" };
+		pom.getReturnsPage().verifySortingFunctionality(columnNames);
 	}
 
-	@Then("User should Add Returns items Using NDC, Product Description then add Quantity with Return Reason to clicks Add To Return")
-	public void userShouldAddReturnsItemsUsingNDCProductDescriptionThenAddQuantityWithReturnReasonToClicksAddToReturn(
-			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
-
-		List<Map<String, String>> returnItems = dataTable.asMaps();
-		for (Map<String, String> Item : returnItems) {
-			String ndc = Item.get("NDC_ProductDescription");
-			String lotNumber = Item.get("lotNumber");
-			String qty = Item.get("qty");
-			String returnReason = Item.get("returnReason");
-			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().addItemsUsingNDC_ProductDiscriptions(ndc, lotNumber, qty, returnReason,
-					successMessage);
-		}
-	}
-
-	@Then("User Adds Returns items using UPC then add Quantity with Return Reason to clicks Add To Return:")
-	public void userAddsReturnsItemsUsingUPCThenAddQuantityWithReturnReasonToClicksAddToReturn(
-			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
-
-		List<Map<String, String>> returnItems = dataTable.asMaps();
-		for (Map<String, String> Item : returnItems) {
-			String upc = Item.get("UPC");
-			String lotNumber = Item.get("lotNumber");
-			String qty = Item.get("qty");
-			String returnReason = Item.get("returnReason");
-			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().addItemsUsingUPC(upc, lotNumber, qty, returnReason, successMessage);
-
-		}
-	}
-
-	@Then("User Adds Add Returns items using GTIN then add Quantity with Return Reason to clicks Add To Return:")
-	public void userAddsAddReturnsitemsUsingGTINThenAddQuantityWithReturnReasonToClicksAddToReturn(
-			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
-
-		List<Map<String, String>> returnItems = dataTable.asMaps();
-		for (Map<String, String> Item : returnItems) {
-			String gtin = Item.get("GTIN");
-			String lotNumber = Item.get("lotNumber");
-			String qty = Item.get("qty");
-			String returnReason = Item.get("returnReason");
-			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().addItemsUsingGTIN(gtin, lotNumber, qty, returnReason, successMessage);
-		}
-
-	}
-
+	/**
+	 * @see used to delete a return order from the returns list and verify the
+	 *      displayed alert message.
+	 *
+	 * @param alertDeleteReturnsMessage The expected alert message after deleting
+	 *                                  the return order.
+	 */
 	@Then("User deletes a return order from the returns list and verifies the {string} alert message")
 	public void userDeletesAReturnOrderFromTheReturnsListAndVerifiesTheAlertMessage(String alertDeleteReturnsMessage) {
 		pom.getReturnsPage().deleteReturDetails();
 		WebElement returnsDelete = pom.getReturnsPage().getAlMeassageDelete();
 		assertEquals(returnsDelete, alertDeleteReturnsMessage);
-
 	}
 
-	@Then("User adds C2 return  items by searching products:")
-	public void userAddsC2ReturnItemsBySearchingProducts(io.cucumber.datatable.DataTable dataTable) {
-		List<Map<String, String>> c2RuturnItems = dataTable.asMaps();
+	/**
+	 * @see used to verify pagination functionality on the Returns page.
+	 *
+	 * @throws InterruptedException if any thread sleep or wait inside
+	 *                              pageNavigations() is interrupted.
+	 */
+	@Then("User verifies pagination functionality on the Returns page")
+	public void userVerifiesPaginationFunctionalityOnTheReturnsPage() throws InterruptedException {
+		pom.getReturnsPage().pageNavigations();
+	}
 
-		for (Map<String, String> Item : c2RuturnItems) {
-			String searchProducts = Item.get("searchProducts");
+//	Regular returns
+	/**
+	 * 
+	 * @see Used to that adds return items by searching for products
+	 * @param dataTable a Cucumber DataTable containing return item details
+	 * @throws InterruptedException if the thread is interrupted during execution
+	 */
+	@Then("User adds returns items by searching products:")
+	public void userAddsReturnsItemsBySearchingProducts(io.cucumber.datatable.DataTable dataTable)
+			throws InterruptedException {
+		List<Map<String, String>> returnItems = dataTable.asMaps();
+		for (Map<String, String> Item : returnItems) {
+			String products = Item.get("products");
 			String expirationDate = Item.get("expirationDate");
 			String lotNumber = Item.get("lotNumber");
 			String qty = Item.get("qty");
 			String returnReason = Item.get("returnReason");
 			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().c2ReturnItems(searchProducts, expirationDate, lotNumber, qty, returnReason,
-					successMessage);
-
+			pom.getReturnsPage().addReturnItem(products, expirationDate, lotNumber, qty, returnReason, successMessage);
 		}
 	}
 
-	@Then("User adds Regular returns items using refined search criteria, sorting by sort By in sort Order order:")
-	public void userAddsRegularReturnsItemsUsingRefinedSearchCriteriaSortingBySortByInSortOrderOrder(
+	/**
+	 * @see Used to that adds return items by using NDC or Product Description, then
+	 *      adds Quantity with a Return Reason and clicks "Add To Return".
+	 * @param dataTable a Cucumber DataTable containing return item details
+	 */
+	@Then("User should Add Returns items Using NDC, Product Description then add Quantity with Return Reason to clicks Add To Return")
+	public void userShouldAddReturnsItemsUsingNDCProductDescriptionThenAddQuantityWithReturnReasonToClicksAddToReturn(
 			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
+		List<Map<String, String>> returnItems = dataTable.asMaps();
+		for (Map<String, String> Item : returnItems) {
+			String products = Item.get("products");
+			String expirationDate = Item.get("expirationDate");
+			String lotNumber = Item.get("lotNumber");
+			String qty = Item.get("qty");
+			String returnReason = Item.get("returnReason");
+			String successMessage = Item.get("successMessage");
+			pom.getReturnsPage().addReturnItem(products, expirationDate, lotNumber, qty, returnReason, successMessage);
+		}
+	}
+
+	/**
+	 * @see Used to that adds return items using UPC, then adds Quantity and Return
+	 *      Reason, and finally clicks "Add To Return".
+	 *
+	 *      It iterates over the provided DataTable, extracts each return item’s
+	 *      details, and invokes the <code>addReturnItem</code> method from the
+	 *      Returns Page Object to simulate the return process.
+	 * 
+	 *      The UPC identifier of the product Expiration date of the product Lot
+	 *      number for the returned item Quantity of the item to be returned Reason
+	 *      for returning the item The expected success message after adding the
+	 *      item
+	 * 
+	 * @param dataTable a Cucumber DataTable containing return item details
+	 * @throws InterruptedException if the thread is interrupted during execution
+	 */
+	@Then("User Adds Returns items using UPC then add Quantity with Return Reason to clicks Add To Return:")
+	public void userAddsReturnsItemsUsingUPCThenAddQuantityWithReturnReasonToClicksAddToReturn(
+			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
+		List<Map<String, String>> returnItems = dataTable.asMaps();
+		for (Map<String, String> Item : returnItems) {
+			String products = Item.get("products");
+			String expirationDate = Item.get("expirationDate");
+			String lotNumber = Item.get("lotNumber");
+			String qty = Item.get("qty");
+			String returnReason = Item.get("returnReason");
+			String successMessage = Item.get("successMessage");
+			pom.getReturnsPage().addReturnItem(products, expirationDate, lotNumber, qty, returnReason, successMessage);
+		}
+	}
+
+	/**
+	 * @see Used to that adds return items using GTIN, then adds Quantity and Return
+	 *      Reason, and finally clicks "Add To Return".
+	 * @param dataTable a Cucumber DataTable containing return item details
+	 * @throws InterruptedException if the thread is interrupted during execution
+	 */
+	@Then("User Adds Add Returns items using GTIN then add Quantity with Return Reason to clicks Add To Return:")
+	public void userAddsAddReturnsItemsUsingGTINThenAddQuantityWithReturnReasonToClicksAddToReturn(
+			io.cucumber.datatable.DataTable dataTable) {
+		List<Map<String, String>> returnItems = dataTable.asMaps();
+		for (Map<String, String> Item : returnItems) {
+			String products = Item.get("products");
+			String expirationDate = Item.get("expirationDate");
+			String lotNumber = Item.get("lotNumber");
+			String qty = Item.get("qty");
+			String returnReason = Item.get("returnReason");
+			String successMessage = Item.get("successMessage");
+			pom.getReturnsPage().addReturnItem(products, expirationDate, lotNumber, qty, returnReason, successMessage);
+		}
+	}
+
+	/**
+	 * Step definition to add return items using refined search criteria and sorting
+	 * preferences.
+	 * 
+	 * @param string    a scenario label or descriptor (e.g., "regular", "special")
+	 *                  for identifying the test case
+	 * @param dataTable a Cucumber DataTable containing item details for search and
+	 *                  return
+	 */
+	@Then("User adds {string} returns items using refined search criteria, sorting by sort By in sort Order order:")
+	public void userAddsReturnsItemsUsingRefinedSearchCriteriaSortingBySortByInSortOrderOrder(String string,
+			io.cucumber.datatable.DataTable dataTable) {
+
 		List<Map<String, String>> searchRegularItems = dataTable.asMaps();
 		for (Map<String, String> Item : searchRegularItems) {
 			String addSearchProducts = Item.get("addSearchProducts");
@@ -135,80 +243,31 @@ public class TC4_ReturnsStep extends BaseClass {
 			String category = Item.get("category");
 			String sortBy = Item.get("sortBy");
 			String sortOrder = Item.get("sortOrder");
-			String lotNumber = Item.get("lotNumber");
-			String qty = Item.get("qty");
-			String returnReason = Item.get("returnReasons");
-			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().refineSearchRegularItems(addSearchProducts, refineSearch, category, sortBy, sortOrder,
-					lotNumber, qty, returnReason, successMessage);
-		}
-
-	}
-
-	@Then("User adds C2 returns items using refined search criteria, sorting by sort By in sort Order order:")
-	public void userAddsC2ReturnsItemsUsingRefinedSearchCriteriaSortingBySortByInSortOrderOrder(
-			io.cucumber.datatable.DataTable dataTable) {
-		List<Map<String, String>> searchC2Items = dataTable.asMaps();
-		for (Map<String, String> Item : searchC2Items) {
-			String addSearchProducts = Item.get("addSearchProducts");
-			String refineSearch = Item.get("refineSearch");
-			String category = Item.get("category");
-			String sortBy = Item.get("sortBy");
-			String sortOrder = Item.get("sortOrder");
+			String expirationDate = Item.get("expirationDate");
 			String lotNumber = Item.get("lotNumber");
 			String qty = Item.get("qty");
 			String returnReason = Item.get("returnReason");
 			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().refineSearchC2Items(addSearchProducts, refineSearch, category, sortBy, sortOrder,
-					lotNumber, qty, returnReason, successMessage);
+			pom.getReturnsPage().refineSearchAndAddItem(addSearchProducts, refineSearch, category, sortBy, sortOrder,
+					expirationDate, lotNumber, qty, returnReason, successMessage);
 		}
-
 	}
 
-	@Then("User adds Refrigerated  returns  items by searching products:")
-	public void userAddsRefrigeratedReturnsItemsBySearchingProducts(io.cucumber.datatable.DataTable dataTable)
-			throws InterruptedException {
-		List<Map<String, String>> refrigeratedItems = dataTable.asMaps();
-		for (Map<String, String> refrigeratedItem : refrigeratedItems) {
-			String searchRefrigeratedProducts = refrigeratedItem.get("searchRefrigeratedProducts");
-			String expirationDate = refrigeratedItem.get("expirationDate");
-			String lotNumber = refrigeratedItem.get("lotNumber");
-			String qty = refrigeratedItem.get("qty");
-			String returnReason = refrigeratedItem.get("returnReason");
-			String successMessage = refrigeratedItem.get("successMessage");
-			pom.getReturnsPage().refrigeratedReturns(searchRefrigeratedProducts, expirationDate, lotNumber, qty,
-					returnReason, successMessage);
-
-		}
-
-	}
-
-	@Then("User adds returns items using refined search criteria, sorting by sort By in sort Order order:")
-	public void userAddsReturnsItemsUsingRefinedSearchCriteriaSortingBySortByInSortOrderOrder(
-			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
-
-		List<Map<String, String>> searchItems = dataTable.asMaps();
-		for (Map<String, String> Item : searchItems) {
-			String addSearchProducts = Item.get("addSearchProducts");
-			String refineSearch = Item.get("refineSearch");
-			String category = Item.get("category");
-			String sortBy = Item.get("sortBy");
-			String sortOrder = Item.get("sortOrder");
-			String lotNumber = Item.get("lotNumber");
-			String qty = Item.get("qty");
-			String returnReason = Item.get("returnReason");
-			String successMessage = Item.get("successMessage");
-			pom.getReturnsPage().refineSearchRefrigeratedItems(addSearchProducts, refineSearch, category, sortBy,
-					sortOrder, lotNumber, qty, returnReason, successMessage);
-
-		}
-
-	}
-
-	@Then("User updates the Regular Returns product list:")
-	public void userUpdatesTheRegularReturnsProductList(io.cucumber.datatable.DataTable dataTable)
-			throws InterruptedException {
-
+	/**
+	 * Step definition to update the Returns product list based on data provided
+	 * through a Cucumber DataTable. This method extracts a list of items from the
+	 * DataTable where each row represents an item with fields such as expiration
+	 * date, lot number, quantity, return reason, and an expected alert message. For
+	 * each item, the method calls the `updateListItems` method from the Returns
+	 * page object to perform the update operation.
+	 *
+	 * @param string    A placeholder string from the step definition, typically
+	 *                  representing the type of return (e.g., "C2" or "Regular").
+	 * @param dataTable The Cucumber DataTable containing rows of item information
+	 *                  to be updated. Each row should have
+	 */
+	@Then("User updates the {string} Returns product list:")
+	public void userUpdatesTheReturnsProductList(String string, io.cucumber.datatable.DataTable dataTable) {
 		List<Map<String, String>> updateRegularItems = dataTable.asMaps();
 		for (Map<String, String> Item : updateRegularItems) {
 			String expirationDateGrid = Item.get("expirationDateGrid");
@@ -216,109 +275,158 @@ public class TC4_ReturnsStep extends BaseClass {
 			String qtyGrid = Item.get("qtyGrid");
 			String returnReasonGrid = Item.get("returnReasonGrid");
 			String updateAlertMessage = Item.get("updateAlertMessage");
-			pom.getReturnsPage().updateRegularReturns(expirationDateGrid, lotNumberGrid, qtyGrid, returnReasonGrid,
-					updateAlertMessage);
+			pom.getReturnsPage().updateListItems(expirationDateGrid, lotNumberGrid, qtyGrid, returnReasonGrid,
+					updateAlertMessage, lotNumberGrid);
 		}
 	}
 
-	@Then("User updates the returns products list:")
-	public void userUpdatesTheReturnsProductsList(io.cucumber.datatable.DataTable dataTable) {
-
-		List<Map<String, String>> updateRefrigeratedItems = dataTable.asMaps();
-		for (Map<String, String> Item : updateRefrigeratedItems) {
-			String expirationDateGrid = Item.get("expirationDateGrid");
-			String lotNumberGrid = Item.get("lotNumberGrid");
-			String qtyGrid = Item.get("qtyGrid");
-			String returnReasonGrid = Item.get("returnReasonGrid");
-			String updateAlertMessage = Item.get("updateAlertMessage");
-			pom.getReturnsPage().updateRefrigeratedItems(expirationDateGrid, lotNumberGrid, qtyGrid, returnReasonGrid,
-					updateAlertMessage);
-
-		}
-	}
-
+	/**
+	 * @see Used for changing the Returns name and verifying the alert message. This
+	 *      method updates the return name using the provided string and then
+	 *      retrieves the resulting alert message displayed on the UI. It asserts
+	 *      that the actual alert message matches the expected one.
+	 *
+	 * @param returnName     The new name to be set for the return.
+	 * @param updatedMessage The expected alert message that should appear after
+	 *                       updating the return name.
+	 */
 	@Then("User can change Returns name as {string} then  verifying the alert message  {string}")
 	public void userCanChangeReturnsNameAsThenVerifyingTheAlertMessage(String returnName, String updatedMessage) {
-
 		pom.getReturnsPage().updateReturnName(returnName);
 		WebElement alMessageReturnNameUpdate = pom.getReturnsPage().getAlMessageReturnNameUpdate();
 		assertEquals(alMessageReturnNameUpdate, updatedMessage);
 	}
 
+	/**
+	 * @see Used for verifying sorting and deletion functionality in the Returns
+	 *      product list. Verifies that sorting works correctly for the "Item#" and
+	 *      "Product Description" columns. Deletes an item from the return list.
+	 *      Asserts that the alert message displayed after deletion matches the
+	 *      expected message.
+	 *
+	 * @param alertDeleteMessage The expected alert message displayed after an item
+	 *                           is deleted from the return list.
+	 */
 	@Then("User should sort by Items and Product Description and delete an item from the return list, verifying the alert message  {string}")
 	public void userShouldSortByItemsAndProductDescriptionAndDeleteAnItemFromTheReturnListVerifyingTheAlertMessage(
 			String alertDeleteMessage) {
-		pom.getReturnsPage().itemsNumberSorting();
-		pom.getReturnsPage().productDiscriptionsSorting();
+		String[] columnNames = { "Item#", "product Discription" };
+		pom.getReturnsPage().verifySortingFunctionality(columnNames);
 		pom.getReturnsPage().deleteIteminGrid();
 		WebElement alDeleteMessage = pom.getReturnsPage().getAlDeleteMessage();
 		assertEquals(alDeleteMessage, alertDeleteMessage);
 	}
 
+	/**
+	 * @see Used for verifying pagination functionality on the Returns items page.
+	 *      This method triggers the pagination logic to navigate through multiple
+	 *      pages of return items, ensuring that the pagination controls (e.g.,
+	 *      next, previous, specific page numbers) function as expected.
+	 *
+	 * @throws InterruptedException if the thread is interrupted during page
+	 *                              navigation (e.g., due to waits or sleep calls).
+	 */
 	@Then("User should navigate through pages using pagination controls on the Returns items page")
 	public void userShouldNavigateThroughPagesUsingPaginationControlsOnTheReturnsItemsPage()
 			throws InterruptedException {
+
 		pom.getReturnsPage().pageNavigations();
 	}
 
+	/**
+	 * @see Used for signing and submitting the Returns form and verifying the
+	 *      success alert message. Clicks the "Sign & Submit" button on the Returns
+	 *      page. Fills in the signature details including the authorized signature
+	 *      name, title, and signature font. Verifies that the alert success message
+	 *      displayed after submission matches the expected message.
+	 * 
+	 *
+	 * @param authorisedSignature The name to be used as the authorized signature.
+	 * @param title               The title associated with the signature.
+	 * @param signatureFont       The font style used for the signature.
+	 * @param string4             The expected alert message after successful
+	 *                            submission.
+	 */
 	@Then("User clicks on Sign & Submit and submits with {string}, {string}, and {string} and verifying alert success message as {string}")
 	public void userClicksOnSignSubmitAndSubmitsWithAndAndVerifyingAlertSuccessMessageAs(String authorisedSignature,
-			String title, String signatureFont, String string4) throws InterruptedException {
+			String title, String signatureFont, String string4) {
 		pom.getReturnsPage().clicksSignSubmit();
 		pom.getReturnsPage().insertSignSubmitDetail(authorisedSignature, title, signatureFont);
+		WebElement successMessageReturnSubmitted = pom.getReturnsPage().getSuccessMessageReturnSubmitted();
+		assertEquals(successMessageReturnSubmitted, string4);
 
-//		WebElement btnPrintReturn = pom.getReturnsPage().getBtnPrintReturn();
-//		click(btnPrintReturn);
-//		Thread.sleep(15000);
 	}
 
+	/**
+	 * @see Used to adding return items by searching for products during a Cucumber
+	 *      test.
+	 * 
+	 *      This method reads data from a Cucumber DataTable, where each row
+	 *      represents a return item with fields such as product name, expiration
+	 *      date, lot number, quantity, return reason, and an expected success
+	 *      message.
+	 *
+	 * 
+	 * 
+	 * @param string    A string parameter passed from the Cucumber step (typically
+	 *                  unused in this implementation but may be used as a scenario
+	 *                  label or identifier).
+	 * @param dataTable A DataTable from the Cucumber feature file containing return
+	 *                  item details. Expected column headers include: "products",
+	 *                  "expirationDate", "lotNumber", "qty", "returnReason",
+	 *                  "successMessage".
+	 */
+	@Then("User adds {string} returns items by searching products:")
+	public void userAddsReturnsItemsBySearchingProducts(String string, io.cucumber.datatable.DataTable dataTable) {
+
+		List<Map<String, String>> returnItems = dataTable.asMaps();
+		for (Map<String, String> Item : returnItems) {
+			String products = Item.get("products");
+			String expirationDate = Item.get("expirationDate");
+			String lotNumber = Item.get("lotNumber");
+			String qty = Item.get("qty");
+			String returnReason = Item.get("returnReason");
+			String successMessage = Item.get("successMessage");
+			pom.getReturnsPage().addReturnItem(products, expirationDate, lotNumber, qty, returnReason, successMessage);
+		}
+	}
+
+	/**
+	 * @see Used to clicking the "Print Returns" button printing a return and
+	 *      viewing the PDF document
+	 *
+	 * @throws InterruptedException if the thread sleep is interrupted while waiting
+	 *                              for the PDF to open.
+	 */
 	@Then("User should Cliks Print Returns then view the PDF document")
-	public void userShouldCliksPrintReturnsThenViewThePDFDocument() {
+	public void userShouldCliksPrintReturnsThenViewThePDFDocument() throws InterruptedException {
 
-	}
-
-	@Then("User removes the Returns name and navigates back to the Returns page")
-	public void userRemovesTheReturnsNameAndNavigatesBackToTheReturnsPage() throws InterruptedException {
-		Thread.sleep(2000);
-		pom.getReturnsPage().removeReturnName();
-	}
-
-	@Then("User searches for a returns name {string} and verifies that the grid displays the returns name is {string}")
-	public void userSearchesForAReturnsNameAndVerifiesThatTheGridDisplaysTheReturnsNameIs(String returnName,
-			String ReturnName) throws InterruptedException {
-
-		Thread.sleep(4000);
-		pom.getReturnsPage().navigatesReturns();
-		pom.getReturnsPage().searchReturnsName(returnName);
-		pom.getReturnsPage().SubmittedDateSorting();
-		WebElement tdFirstcell = pom.getReturnsPage().getTdFirstcell();
-		String text = getText(tdFirstcell);
-		System.out.println(text);
-		assertEquals(tdFirstcell, ReturnName);
-		WebElement firstReturnName = pom.getReturnsPage().getFirstReturnName();
-		clickElementUsingJavaScript(driver, firstReturnName);
-		Thread.sleep(4000);
+		WebElement btnPrintReturn = pom.getReturnsPage().getBtnPrintReturn();
+		click(btnPrintReturn);
+		Thread.sleep(5000);
+		getWindowHandle();
 	}
 
 	@Then("User clicks on Create New without entering a Return Name, Return Type and clicks the Create")
 	public void userClicksOnCreateNewWithoutEnteringAReturnNameReturnTypeAndClicksTheCreate()
 			throws InterruptedException {
+
 		pom.getReturnsPage().returnsWithoutName();
 	}
 
 	@Then("User should see error messages {string} and {string}")
 	public void userShouldSeeErrorMessagesAnd(String errorMessageReturnName, String errorMessageReturnType) {
-
 		WebElement errorMessageReturnsName2 = pom.getReturnsPage().getErrorMessageReturnName();
-		assertEquals(errorMessageReturnsName2, errorMessageReturnName);
 		WebElement errorMessageReturnsType2 = pom.getReturnsPage().getErrorMessageReturnType();
+		assertEquals(errorMessageReturnsName2, errorMessageReturnName);
 		assertEquals(errorMessageReturnsType2, errorMessageReturnType);
+
 	}
 
 	@Then("User should insert Return Name with Special Characters {string} and Choose Return Type {string} and verifies the error message as {string}")
 	public void userShouldInsertReturnNameWithSpecialCharactersAndChooseReturnTypeAndVerifiesTheErrorMessageAs(
-			String special, String returnType, String errorMessageReturnNameSpecial) {
-		pom.getReturnsPage().returnNameWithSpecialChar(special, returnType);
+			String returnName, String returnType, String errorMessageReturnNameSpecial) {
+		pom.getReturnsPage().createReturnOrder(returnName, returnType);
 		WebElement errorMessageSpecialChars = pom.getReturnsPage().getErrorMessageSpecialChars();
 		assertEquals(errorMessageSpecialChars, errorMessageReturnNameSpecial);
 	}
@@ -326,8 +434,7 @@ public class TC4_ReturnsStep extends BaseClass {
 	@Then("User provides double space in the Return Name with {string} Return type and tries to create a Return then see the error message {string}")
 	public void userProvidesDoubleSpaceInTheReturnNameWithReturnTypeAndTriesToCreateAReturnThenSeeTheErrorMessage(
 			String returnType, String errorMessageReturnName) {
-
-		pom.getReturnsPage().returnNameWithSpace(returnType);
+		pom.getReturnsPage().returnNameWithSpaces(returnType, 2);
 		WebElement errorMessageReturnsName2 = pom.getReturnsPage().getErrorMessageReturnName();
 		assertEquals(errorMessageReturnsName2, errorMessageReturnName);
 	}
@@ -335,144 +442,140 @@ public class TC4_ReturnsStep extends BaseClass {
 	@Then("User provides Single space in Return Name with {string} Return type and tries to create a Return then see the error message {string}")
 	public void userProvidesSingleSpaceInReturnNameWithReturnTypeAndTriesToCreateAReturnThenSeeTheErrorMessage(
 			String returnType, String errorMessageReturnName) {
-		pom.getReturnsPage().returnNameWithDoubleSpace(returnType);
+		pom.getReturnsPage().returnNameWithSpaces(returnType, 1);
 		WebElement errorMessageReturnsName2 = pom.getReturnsPage().getErrorMessageReturnName();
 		assertEquals(errorMessageReturnsName2, errorMessageReturnName);
-
 	}
 
-	@Then("User enters  more than {int}  characters as the Return Name is \" abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnop \"with {string} Return type and tries to create a Return and User should see the Return Name in the breadcrumb as {string}")
-	public void userEntersMoreThanCharactersAsTheReturnNameIsAbcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyzabcdefghijklmnopWithReturnTypeAndTriesToCreateAReturnAndUserShouldSeeTheReturnNameInTheBreadcrumbAs(
-			Integer int1, String returnType, String expectedReturnOrderName) throws InterruptedException {
-		pom.getReturnsPage().returnNameWithMaxChar(returnType);
+	@Then("User enters  more than {int}  characters as the Return Name is {string} with {string} Return type and tries to create a Return and User should see the Return Name in the breadcrumb as {string}")
+	public void userEntersMoreThanCharactersAsTheReturnNameIsWithReturnTypeAndTriesToCreateAReturnAndUserShouldSeeTheReturnNameInTheBreadcrumbAs(
+			Integer int1, String returnName, String returnType, String expectedReturnOrderName) {
+
+		pom.getReturnsPage().createReturnOrder(returnName, returnType);
 		WebElement breadCrumbLinlReturnName = pom.getReturnsPage().getBreadCrumbLinlReturnName();
 		String breadcrumbText = getText(breadCrumbLinlReturnName);
-		System.out.println(breadcrumbText);
 		String actualText = breadcrumbText.replace("Returns > ", "");
 		Assert.assertEquals("Breadcrumb text does not match the expected value", expectedReturnOrderName, actualText);
+
 	}
 
+	// negative Regular
 	@Then("User clicks on Sign & Submit without adding any Items and verifies the warning message {string}")
 	public void userClicksOnSignSubmitWithoutAddingAnyItemsAndVerifiesTheWarningMessage(String errormessageSubmit) {
-
 		pom.getReturnsPage().clicksSignSubmit();
 		WebElement errorMessageSignSubmit = pom.getReturnsPage().getErrorMessageSignSubmit();
 		assertEquals(errorMessageSignSubmit, errormessageSubmit);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
+		pom.getReturnsPage().iClose();
 	}
 
-	@Then("User attempts to add C2, refrigerated, discontinued, and inactive items in Regular returns then see the warning message {string} for each item:")
-	public void userAttemptsToAddC2RefrigeratedDiscontinuedAndInactiveItemsInRegularReturnsThenSeeTheWarningMessageForEachItem(
-			String string, io.cucumber.datatable.DataTable dataTable) {
-		List<Map<String, String>> regularDiscountinuedItems = dataTable.asMaps();
-		for (Map<String, String> Item : regularDiscountinuedItems) {
-			String items = Item.get("items");
-			String warningMessage = Item.get("warningMessage");
-			pom.getReturnsPage().regularReturnsDiscountinedItems(items, warningMessage);
+	@Then("User searches for item {string} and verifies input validation on the Returns quantity field")
+	public void userSearchesForItemAndVerifiesInputValidationOnTheReturnsQuantityField(String products)
+			throws InterruptedException {
+		pom.getReturnsPage().searchItem(products);
+		pom.getProductDetailPage().validateQtyInputs(pom.getReturnsPage().getTxtQty());
+	}
+
+	@Then("User attempts to add {string} and discontinued items in {string} then see the warning message {string} for each item:")
+	public void userAttemptsToAddAndDiscontinuedItemsInThenSeeTheWarningMessageForEachItem(String string,
+			String string2, String warningMessage, io.cucumber.datatable.DataTable dataTable) {
+
+		List<Map<String, String>> items = dataTable.asMaps();
+		for (Map<String, String> Item : items) {
+			String products = Item.get("products");
+			pom.getReturnsPage().searchAndTryToAddItem(products, warningMessage);
 		}
 	}
 
-	@Then("User attempts to add C2, refrigerated, discontinued, and inactive items using NDC, UPC, GTIN, Product Discriptions in Regular returns then see the warning message {string} for each item:")
-	public void userAttemptsToAddC2RefrigeratedDiscontinuedAndInactiveItemsUsingNDCUPCGTINProductDiscriptionsInRegularReturnsThenSeeTheWarningMessageForEachItem(
-			String string, io.cucumber.datatable.DataTable dataTable) {
-
-		List<Map<String, String>> regularDiscountinuedItems = dataTable.asMaps();
-		for (Map<String, String> Item : regularDiscountinuedItems) {
-			String items = Item.get("products");
-			String warningMessage = Item.get("warningMessage");
-			pom.getReturnsPage().regularReturnsDiscountinedItems(items, warningMessage);
+	@Then("User attempts to add {string} and discontinued items using NDC and Product Discriptions in {string} then see the warning message {string} for each item:")
+	public void userAttemptsToAddAndDiscontinuedItemsUsingNDCAndProductDiscriptionsInThenSeeTheWarningMessageForEachItem(
+			String string, String string2, String warningMessage, io.cucumber.datatable.DataTable dataTable) {
+		List<Map<String, String>> items = dataTable.asMaps();
+		for (Map<String, String> Item : items) {
+			String products = Item.get("products");
+			pom.getReturnsPage().searchAndTryToAddItem(products, warningMessage);
 		}
 	}
 
-	@Then("User attempts to add Regular, refrigerated, discontinued, and inactive items in Regular returns then see the warning message {string} for each item:")
-	public void userAttemptsToAddRegularRefrigeratedDiscontinuedAndInactiveItemsInRegularReturnsThenSeeTheWarningMessageForEachItem(
-			String string, io.cucumber.datatable.DataTable dataTable) {
+	@Then("User attempts to add {string} and discontinued items using UPC in {string} then see the warning message {string} for each item:")
+	public void userAttemptsToAddAndDiscontinuedItemsUsingUPCInThenSeeTheWarningMessageForEachItem(String string,
+			String string2, String warningMessage, io.cucumber.datatable.DataTable dataTable) {
+		List<Map<String, String>> items = dataTable.asMaps();
+		for (Map<String, String> Item : items) {
+			String products = Item.get("products");
+			pom.getReturnsPage().searchAndTryToAddItem(products, warningMessage);
+		}
+	}
 
-		List<Map<String, String>> c2DiscountinuedItems = dataTable.asMaps();
-		for (Map<String, String> Item : c2DiscountinuedItems) {
-			String items = Item.get("items");
-			String warningMessage = Item.get("warningMessage");
-			pom.getReturnsPage().c2ReturnsDiscont(items, warningMessage);
+	@Then("User attempts to add {string} and discontinued items using GTIN in {string} then see the warning message {string} for each item:")
+	public void userAttemptsToAddAndDiscontinuedItemsUsingGTINInThenSeeTheWarningMessageForEachItem(String string,
+			String string2, String warningMessage, io.cucumber.datatable.DataTable dataTable) {
+		List<Map<String, String>> items = dataTable.asMaps();
+		for (Map<String, String> Item : items) {
+			String products = Item.get("products");
+			pom.getReturnsPage().searchAndTryToAddItem(products, warningMessage);
 		}
 	}
 
 	@Then("User adds a returns by item number {string}, does not select a return reason, clicks on Add to Return and verifies the warning message {string}")
 	public void userAddsAReturnsByItemNumberDoesNotSelectAReturnReasonClicksOnAddToReturnAndVerifiesTheWarningMessage(
-			String itemNumber, String expectedErrorMessageReturnReason) throws InterruptedException {
-		pom.getReturnsPage().returnReasonValidate(itemNumber);
+			String products, String expectedErrorMessageReturnReason) {
+		pom.getReturnsPage().searchItem(products);
+		pom.getReturnsPage().clickAddToReturnWithoutSelectingReason();
 		WebElement errorMessageReturnReason = pom.getReturnsPage().getErrorMessageReturnReason();
 		assertEquals(errorMessageReturnReason, expectedErrorMessageReturnReason);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
-	}
-
-	@Then("User adds a returns by item number {string}, does not select a return reason, clicks on Add to Returns and verifies the warning message {string}")
-	public void userAddsAReturnsByItemNumberDoesNotSelectAReturnReasonClicksOnAddToReturnsAndVerifiesTheWarningMessage(
-			String itemNumber, String expectedErrorMessageReturnReason) throws InterruptedException {
-		pom.getReturnsPage().returnReasonValidate(itemNumber);
-		WebElement errorMessageReturnReason = pom.getReturnsPage().getErrorMessageReturnReason();
-		assertEquals(errorMessageReturnReason, expectedErrorMessageReturnReason);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
-	}
-
-	@Then("User adds a C2 returns by item number {string} with various missing fields \\(Expiration date, Lot Number, Qty, Return Reason) and verifies the corresponding warning messages: {string} , {string} , {string} and {string}")
-	public void userAddsAC2ReturnsByItemNumberWithVariousMissingFieldsExpirationDateLotNumberQtyReturnReasonAndVerifiesTheCorrespondingWarningMessagesAnd(
-			String searchProducts, String dateErrorMessage, String errorMessageLotNumber, String errorMessageQty,
-			String ErrorMessageReturnReason) throws InterruptedException {
-
-		pom.getReturnsPage().c2FieldErrorValidation(searchProducts, dateErrorMessage, errorMessageLotNumber,
-				errorMessageQty, ErrorMessageReturnReason);
-
+		pom.getReturnsPage().iClose();
 	}
 
 	@Then("User insert invalid date with {string} and clicks Add To Order then verifies the warning messages {string}")
 	public void userInsertInvalidDateWithAndClicksAddToOrderThenVerifiesTheWarningMessages(String invalidDate,
-			String errorMessage) throws InterruptedException {
+			String errorMessage) {
+
 		pom.getReturnsPage().insertInvalidDate(invalidDate);
-//		WebElement errormessageInvalidDate = pom.getReturnsPage().getErrormessageInvalidDate();
-//		assertEquals(errormessageInvalidDate, errorMessage);
-//		WebElement getiClose = pom.getReturnsPage().getiClose();
-//		clickElementUsingJavaScript(driver, getiClose);
+		WebElement errormessageInvalidDate = pom.getReturnsPage().getErrormessageInvalidDate();
+		assertEquals(errormessageInvalidDate, errorMessage);
+		pom.getReturnsPage().iClose();
+	}
+
+	@Then("User adds item {string} with Reaturn Reason as {string} and Clicks Add To Order without enter RA Number then verifies the warning messages {string}")
+	public void userAddsItemWithReaturnReasonAsAndClicksAddToOrderWithoutEnterRANumberThenVerifiesTheWarningMessages(
+			String items, String returnReason, String expectedRAErrorMessage) {
+
+		pom.getReturnsPage().submitReturnWithoutRANumber(items, returnReason);
+		WebElement errorMessageRANumber = pom.getReturnsPage().getErrorMessageRANumber();
+		assertEquals(errorMessageRANumber, expectedRAErrorMessage);
 	}
 
 	@Then("User adds return items by searching products insert nill qty verifies warning message")
 	public void userAddsReturnItemsBySearchingProductsInsertNillQtyVerifiesWarningMessage(
-			io.cucumber.datatable.DataTable dataTable) throws InterruptedException {
+			io.cucumber.datatable.DataTable dataTable) {
 		List<Map<String, String>> returnItems = dataTable.asMaps();
 		for (Map<String, String> Item : returnItems) {
-			String searchProducts = Item.get("searchProducts");
+			String products = Item.get("products");
 			String expirationDate = Item.get("expirationDate");
 			String lotNumber = Item.get("lotNumber");
 			String qty = Item.get("qty");
 			String returnReason = Item.get("returnReason");
 			String warningmessage = Item.get("warningmessage");
-			pom.getReturnsPage().validateReturnQty(searchProducts, expirationDate, lotNumber, qty, returnReason,
+			pom.getReturnsPage().addReturnItemwithNillQty(products, expirationDate, lotNumber, qty, returnReason,
 					warningmessage);
-			WebElement getiClose = pom.getReturnsPage().getiClose();
-			clickElementUsingJavaScript(driver, getiClose);
+
 		}
 	}
 
-	@Then("User enters a returns quantity of {string} and sees the warning message {string}")
-	public void userEntersAReturnsQuantityOfAndSeesTheWarningMessage(String updateQty, String expectedWarningMessage) {
+	@Then("User insert invalid date with {string} in the Grid then verifies the warning messages {string}")
+	public void userInsertInvalidDateWithInTheGridThenVerifiesTheWarningMessages(String invalidDate, String string2)
+			throws InterruptedException {
+		pom.getReturnsPage().invalidExpirationDateInGrid(invalidDate);
 
-		pom.getReturnsPage().updateReturnQty(updateQty);
-		WebElement errorMessageReturnQty = pom.getReturnsPage().getErrorMessageReturnQty();
-		assertEquals(errorMessageReturnQty, expectedWarningMessage);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
 	}
 
 	@Then("User enters a returns quantity of {string} in the grid and sees the warning message {string}")
 	public void userEntersAReturnsQuantityOfInTheGridAndSeesTheWarningMessage(String updateQty,
 			String expectedWarningMessage) {
-		pom.getReturnsPage().updateReturnQty(updateQty);
+		pom.getReturnsPage().updateReturnQtyinList(updateQty);
 		WebElement errorMessageReturnQty = pom.getReturnsPage().getErrorMessageReturnQty();
 		assertEquals(errorMessageReturnQty, expectedWarningMessage);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
+		pom.getReturnsPage().iClose();
 	}
 
 	@Then("User clicks on Sign & Submit and submits")
@@ -489,7 +592,7 @@ public class TC4_ReturnsStep extends BaseClass {
 		assertEquals(errorMessageAuthorizedSignature, expectedErrorMessageAuthorizedSignature);
 		WebElement errorMessageTitle = pom.getReturnsPage().getErrorMessageTitle();
 		assertEquals(errorMessageTitle, expectedErrorMessageTitle);
-//field validations
+		// field validations
 		WebElement txtAuthorizedSignature = pom.getReturnsPage().getTxtAuthorizedSignature();
 		txtAuthorizedSignature.sendKeys("abcdefghijklmnopqrstuvwxyzabcdefghijklmnopqrstuvwxyz ");
 		WebElement txtTitle = pom.getReturnsPage().getTxtTitle();
@@ -502,7 +605,23 @@ public class TC4_ReturnsStep extends BaseClass {
 		String text2 = getText(txtTitles);
 		System.out.println("Length of text from Title: " + text2.length());
 		System.out.println(text2);
+	}
 
+	@Then("User adds a C2 returns by item number {string} with various missing fields \\(Expiration date, Lot Number, Qty, Return Reason) and verifies the corresponding warning messages: {string} , {string} , {string} and {string}")
+	public void userAddsAC2ReturnsByItemNumberWithVariousMissingFieldsExpirationDateLotNumberQtyReturnReasonAndVerifiesTheCorrespondingWarningMessagesAnd(
+			String searchProducts, String dateErrorMessage, String errorMessageLotNumber, String errorMessageQty,
+			String ErrorMessageReturnReason) throws InterruptedException {
+
+		pom.getReturnsPage().c2FieldErrorValidation(searchProducts, dateErrorMessage, errorMessageLotNumber,
+				errorMessageQty, ErrorMessageReturnReason);
+	}
+
+	@Then("User validated return reason with closed out item {string} and see the error message {string}")
+	public void userValidatedReturnReasonWithClosedOutItemAndSeeTheErrorMessage(String products,
+			String expectedErrorMessage) {
+
+		pom.getReturnsPage().searchItem(products);
+		pom.getReturnsPage().validateClosedOutItemReturnReasons(expectedErrorMessage);
 	}
 
 	@Then("User selects Don't want back all  without adding any Items and verifies the warning message {string}")
@@ -511,67 +630,47 @@ public class TC4_ReturnsStep extends BaseClass {
 		pom.getReturnsPage().selectsCbxDontWantBack();
 		WebElement errorMessageDontwantBack = pom.getReturnsPage().getErrorMessageDontwantBack();
 		assertEquals(errorMessageDontwantBack, expectedMessageDontwantBack);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
 	}
 
-	@Then("User attempts to add Regular, C2, discontinued, and inactive items in refrigerated returns then see the warning message {string} for each item:")
-	public void userAttemptsToAddRegularC2DiscontinuedAndInactiveItemsInRefrigeratedReturnsThenSeeTheWarningMessageForEachItem(
-			String string, io.cucumber.datatable.DataTable dataTable) {
-		List<Map<String, String>> refrigeratedDiscountinuedItems = dataTable.asMaps();
-		for (Map<String, String> Item : refrigeratedDiscountinuedItems) {
-			String items = Item.get("items");
-			String warningMessage = Item.get("warningMessage");
-			pom.getReturnsPage().refrigeratedDiscountinuedReturns(items, warningMessage);
-
-		}
-	}
-
-	@Then("User adds item {string} with Reaturn Reason as {string} and Clicks Add To Order without enter RA Number then verifies the warning messages {string}")
-	public void userAddsItemWithReaturnReasonAsAndClicksAddToOrderWithoutEnterRANumberThenVerifiesTheWarningMessages(
-			String items, String returnReason, String expectedRAErrorMessage) {
-		pom.getReturnsPage().refrigeratedReturnReason(items, returnReason);
-		WebElement errorMessageRANumber = pom.getReturnsPage().getErrorMessageRANumber();
-		assertEquals(errorMessageRANumber, expectedRAErrorMessage);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
-	}
-
-	@Then("User enters a return quantity of {string} and sees the warning message {string}")
-	public void userEntersAReturnQuantityOfAndSeesTheWarningMessage(String returnQty, String expectedErrorMessage)
-			throws InterruptedException {
-		pom.getReturnsPage().returnQty();
-		WebElement errorMessageReturnQty = pom.getReturnsPage().getErrorMessageReturnQty();
-		assertEquals(errorMessageReturnQty, expectedErrorMessage);
-		WebElement getiClose = pom.getReturnsPage().getiClose();
-		clickElementUsingJavaScript(driver, getiClose);
-	}
-
-	@Then("User insert invalid date with {string} in the Grid then verifies the warning messages {string}")
-	public void userInsertInvalidDateWithInTheGridThenVerifiesTheWarningMessages(String invalidDate,
-			String invalidDateErrorMessage) throws InterruptedException {
-		pom.getReturnsPage().invalidExpirationDateInGrid(invalidDate);
+	@When("User searches for {string} using the search box and clicks the Search")
+	public void userSearchesForUsingTheSearchBoxAndClicksTheSearch(String search) {
+		pom.getSubmittedReturnsPage().searchReturns(search);
 
 	}
 
-	@Then("User verifies sorting order in both ascending and descending order for all columns Return Name, Status, Submitted Date, Submitted By, Type, Total Lines, and Total Pieces")
-	public void userVerifiesSortingOrderInBothAscendingAndDescendingOrderForAllColumnsReturnNameStatusSubmittedDateSubmittedByTypeTotalLinesAndTotalPieces() {
-		pom.getReturnsPage().returnsSorting();
-	}
-
-	@Then("User verifies pagination functionality on the Returns page")
-	public void userVerifiesPaginationFunctionalityOnTheReturnsPage() throws InterruptedException {
-		pom.getReturnsPage().pageNavigations();
-	}
-
-	@Then("User should Cliks Print Return then view the PDF document")
-	public void userShouldCliksPrintReturnThenViewThePDFDocument() throws InterruptedException {
-
-		WebElement btnPrintReturn = pom.getReturnsPage().getBtnPrintReturn();
-		click(btnPrintReturn);
-		Thread.sleep(5000);
-		getWindowHandle();
+	@Then("the results should include rows containing {string} in Return Name")
+	public void theResultsShouldIncludeRowsContainingInReturnName(String string) {
+		WebElement tdReturnNamelink = pom.getSubmittedReturnsPage().getTdReturnNamelink();
+		assertEquals(tdReturnNamelink, string);
 
 	}
+
+	@When("User selects {string} from the {string} dropdown and clicks the {string} button")
+	public void userSelectsFromTheDropdownAndClicksTheButton(String orderType, String string2, String string3) {
+		pom.getSubmittedReturnsPage().typeFilter(orderType);
+
+	}
+
+	@Then("User verifies submitted returns of type {string} should be displayed")
+	public void userVerifiesSubmittedReturnsOfTypeShouldBeDisplayed(String string) {
+
+	}
+
+	@When("User selects the Submitted From Date as {string}, the Submitted To Date as {string}, and clicks the {string} button.")
+	public void userSelectsTheSubmittedFromDateAsTheSubmittedToDateAsAndClicksTheButton(String formDate, String toDate,
+			String string3) {
+		pom.getSubmittedReturnsPage().clearDetails();
+		pom.getSubmittedReturnsPage().dateFilters(formDate, toDate);
+
+	}
+
+	@Then("User verifies submitted returns within the date range {string} to {string} should be displayed")
+	public void userVerifiesSubmittedReturnsWithinTheDateRangeToShouldBeDisplayed(String formDate, String toDate) {
+
+		pom.getSubmittedReturnsPage().verifySubmittedReturnsDateRange(formDate, toDate);
+
+	}
+
+
 
 }

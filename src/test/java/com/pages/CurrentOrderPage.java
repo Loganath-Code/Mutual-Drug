@@ -214,12 +214,21 @@ public class CurrentOrderPage extends BaseClass {
 
 	@FindBy(xpath = "//a[text()='Compact View']")
 	private WebElement viewLinkCompactView;
-	
+
 	@FindBy(xpath = "//button[text()='Update']")
 	private WebElement btnUpdate;
 
 	@FindBy(xpath = "//h4[text()='Item Already Exist']")
 	private WebElement modaltitle;
+
+	@FindBy(xpath = "(//select[contains(@class, 'form-control')])[2]")
+	private WebElement ddSelectYourCustomerAccount;
+
+	@FindBy(xpath = "//button[@class='modal-btn']")
+	private WebElement btnSubmitPhar;
+
+	@FindBy(xpath = "//div[contains(@class, 'user-Member-Section')]")
+	private WebElement textMemberSelection;
 
 	public WebElement getTitleCurrentOrders() {
 		return titleCurrentOrders;
@@ -477,13 +486,25 @@ public class CurrentOrderPage extends BaseClass {
 	public WebElement getViewLinkCompactView() {
 		return viewLinkCompactView;
 	}
-	
+
 	public WebElement getBtnUpdate() {
 		return btnUpdate;
 	}
 
 	public WebElement getModaltitle() {
 		return modaltitle;
+	}
+
+	public WebElement getDdSelectYourCustomerAccount() {
+		return ddSelectYourCustomerAccount;
+	}
+
+	public WebElement getBtnSubmitPhar() {
+		return btnSubmitPhar;
+	}
+
+	public WebElement getTextMemberSelection() {
+		return textMemberSelection;
 	}
 
 	public void searchCurrentOrders(String orderName) throws InterruptedException {
@@ -493,7 +514,7 @@ public class CurrentOrderPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getiSearchOrders());
 
 	}
-	
+
 	public void deleteCurrentOrder() {
 		clickElementUsingJavaScript(driver, getiTrash());
 		clickElementUsingJavaScript(driver, getBtnYes());
@@ -572,6 +593,26 @@ public class CurrentOrderPage extends BaseClass {
 		radioButton.click();
 	}
 
+	public void clickBtnCreateNew() {
+
+		clickElementUsingJavaScript(driver, getBtnCreateNew());
+	}
+
+	public void selectYourPharmacyAccount(String selectPharmacyAccount) throws InterruptedException {
+		try {
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		wait.until(ExpectedConditions.elementToBeClickable(getDdSelectYourCustomerAccount()));
+		selectByVisibleText(getDdSelectYourCustomerAccount(), selectPharmacyAccount);
+		System.out.println(selectPharmacyAccount);
+		wait.until(ExpectedConditions.elementToBeClickable(getBtnSubmitPhar()));
+		clickWithActions(getBtnSubmitPhar());
+		Thread.sleep(2000);
+		clickElementUsingJavaScript(driver, getBtnSubmitPhar());
+		}catch (Exception e) {
+			
+		}
+	}
+
 	/**
 	 * @see Used to create a new order
 	 * @param orderName
@@ -580,7 +621,6 @@ public class CurrentOrderPage extends BaseClass {
 	 * @param orderReferance
 	 */
 	public void createNewOrder(String orderName, String orderType, String autoSubmit, String orderReferance) {
-		clickElementUsingJavaScript(driver, getBtnCreateNew());
 		insertValue(getTxtOrderName(), orderName);
 		clickRadioButton(orderType);
 		clickRadioButton(autoSubmit);
@@ -963,6 +1003,7 @@ public class CurrentOrderPage extends BaseClass {
 		Thread.sleep(1500);
 
 	}
+
 	public void alreadyAddedItemUsingAddProducts(String product) throws InterruptedException {
 		elementVisibility(getTxtSearchAddProducts());
 		Thread.sleep(1000);
@@ -970,8 +1011,6 @@ public class CurrentOrderPage extends BaseClass {
 		Thread.sleep(1500);
 		clickElementUsingJavaScript(driver, getiSearch());
 
-
 	}
 
-	
 }

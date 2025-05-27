@@ -14,7 +14,7 @@ import io.cucumber.junit.CucumberOptions;
 import io.cucumber.junit.CucumberOptions.SnippetType;
 
 @RunWith(Cucumber.class)
-@CucumberOptions(features = "C:\\Users\\nloga\\eclipse-workspace\\MutualDrug\\src\\test\\resources\\Feature", glue = ("com.stepdefinition"), tags = "@BannerMetrics", snippets = SnippetType.CAMELCASE, dryRun = true , publish = true, monochrome = false, plugin = {
+@CucumberOptions(features = "C:\\Users\\nloga\\eclipse-workspace\\MutualDrug\\src\\test\\resources\\Feature", glue = ("com.stepdefinition"), tags = "@SubmittedReturns", snippets = SnippetType.CAMELCASE, dryRun = true , publish = true, monochrome = false, plugin = {
 		"pretty", "json:target\\sample.json" }, stepNotifications = true)
 public class TestRunner extends BaseClass {
 	@AfterClass

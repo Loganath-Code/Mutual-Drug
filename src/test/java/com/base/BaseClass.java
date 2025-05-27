@@ -402,7 +402,8 @@ public class BaseClass {
 	 */
 	public void moveToElement(WebElement target) {
 		Actions actions = new Actions(driver);
-		actions.moveToElement(target).perform();
+		elementVisibility(target);
+		actions.moveToElement(target).pause(Duration.ofMillis(500)).perform();
 	}
 
 	/**
@@ -984,17 +985,17 @@ public class BaseClass {
 		WebElement dropdown = wait.until(ExpectedConditions.elementToBeClickable(dropdownLocator));
 		click(dropdown);
 		WebElement option = wait.until(
-				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[text()=' " + optionText + " ']")));
+				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[normalize-space()='" + optionText + "']")));
 		clickElementUsingJavaScript(driver, option);
 
 	}
 
-	public void selectOptionDropDown(WebDriver driver, WebElement dropdownElement, String optionText) {
+	public void selectOptionDropDown(WebElement dropdownElement, String optionText) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(dropdownElement));
 		click(dropdownElement);
 		WebElement option = wait.until(
-				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[text()=' " + optionText + " ']")));
+				ExpectedConditions.elementToBeClickable(By.xpath("//mat-option//span[normalize-space()='" + optionText + "']")));
 		clickElementUsingJavaScript(driver, option);
 	}
 
@@ -1009,7 +1010,13 @@ public class BaseClass {
 		clickElementUsingJavaScript(driver, option);
 	}
 
+	/**
+	 * @see Used assert verification
+	 * @param element
+	 * @param expectedMessage
+	 */
 	public void assertEquals(WebElement element, String expectedMessage) {
+		elementVisibility(element);
 		String actualMessage = getText(element);
 		Assert.assertEquals("Verify the message", expectedMessage, actualMessage);
 
@@ -1039,17 +1046,19 @@ public class BaseClass {
 		return wait.until(ExpectedConditions.visibilityOf(element));
 	}
 
-	public void clickWithWait( WebElement element) {
+	public void clickWithWait(WebElement element) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(element));
 		clickElementUsingJavaScript(driver, element);
 	}
+
 	/**
-	 * Clears any existing text from the given element by sending Ctrl+A then Backspace.
-	 * Works on Windows/Linux. On macOS you may need to use Keys.COMMAND instead of Keys.CONTROL.
+	 * Clears any existing text from the given element by sending Ctrl+A then
+	 * Backspace. Works on Windows/Linux. On macOS you may need to use Keys.COMMAND
+	 * instead of Keys.CONTROL.
 	 */
 	public void clearField(WebElement field) {
-	    field.sendKeys(Keys.chord(Keys.CONTROL, "a"));
-	    field.sendKeys(Keys.BACK_SPACE);
+		field.sendKeys(Keys.chord(Keys.CONTROL, "a"));
+		field.sendKeys(Keys.BACK_SPACE);
 	}
 }

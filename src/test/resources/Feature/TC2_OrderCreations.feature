@@ -5,9 +5,12 @@ Feature: Verifying Mutual Drug - Create New orders
   Scenario Outline: Verifying Mutual Drug Current Order Webpage
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
-    Then User should verify after login "<selectYourCustomerAccount>" and success message as "C2 CERTIFICATE NOTIFICATION !!"
+    Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
-    When User clicks on  Create New, Create New Regular Orders with "<orderName>" , "<orderType>" , "<autoSubmit>" , "<orderReferance>"
+    When User clicks the Create New button and selects "<selectPharmacyAccount>" as the customer account for the new order
+    And User should Create New Regular Orders with "<selectedPharmacyAccount>", "<orderName>" , "<orderType>" , "<autoSubmit>" , "<orderReferance>"
+    And User verifies that the selected Member Pharmacy Account "<selectedPharmacyAccount>" is displayed on the Orders page
     And User removes the Order name and navigates back to the Current Order page
     And User searches for a Order name "Test Regular Orders" and verifies that the grid displays the Order name is "Test Regular Orders"
     And User verifies sorting order in both ascending and descending current orders for all columns Order Name, Status, Created Date, Order Type, Total Lines, Total Pieces and Ext.Inv. Price
@@ -15,15 +18,17 @@ Feature: Verifying Mutual Drug - Create New orders
     And User verifies pagination functionality on the current order page
 
     Examples: 
-      | selectYourCustomerAccount             | orderName           | orderType     | autoSubmit | orderReferance |
-      | WALKERS DRUG STORE (PREMIER) - 124685 | Test Regular Orders | Regular Order | None       | test           |
+      | selectYourCustomerAccount             | selectPharmacyAccount                 | selectedPharmacyAccount     | orderName           | orderType     | autoSubmit | orderReferance |
+      | WALKERS DRUG STORE (PREMIER) - 124685 | WALKERS DRUG STORE (PREMIER) - 124685 | 124685 - WALKERS DRUG STORE | Test Regular Orders | Regular Order | None       | test           |
 
   Scenario Outline: Verifying Mutual Drug to Create new orders in Current Orders webpage - Regular orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
-    When User clicks on  Create New, Create New Regular Orders with "<orderName>" , "<orderType>" , "<autoSubmit>" , "<orderReferance>"
+    When User clicks the Create New button and selects "<selectPharmacyAccount>" as the customer account for the new order
+    And User should Create New Regular Orders with "<orderName>" , "<orderType>" , "<autoSubmit>" , "<orderReferance>"
     And User Adds the items/products using item number
       | itemsNum | specialCode                   | orderQty | successMessage               |
       |   285684 |                               |        1 | Item #285684 added to order. |
@@ -100,15 +105,17 @@ Feature: Verifying Mutual Drug - Create New orders
 
     @RegularOrder
     Examples: 
-      | selectYourCustomerAccount             | orderName                | orderType     | autoSubmit | orderReferance | date       | time |
-      | WALKERS DRUG STORE (PREMIER) - 124685 | Regular Order Test- Prod | Regular Order | None       | test           | 13-05-2025 | 6 PM |
+      | selectYourCustomerAccount             | selectPharmacyAccount                 | orderName             | orderType     | autoSubmit | orderReferance | date       | time |
+      | WEB POS TEST STORE (PREMIER) - 009498 | WALKERS DRUG STORE (PREMIER) - 124685 | Regular Order Test- 1 | Regular Order | None       | test           | 13-05-2025 | 6 PM |
 
   Scenario Outline: Verifying Mutual Drug to Create new order in Current Orders webpage - C2 orders creation
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
-    When User clicks Create New, Create New C2 Orders with "<orderName>" , "<orderType>"
+    When User clicks the Create New button and selects "<selectPharmacyAccount>" as the customer account for the new order
+    When User should Create New C2 Orders  with "<orderName>" , "<orderType>"
     And User Adds the items/products using item number
       | itemsNum | orderQty | successMessage               |
       |   046425 |        1 | Item #046425 added to order. |
@@ -168,6 +175,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User should clicks Products, selects "Over the Counter (OTC)" and verify the page "Product Catalog"
     When User select Full view and clicks Create New for first product, Create New Orders with "<orderName>" , "<orderType>" , "<autoSubmit>"
     Then User should verifies that a success alert with the message "Success!" is displayed, confirming the item has been added to the order
@@ -183,6 +191,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User should clicks Products, selects "Over the Counter (OTC)" and verify the page "Product Catalog"
     When User select Compact view and clicks Create New for first product, Create New Orders with "<orderName>" , "<orderType>" , "<autoSubmit>"
     Then User should verifies that a success alert with the message "Success!" is displayed, confirming the item has been added to the order
@@ -198,6 +207,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     And User performs global search for "<globalSearch>" to create a new regular orders
     When User selects a product, enters quantity "<qty>", creates a new order with "<orderName>" and "<autoSubmit>", and confirms the success message "Success!"
@@ -212,6 +222,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User performs global search for "<globalSearch>" to create a new regular orders
     When User selects a product, enters quantity "<qty>", creates a new order with "<orderName>" and "<autoSubmit>", and confirms the success message "Success!"
@@ -226,6 +237,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User performs global search for "<globalSearch>" to create a new regular orders
     Then User should Create New Regular Orders in Suggested Products list with "<orderName>" , "<autoSubmit>" and verifies the success message "Success!"
@@ -240,6 +252,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User performs global search for "<globalSearch>" to create a new regular orders
     And User clicks on Create New Orders, clicks YES for Case Item orders and enters "<orderName>" and "<autoSubmit>" and verifies the success message "Success!"
@@ -253,6 +266,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User should navigates to Notification list and verifies that the page is "Notifications"
     And User clicks on Create Notification Group to Create New Notification Group
       | groupName                       | groupType     | successMessage              |
@@ -270,6 +284,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User clicks on  Create New, Create New Regular Orders with "<orderName>" , "<orderType>" , "<autoSubmit>" , "<orderReferance>"
     When User add system suggests alternative items when the user attempts to add discontinued or inactive products
@@ -292,6 +307,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User clicks on Create New without entering any details and clicks Create
     Then User should verifies the error messages: "Order Name is required" and "Order Type is required"
@@ -315,6 +331,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User clicks on  Create New, Create New Regular Orders with "<orderName>" , "<orderType>" , "<autoSubmit>" , "<orderReferance>"
     Then User attempts to submit the order without selecting any items and verifies the warning message "Please select one or more item(s)."
@@ -376,6 +393,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User clicks Create New, Create New C2 Orders with "<orderName>" , "<orderType>"
     Then User attempts to Sign&Submit the order without selecting any items and verifies the warning message "Please select one or more item(s)."
@@ -440,6 +458,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User should clicks Products, selects "Over the Counter (OTC)" and verify the page "Product Catalog"
     And User selects "Full view" and clicks "Create New Order" to initiate creating a new order
     Then User tries to create an order without entering Order Name and verifies the error message "Order Name is required"
@@ -455,6 +474,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User should clicks Products, selects "Over the Counter (OTC)" and verify the page "Product Catalog"
     And User selects Compact view and clicks "Create New Order" to initiate creating a new order
     Then User tries to create an order without entering Order Name and verifies the error message "Order Name is required"
@@ -470,6 +490,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     And User performs global search for "<globalSearch>" to create a new regular orders
     And User selects "Full view" and clicks "Create New Order" to initiate creating a new order
@@ -486,6 +507,7 @@ Feature: Verifying Mutual Drug - Create New orders
     Given User is on the Mutual Drug Login
     When User perform login with Username, Password
     Then User should verify after login "<selectYourCustomerAccount>" and success message as "Member Access Portal"
+    And User should Read and Accept the Returns Policy Update
     Then User navigates to Orders, selects Current Orders and verifies that the page is "Current Orders"
     When User performs global search for "<globalSearch>" to create a new regular orders
     And User should verify the suggested products quantity field validations
@@ -497,7 +519,7 @@ Feature: Verifying Mutual Drug - Create New orders
       |       -11 |
       |      0.01 |
       | 3/4       |
-      | 25%       |
+      | 100%      |
       |     -1234 |
       | !@        |
       | abc       |

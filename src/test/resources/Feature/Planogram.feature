@@ -25,3 +25,13 @@ Feature: Verifying Mutual Drug Admin Planogram Webpage
     Examples: 
       | name               | description                      | updateName | updateDescription                                |
       | Automation Testing | Created for Testing Purpose Only | Auto Test  | Planogram Created for Automation Testing Purpose |
+
+  @PlanogramNegativeTest
+  Scenario Outline: Verifying Mutual Drug Planogram Negative Test
+    Given User is on the Mutual Drug Login
+    When User perform admin login with Username, Password
+    Then User should verify after successful login success message as "Member Users"
+    Then User navigates to Administration selects Planograms, verifies the page title should be "Planograms"
+    Then User should verifies to clicks on Add Planogram navigates through the "Add Planogram"
+    Then User clicks the "Save" button without entering any planogram details
+    Then User verifies that the error messages "Name is required ", "File is required " and "Description is required " is displayed

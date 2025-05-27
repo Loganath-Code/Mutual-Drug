@@ -361,17 +361,16 @@ public class ProductsCatalogPage extends BaseClass {
 	 * @param autoSubmit
 	 */
 	public void createNewOrder(String orderName, String orderType, String autoSubmit) {
-//		try {
+		try {
 			scrollToElement(getBtnCreateNewOrder());
 			clickElementUsingJavaScript(driver, getBtnCreateNewOrder());
 //			checkingCaseItem();
 			insertValue(getTxtOrderName(), orderName);
-//			clickRadioButton(orderType);
 			clickRadioButton(autoSubmit);
 			clickElementUsingJavaScript(driver, getBtnCreate());
-//		} catch (Exception e) {
-//
-//		}
+		} catch (Exception e) {
+
+		}
 	}
 
 	/**
@@ -679,7 +678,7 @@ public class ProductsCatalogPage extends BaseClass {
 				assertEquals(getSuccessMessage(), expectedAlertMsg);
 
 			} catch (Exception e) {
-				System.out.println("❌ Failed at row " + i + ": " + e.getMessage());
+				System.out.println(" Failed at row " + i + ": " + e.getMessage());
 			}
 		}
 
@@ -730,7 +729,7 @@ public class ProductsCatalogPage extends BaseClass {
 						&& !"[empty]".equalsIgnoreCase(specialCode.trim())) {
 					try {
 						dropdownSpecialCode.selectByVisibleText(specialCode.trim());
-						System.out.println("✅ Special code selected: " + specialCode.trim());
+						System.out.println(" Special code selected: " + specialCode.trim());
 					} catch (Exception e) {
 						// Fallback to value
 						specialCodeDropdown = driver.findElement(By.xpath("//select[@formcontrolname='specialCode']"));
@@ -739,59 +738,18 @@ public class ProductsCatalogPage extends BaseClass {
 					}
 				} else {
 					dropdownSpecialCode.selectByIndex(0);
-					System.out.println("🔘 Default special code selected (index 0)");
+					System.out.println(" Default special code selected (index 0)");
 				}
 			} else {
-				System.out.println("⚠️ Special code dropdown not visible — skipping");
+				System.out.println(" Special code dropdown not visible — skipping");
 			}
 		} catch (Exception e) {
-			System.out.println("⚠️ Special code dropdown error — skipped: " + e.getMessage());
+			System.out.println(" Special code dropdown error — skipped: " + e.getMessage());
 		}
-
-		// ✅ Click update after all interactions — no more element checks after this
-		Thread.sleep(300); // Small wait if UI lags
+		
+		Thread.sleep(300);
 		clickElementUsingJavaScript(driver, getBtnUpdate());
 
-//		assertEquals(getModaltitle(), titleItemAlreadyExist);
-//		elementVisibility(getTxtOrderQty());
-//		Thread.sleep(1000);
-//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
-//		WebElement qtyFieldUpdate = wait.until(ExpectedConditions.elementToBeClickable(getTxtOrderQty()));
-//		qtyFieldUpdate.clear();
-//		qtyFieldUpdate.sendKeys(qtyUpdate);
-//		qtyFieldUpdate.sendKeys(Keys.ENTER);
-//		List<WebElement> dropdowns = driver.findElements(By.xpath("//select[@formcontrolname='specialCode']"));
-//		if (!dropdowns.isEmpty() && dropdowns.get(0).isDisplayed()) {
-////		    try {
-//		        WebElement specialCodeDropdown = driver.findElement(By.xpath("//select[@formcontrolname='specialCode']"));
-//		        Select dropdownSpecialCode = new Select(specialCodeDropdown);
-//
-//		        if (specialCode != null && !specialCode.trim().isEmpty()
-//		                && !"[empty]".equalsIgnoreCase(specialCode.trim())) {
-//		        	Thread.sleep(1000);
-//		            try {
-//		                dropdownSpecialCode.selectByVisibleText(specialCode.trim());
-//		                System.out.println("Selected by visible text: " + specialCode.trim());
-//		            } catch (Exception e) {
-//		                specialCodeDropdown = driver.findElement(By.xpath("//select[@formcontrolname='specialCode']"));
-//		                dropdownSpecialCode = new Select(specialCodeDropdown);
-//		                dropdownSpecialCode.selectByValue(specialCode.trim());
-//		                System.out.println("Fallback: Selected by value.");
-//		            }
-//		        } else {
-//		            dropdownSpecialCode.selectByIndex(1);
-//		            System.out.println(" Selected default special code at index 1.");
-//		        }
-////		    } catch (StaleElementReferenceException e) {
-////		        System.out.println(" Special code dropdown went stale. Skipping special code update.");
-////		    }
-//		} else {
-//		    System.out.println("Special code dropdown is not visible or not available.");
-//		}
-//		Thread.sleep(800);
-//		clickElementUsingJavaScript(driver, getBtnUpdate());
-//
-//	}
 	}
 	public void existingItemQtyField(String qtyUpdate) {
 		String qtyFieldXPath = "(//input[@placeholder='Order Qty'])[1]";

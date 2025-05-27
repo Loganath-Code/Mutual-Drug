@@ -134,7 +134,7 @@ public class LoginPage extends BaseClass {
 
 //dashboard
 
-	@FindBy(xpath = "//select[@class='form-control']")
+	@FindBy(xpath = "(//select[contains(@class, 'form-control')])")
 	private WebElement ddSelect_Your_Customer_Account;
 
 	@FindBy(xpath = "//button[@class='modal-btn']")
@@ -466,6 +466,7 @@ public class LoginPage extends BaseClass {
 		click(getBtnLogin());
 
 	}
+
 	/**
 	 * @see Used to login after update profile
 	 * @throws FileNotFoundException

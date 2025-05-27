@@ -23,10 +23,10 @@ public class OrdersPage extends BaseClass {
 	public OrdersPage() {
 		PageFactory.initElements(driver, this);
 	}
-	
+
 	@FindBy(xpath = "(//a[@href='/member/orders/current-orders'])[3]")
 	private WebElement bclnkCurrentOrderPage;
-	
+
 	@FindBy(xpath = "//input[@name='orderName']")
 	private WebElement txtOrderName;
 
@@ -281,22 +281,22 @@ public class OrdersPage extends BaseClass {
 
 	@FindBy(xpath = "//div[@aria-label='C2 products cannot be added to a regular order.']")
 	private WebElement warningMessageC2addedRegular;
-	
+
 	@FindBy(xpath = "//div[@aria-label='Regular products cannot be added to a C2 order.']")
 	private WebElement warningmessageRegularAddedC2;
-	
+
 	@FindBy(xpath = "//div[text()='Certificate is not registered or password did not match.']")
 	private WebElement alertmessageC2PasswordnotMatch;
-	
+
 	@FindBy(xpath = "//div[text()='Please enter valid qty']")
 	private WebElement errorMessageQty;
-	
+
 	@FindBy(xpath = "//div[text()='Order Qty is not valid']")
 	private WebElement errorMessageOrderQty;
-	
+
 	@FindBy(xpath = "//button[text()='Cancel']")
 	private WebElement btncance;
-	
+
 	public WebElement getBclnkCurrentOrderPage() {
 		return bclnkCurrentOrderPage;
 	}
@@ -678,6 +678,12 @@ public class OrdersPage extends BaseClass {
 		click(getBtnAutoSubmit());
 	}
 
+	/**
+	 * @see Used to select values from drop down
+	 * @param driver
+	 * @param matSelectElement
+	 * @param visibleText
+	 */
 	public static void selectFromMatSelectByText(WebDriver driver, WebElement matSelectElement, String visibleText) {
 		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 		wait.until(ExpectedConditions.elementToBeClickable(matSelectElement)).click();
@@ -700,6 +706,10 @@ public class OrdersPage extends BaseClass {
 		}
 	}
 
+	/**
+	 * @see Used to auto submit date field validation
+	 * @param date
+	 */
 	public void autoSubmitValidation(String date) {
 		try {
 			getTxtDate().sendKeys(Keys.chord(Keys.CONTROL, "a"));
@@ -980,20 +990,6 @@ public class OrdersPage extends BaseClass {
 		}
 	}
 
-//	/**
-//	 * @see Used to update special code in Grid
-//	 */
-//	public void updateSpecialCode(String specialCode) {
-//		
-//		if (getDdSpecialCodeinGrid().isDisplayed()) {
-//			try {
-//			selectByVisibleText(getDdSpecialCodeinGrid(), specialCode);
-//			}catch (Exception e) {
-//				
-//			}
-//		}
-//	}
-
 	/**
 	 * @see Used to delete item in Grid
 	 */
@@ -1210,7 +1206,6 @@ public class OrdersPage extends BaseClass {
 		clearTextUsingjs(getTxtItemSearch());
 		insertValue(getTxtItemSearch(), itemNum);
 		clickElementUsingJavaScript(driver, getTxtItemSearch());
-//		getTxtItemSearch().sendKeys(Keys.ENTER);
 		getTxtQty().sendKeys(Keys.chord(Keys.CONTROL, "a"));
 		getTxtQty().sendKeys(Keys.BACK_SPACE);
 		String qty = "1";
@@ -1238,106 +1233,62 @@ public class OrdersPage extends BaseClass {
 		clickElementUsingJavaScript(driver, getTdNetPrice());
 	}
 
-//	public void verifySelectAllCheckboxFunctionality() throws InterruptedException {
-//		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-//
-//		// 1. Click the header checkbox (mat-checkbox wrapper)
-//		WebElement headerCheckboxWrapper = wait
-//				.until(ExpectedConditions.elementToBeClickable(By.xpath("//th//mat-checkbox")));
-//		clickElementUsingJavaScript(driver, headerCheckboxWrapper);
-//
-//		Thread.sleep(1000); // Wait for state change
-//
-//		// 2. Verify row checkboxes are all selected
-//		List<WebElement> rowCheckboxes = driver.findElements(By.xpath("//td//mat-checkbox"));
-//		boolean allSelected = true;
-//		for (WebElement checkbox : rowCheckboxes) {
-//			if (!"true".equals(checkbox.getAttribute("aria-checked"))) {
-//				allSelected = false;
-//				break;
-//			}
-//		}
-//		Thread.sleep(1000);
-//		if (allSelected) {
-//			System.out.println(" All row checkboxes are selected after clicking header checkbox.");
-//			verifyMessageDisplayed("All items selected"); // Adjust message based on UI
-//		} else {
-////			System.out.println(" Some checkboxes are not selected.");
-//		}
-//
-//		// 3. Click header checkbox again to deselect all
-//		clickElementUsingJavaScript(driver, headerCheckboxWrapper);
-//		Thread.sleep(1000);
-//
-//		boolean noneSelected = true;
-//		for (WebElement checkbox : rowCheckboxes) {
-//			if (!"false".equals(checkbox.getAttribute("aria-checked"))) {
-//				noneSelected = false;
-//				break;
-//			}
-//		}
-//
-//		if (noneSelected) {
-//			System.out.println("All row checkboxes are deselected after toggling header checkbox.");
-//			verifyMessageDisplayed("All items deselected");
-//		} else {
-//			System.out.println("Some checkboxes are still selected after deselecting.");
-//		}
-//	}
+
 	public void verifySelectAllCheckboxFunctionality() {
-	    WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
+		WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(10));
 
-	    try {
-	        // 1. Click the header checkbox to select all
-	        WebElement headerCheckboxWrapper = wait.until(ExpectedConditions.elementToBeClickable(By.xpath("//th//mat-checkbox//input[@type='checkbox']")));
-	        clickElementUsingJavaScript(driver, headerCheckboxWrapper);
+		try {
+			// 1. Click the header checkbox to select all
+			WebElement headerCheckboxWrapper = wait.until(
+					ExpectedConditions.elementToBeClickable(By.xpath("//th//mat-checkbox//input[@type='checkbox']")));
+			clickElementUsingJavaScript(driver, headerCheckboxWrapper);
 
-	        // Wait for UI to reflect selection
-	        wait.until(ExpectedConditions.attributeToBe(headerCheckboxWrapper, "class", "mat-checkbox-checked"));
+			// Wait for UI to reflect selection
+			wait.until(ExpectedConditions.attributeToBe(headerCheckboxWrapper, "class", "mat-checkbox-checked"));
 
-	        // 2. Verify that all row checkboxes are selected
-	        List<WebElement> rowCheckboxes = driver.findElements(By.xpath("//td//mat-checkbox"));
-	        boolean allSelected = true;
-	        for (WebElement checkbox : rowCheckboxes) {
-	            if (!"true".equals(checkbox.getAttribute("checked"))) {
-	                allSelected = false;
-	                break;
-	            }
-	        }
+			// 2. Verify that all row checkboxes are selected
+			List<WebElement> rowCheckboxes = driver.findElements(By.xpath("//td//mat-checkbox"));
+			boolean allSelected = true;
+			for (WebElement checkbox : rowCheckboxes) {
+				if (!"true".equals(checkbox.getAttribute("checked"))) {
+					allSelected = false;
+					break;
+				}
+			}
 
-	        if (allSelected) {
-	            System.out.println(" All row checkboxes are selected after clicking header checkbox.");
-	            verifyMessageDisplayed("All items selected"); // Adjust message if needed
-	        } else {
-	            System.out.println("Some checkboxes are not selected.");
-	        }
+			if (allSelected) {
+				System.out.println(" All row checkboxes are selected after clicking header checkbox.");
+				verifyMessageDisplayed("All items selected"); // Adjust message if needed
+			} else {
+				System.out.println("Some checkboxes are not selected.");
+			}
 
-	        // 3. Click header checkbox again to deselect all
-	        clickElementUsingJavaScript(driver, headerCheckboxWrapper);
+			// 3. Click header checkbox again to deselect all
+			clickElementUsingJavaScript(driver, headerCheckboxWrapper);
 
-	        // Re-fetch the row checkboxes to avoid stale element exception
-	        wait.until(ExpectedConditions.attributeToBe(headerCheckboxWrapper, "aria-checked", "false"));
-	        rowCheckboxes = driver.findElements(By.xpath("//td//mat-checkbox"));
+			// Re-fetch the row checkboxes to avoid stale element exception
+			wait.until(ExpectedConditions.attributeToBe(headerCheckboxWrapper, "aria-checked", "false"));
+			rowCheckboxes = driver.findElements(By.xpath("//td//mat-checkbox"));
 
-	        boolean noneSelected = true;
-	        for (WebElement checkbox : rowCheckboxes) {
-	            if (!"false".equals(checkbox.getAttribute("checked"))) {
-	                noneSelected = false;
-	                break;
-	            }
-	        }
+			boolean noneSelected = true;
+			for (WebElement checkbox : rowCheckboxes) {
+				if (!"false".equals(checkbox.getAttribute("checked"))) {
+					noneSelected = false;
+					break;
+				}
+			}
 
-	        if (noneSelected) {
-	            System.out.println(" All row checkboxes are deselected after toggling header checkbox.");
-	            verifyMessageDisplayed("All items deselected");
-	        } else {
-	            System.out.println(" Some checkboxes are still selected after deselecting.");
-	        }
+			if (noneSelected) {
+				System.out.println(" All row checkboxes are deselected after toggling header checkbox.");
+				verifyMessageDisplayed("All items deselected");
+			} else {
+				System.out.println(" Some checkboxes are still selected after deselecting.");
+			}
 
-	    } catch (Exception e) {
-	        System.out.println("Exception during Select All checkbox validation: " + e.getMessage());
+		} catch (Exception e) {
+			System.out.println("Exception during Select All checkbox validation: " + e.getMessage());
 //	        Assert.fail("Select All checkbox test failed.");
-	    }
+		}
 	}
 
 	public void verifyMessageDisplayed(String expectedText) {
@@ -1369,9 +1320,6 @@ public class OrdersPage extends BaseClass {
 		implicitWait();
 		clickElementUsingJavaScript(driver, getiSearchAddProduct());
 		selectsFullView();
-//		elementVisibility(getTxtOrderQty());
-//		insertValue(getTxtOrderQty(), "2");
-//		clickElementUsingJavaScript(driver, getBtnAddToOrder());
 
 	}
 
@@ -1422,23 +1370,25 @@ public class OrdersPage extends BaseClass {
 	}
 
 	public void submitOrder() {
-		
 
 	}
+
 	public void clicksbclnk() {
 		elementVisibility(getBclnkCurrentOrderPage());
 		clickElementUsingJavaScript(driver, getBclnkCurrentOrderPage());
 
 	}
+
 	public void emptyFieldOrderQty() {
 		elementVisibility(getTxtOrderQty());
 		clearField(getTxtOrderQty());
 		clickElementUsingJavaScript(driver, getBtnUpdate());
 	}
+
 	public void orderQty(String qty) {
 		elementVisibility(getTxtOrderQty());
 		insertValue(getTxtOrderQty(), qty);
 		clickElementUsingJavaScript(driver, getBtnUpdate());
 	}
-	
+
 }
